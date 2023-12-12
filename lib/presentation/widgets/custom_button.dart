@@ -4,12 +4,18 @@ import 'package:house_of_genuises/common/constants/colors.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton(
-      {super.key, this.height = 55, this.width = 252, this.onTap, this.child});
+      {super.key,
+      this.height = 55,
+      this.width = 252,
+      this.onTap,
+      this.child,
+      this.borderRadius});
 
   final double? height;
   final double? width;
   final Function()? onTap;
   final Widget? child;
+  final double? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,7 @@ class CustomButton extends StatelessWidget {
         decoration: ShapeDecoration(
             color: kprimaryBlueColor,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.r),
+              borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
             )),
         child: Center(child: child),
       ),
