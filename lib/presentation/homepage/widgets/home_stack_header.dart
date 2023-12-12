@@ -14,7 +14,7 @@ class HomeStackHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height / 1.58,
+      height: Get.height / 1.1,
       width: Get.width,
       child: Stack(
         alignment: Alignment.topRight,
@@ -91,6 +91,18 @@ class HomeStackHeader extends StatelessWidget {
                 height: 10.h,
               ),
               Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  child: Text(
+                      'ابحث وستجد أهم الكورسات اعثر على دورة مثالية لكوالدورات المثالية لك اعثر على دورة مثالية لك اعثر على دورة مثالية لك اعثر على دورة مثالية لك ',
+                      textAlign: TextAlign.right,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 14.sp, color: Colors.white))),
+              SizedBox(
+                height: 120.h,
+              ),
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 14.w),
                 child: CustomButton(
                   height: 55.h,
@@ -128,6 +140,9 @@ class HomeStackHeader extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelLarge),
               ),
               SizedBox(
+                height: 20.h,
+              ),
+              SizedBox(
                 height: 215.h,
                 child: ListView.builder(
                     itemCount: 5,
@@ -136,7 +151,7 @@ class HomeStackHeader extends StatelessWidget {
                         model: NewsModel(
                             image: defPic,
                             news: "Lorem ipsum dolor sit amet, consectetur."))),
-              )
+              ),
             ],
           )
         ],
