@@ -9,27 +9,30 @@ class CustomButton extends StatelessWidget {
       this.width = 252,
       this.onTap,
       this.child,
-      this.borderRadius});
+      this.borderRadius,
+      this.bottomColor = kprimaryBlueColor});
 
   final double? height;
   final double? width;
   final Function()? onTap;
   final Widget? child;
   final double? borderRadius;
-
+  final Color bottomColor;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: width!.w,
+    return Container(
+      height: height,
+      width: width,
+      decoration: ShapeDecoration(
+          color: bottomColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
+          )),
+      child: MaterialButton(
+        onPressed: onTap,
+        minWidth: width!.w,
         height: height!.h,
         padding: EdgeInsets.symmetric(vertical: 13.h),
-        decoration: ShapeDecoration(
-            color: kprimaryBlueColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius ?? 30.r),
-            )),
         child: Center(child: child),
       ),
     );
