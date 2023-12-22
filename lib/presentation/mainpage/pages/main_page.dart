@@ -10,68 +10,32 @@ class MainPage extends GetView<MainPageController> {
   @override
   Widget build(BuildContext context) {
     Get.put(MainPageController());
-    return Obx(
-      () => Scaffold(
-        extendBody: true,
-        // body: controller.screens[controller.currentPageIndex.value],
-        body: PersistentTabView(
-          context,
-          screens: controller.screens,
-          items: [
-            PersistentBottomNavBarItem(
-                // onPressed: (context) {
-                //   controller.changeCurrentPage(0);
-                // },
-                icon: const Icon(Icons.home),
-                title: "حسابي",
-                activeColorPrimary: kprimaryBlueColor,
-                inactiveColorPrimary: Colors.grey,
-                inactiveColorSecondary: Colors.grey),
-            PersistentBottomNavBarItem(
-              // onSelectedTabPressWhenNoScreensPushed: () {
-              //   controller.changeCurrentPage(1);
-              // },
-              // onPressed: (context) {
-              //   controller.changeCurrentPage(1);
-              // },
-              icon: const Icon(Icons.search),
-              title: "الرئيسية",
+    return Scaffold(
+      extendBody: true,
+      body: PersistentTabView(
+        context,
+        screens: controller.screens,
+        items: [
+          PersistentBottomNavBarItem(
+              icon: const Icon(Icons.home),
+              title: "حسابي",
               activeColorPrimary: kprimaryBlueColor,
               inactiveColorPrimary: Colors.grey,
-            ),
-            PersistentBottomNavBarItem(
-              // onPressed: (context) {
-              //   controller.changeCurrentPage(2);
-              // },
-              icon: const Icon(Icons.message),
-              title: "كورساتي",
-              activeColorPrimary: kprimaryBlueColor,
-              inactiveColorPrimary: Colors.grey,
-            ),
-          ],
-        ),
+              inactiveColorSecondary: Colors.grey),
+          PersistentBottomNavBarItem(
+            icon: const Icon(Icons.search),
+            title: "الرئيسية",
+            activeColorPrimary: kprimaryBlueColor,
+            inactiveColorPrimary: Colors.grey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: const Icon(Icons.message),
+            title: "كورساتي",
+            activeColorPrimary: kprimaryBlueColor,
+            inactiveColorPrimary: Colors.grey,
+          ),
+        ],
       ),
     );
   }
 }
-
-List<PersistentBottomNavBarItem> _navBarsItems() => [
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.home),
-          title: "Home",
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.grey,
-          inactiveColorSecondary: Colors.purple),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.search),
-        title: "Search",
-        activeColorPrimary: Colors.teal,
-        inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Icons.message),
-        title: "Messages",
-        activeColorPrimary: Colors.deepOrange,
-        inactiveColorPrimary: Colors.grey,
-      ),
-    ];

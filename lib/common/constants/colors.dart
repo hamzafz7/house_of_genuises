@@ -9,3 +9,4 @@ const Color ksecondaryGreyColor = Color(0xFF8C8C8C);
 const Color ksecondaryBlueColor = Color(0x140794EB);
 const Color kDarkBlueColor = Color(0xCC232323);
 const Color kprimaryPinkColor = Color.fromARGB(255, 238, 183, 193);
+const Color kthirdGreyColor = Color(0xFFE9E9E9);
