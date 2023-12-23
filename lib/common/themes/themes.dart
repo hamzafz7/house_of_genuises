@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 var lighttheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    scaffoldBackgroundColor: Colors.white,
     useMaterial3: true,
     textTheme: TextTheme(
       titleLarge: TextStyle(

@@ -16,6 +16,7 @@ class MyProfilePage extends GetView<MyProfileController> {
   Widget build(BuildContext context) {
     Get.put(MyProfileController());
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           const MyProfileHeader(),
@@ -41,7 +42,9 @@ class MyProfilePage extends GetView<MyProfileController> {
           ),
           ProfileListItem(
               svgUrl: "assets/icons/settings.svg",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoute.settingsPageRoute);
+              },
               text: "الإعدادات"),
           SizedBox(
             height: 30.h,
