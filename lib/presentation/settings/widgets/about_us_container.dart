@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:house_of_genuises/common/constants/colors.dart';
 
 class AboutUsConatiner extends StatelessWidget {
   const AboutUsConatiner(

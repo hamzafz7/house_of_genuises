@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
+  final Function()? onPressed;
 
-  const CustomAppBar({super.key, required this.text});
+  const CustomAppBar({super.key, required this.text, this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,9 +25,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: true,
         leading: IconButton(
           icon: SvgPicture.asset("assets/icons/back.svg"),
-          onPressed: () {
-            Get.back();
-          },
+          onPressed: onPressed ??
+              () {
+                Get.back();
+              },
         ));
   }
 

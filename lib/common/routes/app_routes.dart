@@ -17,7 +17,7 @@ class AppRoute {
     GetPage(name: onboardingPageRoute, page: () => const OnBoardingPage()),
     GetPage(name: loginPageRoute, page: () => const LoginPage()),
     GetPage(name: registerPageRoute, page: () => const RegisterPage()),
-    GetPage(name: userInfoPageRoute, page: () => const UserInfoPage()),
+    GetPage(name: userInfoPageRoute, page: () => UserInfoPage()),
     GetPage(name: settingsPageRoute, page: () => const SettingsPage()),
     GetPage(name: aboutUsPageRoute, page: () => const AboutUsPage()),
   ];
