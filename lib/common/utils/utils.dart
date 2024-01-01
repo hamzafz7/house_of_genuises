@@ -222,4 +222,14 @@ class Utils {
       return "No month";
     }
   }
+
+  static isPhoneValidated(String? val) {
+    if (val == null || val.isEmpty) {
+      return " الهاتف المحمول حقل إجباري";
+    } else if (val.length < 10 || val.length > 10) {
+      return "الهاتف المحمول يجب أن يكون من 10 أرقام ";
+    } else {
+      return null;
+    }
+  }
 }

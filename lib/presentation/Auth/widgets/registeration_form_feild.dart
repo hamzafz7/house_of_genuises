@@ -9,12 +9,16 @@ class RegisterationFormFeild extends StatelessWidget {
       required this.svgSrc,
       this.validator,
       this.hintText,
-      required this.controller});
+      required this.controller,
+      this.suffix,
+      this.visibility = false});
 
   final String svgSrc;
   final String? Function(String?)? validator;
   final String? hintText;
   final TextEditingController controller;
+  final IconButton? suffix;
+  final bool visibility;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,11 +32,13 @@ class RegisterationFormFeild extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 2.0.h, horizontal: 8.w),
         child: TextFormField(
+          obscureText: visibility,
           controller: controller,
           validator: validator,
           style:
               Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18.sp),
           decoration: InputDecoration(
+              suffixIcon: suffix,
               hintText: hintText,
               hintStyle: Theme.of(context)
                   .textTheme

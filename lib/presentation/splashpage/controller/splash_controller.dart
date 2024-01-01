@@ -6,9 +6,9 @@ class SplashPageController extends GetxController {
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 3), () {
-      if (CacheProvider().getIsOnBoardingOpened() == null) {
+      if (CacheProvider.getIsOnBoardingOpened() == null) {
         Get.toNamed(AppRoute.onboardingPageRoute);
-      } else if (CacheProvider().getAppToken() == null) {
+      } else if (CacheProvider.getAppToken() == null) {
         Get.toNamed(AppRoute.loginPageRoute);
       } else {}
     });

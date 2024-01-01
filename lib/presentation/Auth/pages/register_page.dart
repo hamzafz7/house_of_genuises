@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/presentation/Auth/widgets/registeration_form_feild.dart';
@@ -51,9 +53,9 @@ class RegisterPage extends GetView<RegisterationController> {
               RegisterationFormFeild(
                 controller: controller.nameController,
                 hintText: 'الاسم',
-                svgSrc: "assets/icons/Lock.svg",
+                svgSrc: "assets/icons/person1.svg",
                 validator: (val) {
-                  return Utils.isFeildValidated(val);
+                  return Utils.isFeildValidated(val?.trim());
                 },
               ),
               SizedBox(
@@ -62,9 +64,9 @@ class RegisterPage extends GetView<RegisterationController> {
               RegisterationFormFeild(
                 controller: controller.registerPhoneController,
                 hintText: 'رقم الهاتف',
-                svgSrc: "assets/icons/Lock.svg",
+                svgSrc: "assets/icons/Phone1.svg",
                 validator: (val) {
-                  return Utils.isNumericFeildValidated(val);
+                  return Utils.isNumericFeildValidated(val?.trim());
                 },
               ),
               SizedBox(
@@ -75,7 +77,7 @@ class RegisterPage extends GetView<RegisterationController> {
                 hintText: 'كلمة المرور',
                 svgSrc: "assets/icons/Lock.svg",
                 validator: (val) {
-                  return Utils.isPasswordValidated(val);
+                  return Utils.isPasswordValidated(val?.trim());
                 },
               ),
               SizedBox(
@@ -96,20 +98,34 @@ class RegisterPage extends GetView<RegisterationController> {
               SizedBox(
                 height: 60.h,
               ),
-              CustomButton(
-                onTap: () {
-                  if (controller.registerPageFormKey.currentState!
-                      .validate()) {}
-                },
-                height: 55.h,
-                width: 333.w,
-                child: Text(
-                  "إنشاء حساب",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white),
-                ),
+              Obx(
+                () => controller.registerRequestStatus.value ==
+                        RequestStatus.loading
+                    ? appCircularProgress()
+                    : CustomButton(
+                        onTap: () {
+                          if (controller.registerPageFormKey.currentState!
+                              .validate()) {
+                            controller.userRegister(
+                                phone: controller.registerPhoneController.text
+                                    .trim(),
+                                password: controller
+                                    .registerPasswordController.text
+                                    .trim(),
+                                fullName:
+                                    controller.nameController.text.trim());
+                          }
+                        },
+                        height: 55.h,
+                        width: 333.w,
+                        child: Text(
+                          "إنشاء حساب",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(color: Colors.white),
+                        ),
+                      ),
               ),
               SizedBox(
                 height: 15.h,

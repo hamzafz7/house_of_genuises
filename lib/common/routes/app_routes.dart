@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:house_of_genuises/presentation/Auth/pages/login_page.dart';
 import 'package:house_of_genuises/presentation/Auth/pages/register_page.dart';
+import 'package:house_of_genuises/presentation/mainpage/pages/main_page.dart';
 import 'package:house_of_genuises/presentation/onboarding/pages/on_boarding_page.dart';
 import 'package:house_of_genuises/presentation/settings/pages/about_us_page.dart';
 import 'package:house_of_genuises/presentation/settings/pages/settings_page.dart';
@@ -13,6 +14,7 @@ class AppRoute {
   static String userInfoPageRoute = '/userinfo';
   static String settingsPageRoute = '/settings';
   static String aboutUsPageRoute = "/about_us";
+  static String mainPageRoute = "/main_page";
   static List<GetPage> pages = [
     GetPage(name: onboardingPageRoute, page: () => const OnBoardingPage()),
     GetPage(name: loginPageRoute, page: () => const LoginPage()),
@@ -20,5 +22,6 @@ class AppRoute {
     GetPage(name: userInfoPageRoute, page: () => UserInfoPage()),
     GetPage(name: settingsPageRoute, page: () => const SettingsPage()),
     GetPage(name: aboutUsPageRoute, page: () => const AboutUsPage()),
+    GetPage(name: mainPageRoute, page: () => const MainPage()),
   ];
 }

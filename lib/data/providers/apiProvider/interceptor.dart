@@ -17,6 +17,11 @@ class AppInterceptors extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     debugPrint("request is sending");
     debugPrint("REQUEST[${options.method}] => PATH: $baseUrl${options.path}");
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      return handler.reject(DioException(
+          requestOptions: options, message: "لا يوجد اتصال بالانترنت"));
+    }
 
     return handler.next(options);
   }
@@ -31,19 +36,7 @@ class AppInterceptors extends Interceptor {
           requestOptions: response.requestOptions, message: "no_internet"));
     }
 
-    if (response.statusCode == 401) {
-      debugPrint("hello from 401");
-      // LoginModel model = LoginModel(
-      //   email: Shared.getstring("email")!,
-      //   password: Shared.getstring("password")!,
-      // );
-      // var appResponse = await repository.userLogin(model);
-      // Shared.setstring("token", appResponse.data["token"]);
-      // var options = response.requestOptions;
-      // options.headers['Authorization'] = 'Bearer ${Shared.getstring("token")}';
-      // await dio!.fetch(options);
-      Get.snackbar("sorry".tr, "re_login".tr);
-    }
+    // if (response.statusCode == 401) {}
     return handler.next(response);
   }
 
@@ -53,24 +46,15 @@ class AppInterceptors extends Interceptor {
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,
-          message: 'no_internet'.tr,
+          message: "لا يوجد اتصال في الانترنت",
         ),
       );
-    }
-    // if (err.error is SocketException) {
-    //   return handler.next(
-    //     DioException(
-    //       requestOptions: err.requestOptions,
-    //       message: 'no_internet'.tr,
-    //     ),
-    //   );
-    // }
-    else if (err.response?.statusCode == 401) {
+    } else if (err.response?.statusCode == 401) {
       if (Get.currentRoute != '/login') {
         Get.offAllNamed(AppRoute.loginPageRoute);
       }
     } else if (err.response?.statusCode == 422) {
-      String? error = err.response?.data['message'] ?? "wrong_request";
+      String? error = err.response?.data['message'] ?? "حدث خطأ ما ";
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,
@@ -79,7 +63,7 @@ class AppInterceptors extends Interceptor {
       );
     } else if (err.response?.statusCode == 403) {
       try {
-        String? error = err.response?.data['error'] ?? "wrong_request";
+        String? error = err.response?.data['message'] ?? "حدث خطأ ما ";
         return handler.next(
           DioException(
             requestOptions: err.requestOptions,
@@ -90,12 +74,13 @@ class AppInterceptors extends Interceptor {
         return handler.next(
           DioException(
             requestOptions: err.requestOptions,
-            message: 'wrong_request'.tr,
+            message: 'حدث خطأ ما'.tr,
           ),
         );
       }
     } else {
-      String? error = err.response?.data['message'] ?? "wrong_request";
+      String? error = err.response?.data['message'] ?? "حدث خطأ ما";
+      print(error);
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,

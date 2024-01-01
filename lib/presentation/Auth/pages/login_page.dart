@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/presentation/Auth/widgets/registeration_form_feild.dart';
@@ -51,38 +53,59 @@ class LoginPage extends GetView<RegisterationController> {
               RegisterationFormFeild(
                 controller: controller.loginPhoneController,
                 hintText: 'رقم الهاتف',
-                svgSrc: "assets/icons/Lock.svg",
+                svgSrc: "assets/icons/Phone1.svg",
                 validator: (val) {
-                  return Utils.isEmailValidated(val);
+                  return Utils.isPhoneValidated(val?.trim());
                 },
               ),
               SizedBox(
                 height: 20.h,
               ),
-              RegisterationFormFeild(
-                controller: controller.loginPasswordController,
-                hintText: 'كلمة المرور',
-                svgSrc: "assets/icons/Lock.svg",
-                validator: (val) {
-                  return Utils.isPasswordValidated(val);
-                },
+              Obx(
+                () => RegisterationFormFeild(
+                  visibility: controller.isloginpasswordShown.value,
+                  suffix: IconButton(
+                      onPressed: () {
+                        controller.changeIsLoginPasswordShown();
+                      },
+                      icon: Icon(controller.isloginpasswordShown.value
+                          ? Icons.visibility_off
+                          : Icons.visibility)),
+                  controller: controller.loginPasswordController,
+                  hintText: 'كلمة المرور',
+                  svgSrc: "assets/icons/Lock.svg",
+                  validator: (val) {
+                    return Utils.isPasswordValidated(val?.trim());
+                  },
+                ),
               ),
               SizedBox(
                 height: 70.h,
               ),
-              CustomButton(
-                onTap: () {
-                  if (controller.loginPageFormKey.currentState!.validate()) {}
-                },
-                height: 55.h,
-                width: 333.w,
-                child: Text(
-                  "تسجيل الدخول",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Colors.white),
-                ),
+              Obx(
+                () =>
+                    controller.loginRequestStatus.value == RequestStatus.loading
+                        ? appCircularProgress()
+                        : CustomButton(
+                            onTap: () {
+                              if (controller.loginPageFormKey.currentState!
+                                  .validate()) {
+                                controller.userLogin(
+                                    phone: controller.loginPhoneController.text,
+                                    password: controller
+                                        .loginPasswordController.text);
+                              }
+                            },
+                            height: 55.h,
+                            width: 333.w,
+                            child: Text(
+                              "تسجيل الدخول",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
               ),
               SizedBox(
                 height: 15.h,

@@ -6,7 +6,7 @@ import 'package:house_of_genuises/data/providers/apiProvider/api_provider.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class AccountRepo {
-  Future<AppResponse> userLogin(UserModel model) async {
+  Future<AppResponse> userLogin(User model) async {
     try {
       var response = await ApiProvider.post(
         url: loginUrl,
@@ -26,7 +26,7 @@ class AccountRepo {
     }
   }
 
-  Future<AppResponse> userRegister(UserModel model) async {
+  Future<AppResponse> userRegister(User model) async {
     try {
       var response = await ApiProvider.post(
         url: registerUrl,
@@ -50,7 +50,7 @@ class AccountRepo {
     try {
       final response = await ApiProvider.post(
         url: logOutUrl,
-        token: CacheProvider().getAppToken(),
+        token: CacheProvider.getAppToken(),
       );
       return AppResponse(
         errorMessage: null,
