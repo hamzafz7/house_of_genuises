@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 var lighttheme = ThemeData(
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+
+    // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    colorScheme: const ColorScheme.light().copyWith(
+      surface: Colors.white,
+    ),
     scaffoldBackgroundColor: Colors.white,
     useMaterial3: true,
     textTheme: TextTheme(

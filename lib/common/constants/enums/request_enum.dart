@@ -1,1 +1,1 @@
-enum RequestStatus { begin, loading, onError, success, noData }
+enum RequestStatus { begin, loading, onError, success, noData, noInternentt }

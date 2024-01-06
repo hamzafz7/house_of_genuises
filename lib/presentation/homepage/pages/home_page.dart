@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/presentation/homepage/controller/home_controller.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/home_course_item.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/home_stack_header.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/year_button.dart';
 import 'package:svg_flutter/svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(HomeController());
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(width: Get.width, child: HomeStackHeader()),
+              SizedBox(width: Get.width, child: const HomeStackHeader()),
               SizedBox(
                 height: 30.h,
               ),

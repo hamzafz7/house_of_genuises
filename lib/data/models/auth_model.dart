@@ -1,7 +1,7 @@
 import 'package:house_of_genuises/data/models/user_model.dart';
 
 class AuthResponse {
-  final AuthData? data;
+  AuthData? data;
   final String? message;
 
   AuthResponse({required this.data, required this.message});

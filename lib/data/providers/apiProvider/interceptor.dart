@@ -33,7 +33,8 @@ class AppInterceptors extends Interceptor {
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
       return handler.reject(DioException(
-          requestOptions: response.requestOptions, message: "no_internet"));
+          requestOptions: response.requestOptions,
+          message: "لا يوجد اتصال بالانترنت"));
     }
 
     // if (response.statusCode == 401) {}
@@ -42,7 +43,7 @@ class AppInterceptors extends Interceptor {
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.message == "no_internet") {
+    if (err.message == "لا يوجد اتصال بالانترنت") {
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,

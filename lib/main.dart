@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
@@ -13,6 +14,7 @@ void main() async {
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
+  secureScreen();
   if (CacheProvider().getDeviceId() == null) {
     await CacheProvider().setDeviceId();
     runApp(const MyApp());
@@ -21,9 +23,18 @@ void main() async {
   }
 }
 
-class MyApp extends StatelessWidget {
+Future<void> secureScreen() async {
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+}
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,4 +48,16 @@ class MyApp extends StatelessWidget {
               home: const SplashPage(),
             ));
   }
+
+  // @override
+  // void initState() {
+  //   secureScreen();
+  //   super.initState();
+  // }
+
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+  // }
 }

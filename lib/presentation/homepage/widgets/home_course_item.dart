@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/presentation/course_details/pages/course_details_page.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -30,13 +32,11 @@ class HomeCourseItem extends StatelessWidget {
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(10.r),
-              child: Container(
-                child: Image.network(
-                  defPic,
-                  height: 136.h,
-                  width: 166.w,
-                  fit: BoxFit.fill,
-                ),
+              child: Image.network(
+                defPic,
+                height: 136.h,
+                width: 166.w,
+                fit: BoxFit.fill,
               ),
             ),
             SizedBox(
@@ -88,6 +88,9 @@ class HomeCourseItem extends StatelessWidget {
               height: 25.h,
             ),
             CustomButton(
+              onTap: () {
+                Get.to(() => const CourseDetailsPage());
+              },
               height: 40.h,
               width: 110.w,
               borderRadius: 6.r,

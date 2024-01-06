@@ -7,7 +7,9 @@ class User {
   final String? phone;
   final String? password;
   final int? isBlocked;
+  final String? image;
   final String? type;
+  final String? location;
 
   User(
       {this.id,
@@ -16,7 +18,9 @@ class User {
       this.phone,
       this.isBlocked,
       this.type,
-      this.password});
+      this.password,
+      this.image,
+      this.location});
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
