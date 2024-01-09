@@ -43,21 +43,13 @@ class _MyAppState extends State<MyApp> {
         builder: (context, child) => GetMaterialApp(
               debugShowCheckedModeBanner: false,
               theme: lighttheme,
+              darkTheme: darkTheme,
+              themeMode: CacheProvider.getAppTheme()
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
               locale: const Locale('ar'),
               getPages: AppRoute.pages,
               home: const SplashPage(),
             ));
   }
-
-  // @override
-  // void initState() {
-  //   secureScreen();
-  //   super.initState();
-  // }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
-  // }
 }

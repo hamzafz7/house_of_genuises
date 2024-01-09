@@ -21,11 +21,7 @@ class MyCoursesPageHeader extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: kprimaryGreyColor)),
-              Text('طارق القاسم',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: kDarkBlueColor))
+              Text('طارق القاسم', style: Theme.of(context).textTheme.bodyLarge!)
             ],
           ),
           const Spacer(),

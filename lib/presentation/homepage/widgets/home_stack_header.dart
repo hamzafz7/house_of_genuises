@@ -5,8 +5,6 @@ import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/data/models/news_model.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/news_item.dart';
-import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 class HomeStackHeader extends StatelessWidget {
   const HomeStackHeader({super.key});
@@ -14,7 +12,7 @@ class HomeStackHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height / 1.1,
+      height: Get.height / 1.3,
       width: Get.width,
       child: Stack(
         alignment: Alignment.topRight,
@@ -100,36 +98,36 @@ class HomeStackHeader extends StatelessWidget {
                           .bodyMedium!
                           .copyWith(fontSize: 14.sp, color: Colors.white))),
               SizedBox(
-                height: 120.h,
+                height: 70.h,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 14.w),
-                child: CustomButton(
-                  height: 55.h,
-                  width: 200.w,
-                  borderRadius: 6.r,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "ابدأ الآن",
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Container(
-                        width: 22.w,
-                        height: 22.h,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white)),
-                        child: SvgPicture.asset("assets/icons/arrow-right.svg"),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 14.w),
+              //   child: CustomButton(
+              //     height: 55.h,
+              //     width: 200.w,
+              //     borderRadius: 6.r,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Text(
+              //           "ابدأ الآن",
+              //           style: Theme.of(context).textTheme.labelMedium,
+              //         ),
+              //         SizedBox(
+              //           width: 5.w,
+              //         ),
+              //         Container(
+              //           width: 22.w,
+              //           height: 22.h,
+              //           decoration: BoxDecoration(
+              //               shape: BoxShape.circle,
+              //               border: Border.all(color: Colors.white)),
+              //           child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 15.h,
               ),

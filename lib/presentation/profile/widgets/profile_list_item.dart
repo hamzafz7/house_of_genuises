@@ -40,10 +40,7 @@ class ProfileListItem extends StatelessWidget {
               ),
               Text(
                 text,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelMedium!
-                    .copyWith(color: kDarkBlueColor),
+                style: Theme.of(context).textTheme.labelMedium!,
               )
             ],
           )),

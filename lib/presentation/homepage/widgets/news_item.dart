@@ -37,6 +37,7 @@ class NewsItem extends StatelessWidget {
                   model.news ?? "لا يوجد",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.labelSmall,
                 ))
           ]),
         ),

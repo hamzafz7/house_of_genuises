@@ -5,6 +5,7 @@ import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
+import 'package:house_of_genuises/presentation/controllers/themeController.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/log-out.dart';
 import 'package:house_of_genuises/presentation/profile/controllers/profile_controller.dart';
@@ -12,14 +13,13 @@ import 'package:house_of_genuises/presentation/profile/widgets/my_profile_header
 import 'package:house_of_genuises/presentation/profile/widgets/my_profile_image.dart';
 import 'package:house_of_genuises/presentation/profile/widgets/profile_list_item.dart';
 
+// ignore: must_be_immutable
 class MyProfilePage extends GetView<MyProfileController> {
   const MyProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
     Get.put(MyProfileController());
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Column(children: [
         const MyProfileHeader(),
@@ -74,6 +74,37 @@ class MyProfilePage extends GetView<MyProfileController> {
                                     }), height: 250, width: 390);
                                   },
                                   text: "تسجيل الخروج"),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Row(
+                      children: [
+                        ProfileListItem(
+                            svgUrl: "assets/icons/sun.svg",
+                            onTap: () {},
+                            text: "السطوع"),
+                        const Spacer(),
+                        GetBuilder(
+                            init: ThemeController(),
+                            builder: (cnt) {
+                              return Switch.adaptive(
+                                  activeColor: Colors.blue,
+                                  inactiveThumbColor: Colors.blue,
+                                  trackOutlineColor:
+                                      MaterialStateProperty.resolveWith(
+                                          (states) => Colors.blue),
+                                  value: controller.isEdited.value ==
+                                      ThemeMode.dark,
+                                  onChanged: (val) {
+                                    cnt.switchTheme();
+                                    Get.changeThemeMode(cnt.currentTheme);
+                                  });
+                            }),
+                        SizedBox(
+                          width: 40.w,
+                        )
+                      ],
                     ),
                     SizedBox(
                       height: 30.h,

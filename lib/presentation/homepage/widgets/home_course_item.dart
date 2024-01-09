@@ -18,7 +18,6 @@ class HomeCourseItem extends StatelessWidget {
         width: 187.w,
         height: 360.h,
         decoration: ShapeDecoration(
-          color: Colors.white,
           shape: RoundedRectangleBorder(
             side: const BorderSide(width: 1, color: kprimarwhiteColor),
             borderRadius: BorderRadius.circular(10.r),

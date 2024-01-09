@@ -13,7 +13,6 @@ class UserInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: CustomAppBar(
         text: "الملف الشخصي",
         onPressed: () {
@@ -39,10 +38,7 @@ class UserInfoPage extends StatelessWidget {
               child: Row(
                 children: [
                   Text('المعلومات الشخصية',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: kDarkBlueColor)),
+                      style: Theme.of(context).textTheme.labelMedium!),
                   const Spacer(),
                   TextButton(
                     onPressed: () {

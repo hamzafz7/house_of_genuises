@@ -58,6 +58,14 @@ class CacheProvider {
     return _getStorage.read("device_id");
   }
 
+  static bool getAppTheme() {
+    return _getStorage.read("is_Dark") ?? false;
+  }
+
+  static setAppTheme(bool val) {
+    _getStorage.write("is_Dark", val);
+  }
+
   Future<void> setDeviceId() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/presentation/my_courses/widgets/my_course_container.dart';
 import 'package:house_of_genuises/presentation/my_courses/widgets/my_courses_page_header.dart';
 
@@ -34,7 +33,7 @@ class MyCoursesPage extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
-                    .copyWith(color: kDarkBlueColor, fontSize: 18.sp)),
+                    .copyWith(fontSize: 18.sp)),
           ),
           Expanded(
             child: ListView.builder(
