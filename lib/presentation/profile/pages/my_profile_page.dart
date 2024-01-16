@@ -37,7 +37,7 @@ class MyProfilePage extends GetView<MyProfileController> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Text(CacheProvider.getUserName(),
+                    Text(CacheProvider.getUserName() ?? " ",
                         style: Theme.of(context).textTheme.bodyLarge),
                     SizedBox(
                       height: 45.h,

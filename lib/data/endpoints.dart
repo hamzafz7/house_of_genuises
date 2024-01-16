@@ -1,4 +1,4 @@
-String baseUrl = "http://192.168.1.107:8000/api/v1/";
+String baseUrl = "https://houseofgeniuses.tech/api/v1/";
 
 // Registeration :
 String loginUrl = 'auth/login';
@@ -11,3 +11,7 @@ String updateProfileUrl = 'users/updateProfile/';
 
 // News :
 String newsUrl = "news/visible";
+
+// Categories:
+String categoriesUrl = "categories/visible";
+String coursesUrl = "courses/visible";

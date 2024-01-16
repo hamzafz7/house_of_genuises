@@ -14,7 +14,7 @@ void main() async {
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
-  secureScreen();
+  // secureScreen();
   if (CacheProvider().getDeviceId() == null) {
     await CacheProvider().setDeviceId();
     runApp(const MyApp());

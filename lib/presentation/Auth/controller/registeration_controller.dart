@@ -44,6 +44,7 @@ class RegisterationController extends GetxController {
     var response = await _repo.userLogin(user);
     if (response.success) {
       authResponse = AuthResponse.fromJson(response.data);
+      print(authResponse!.data!.token);
       Get.snackbar("مرحباً !!", authResponse!.message!);
       CacheProvider.setUserId(authResponse!.data!.user!.id!);
       // CacheProvider.setUserName(authResponse!.data!.user!.fullName!);

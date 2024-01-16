@@ -6,7 +6,7 @@ class User {
   final String? email;
   final String? phone;
   final String? password;
-  final int? isBlocked;
+  final bool? isBlocked;
   final String? image;
   final String? type;
   final String? location;
