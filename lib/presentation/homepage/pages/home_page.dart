@@ -37,25 +37,35 @@ class HomePage extends GetView<HomeController> {
               SizedBox(
                 height: 70.h,
                 child: Obx(() => switch (controller.categoriesStatus.value) {
-                      RequestStatus.success => ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount:
-                              controller.categoriesModel!.categories!.length,
-                          itemBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.all(8.0.r),
-                                child: YearButton(
-                                  index: index,
-                                  onPressed: () {
-                                    controller.changeCurrentIndex(
-                                        index,
-                                        controller.categoriesModel!
-                                            .categories![index].id!);
-                                    print("Zzz");
-                                  },
-                                  categoryModel: controller
-                                      .categoriesModel!.categories![index],
-                                ),
-                              )),
+                      RequestStatus.success => controller.categoriesModel !=
+                                  null &&
+                              controller.categoriesModel!.categories!.isNotEmpty
+                          ? ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller
+                                  .categoriesModel!.categories!.length,
+                              itemBuilder: (context, index) {
+                                print(
+                                  controller
+                                      .categoriesModel!.categories!.length,
+                                );
+                                return Padding(
+                                  padding: EdgeInsets.all(8.0.r),
+                                  child: YearButton(
+                                    index: index,
+                                    onPressed: () {
+                                      controller.changeCurrentIndex(
+                                          index,
+                                          controller.categoriesModel!
+                                              .categories![index].id!);
+                                      print("Zzz");
+                                    },
+                                    categoryModel: controller
+                                        .categoriesModel!.categories![index],
+                                  ),
+                                );
+                              })
+                          : Container(),
                       RequestStatus.begin => Container(),
                       RequestStatus.loading => Center(
                           child: appCircularProgress(),
@@ -77,7 +87,11 @@ class HomePage extends GetView<HomeController> {
                 height: 30.h,
               ),
               Obx(() => switch (controller.courseStatus.value) {
-                    RequestStatus.success => CoursesWidget(),
+                    RequestStatus.success =>
+                      controller.coursesModel!.courses!.isNotEmpty ||
+                              controller.coursesModel!.courses != null
+                          ? CoursesWidget()
+                          : Container(),
                     RequestStatus.begin => Container(),
                     RequestStatus.loading => Center(
                         child: appCircularProgress(),

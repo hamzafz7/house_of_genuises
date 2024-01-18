@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/models/profile_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/repositories/account_repo.dart';
 
 class MyProfileController extends GetxController {
@@ -55,6 +56,7 @@ class MyProfileController extends GetxController {
     var response = await _repo.signOut();
     if (response.success) {
       updateLogOutStatus(RequestStatus.success);
+      CacheProvider.clearAppToken();
       Get.offAllNamed(AppRoute.loginPageRoute);
     } else if (!response.success) {
       updateGetProfileStatus(RequestStatus.onError);

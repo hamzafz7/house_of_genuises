@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/presentation/course_details/pages/course_details_page.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class HomeCourseItem extends StatelessWidget {
-  const HomeCourseItem({super.key});
+  const HomeCourseItem({super.key, required this.courseModel});
+  final CourseModel courseModel;
 
   @override
   Widget build(BuildContext context) {

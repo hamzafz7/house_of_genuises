@@ -5,6 +5,7 @@ import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/data/models/categories_model.dart';
 import 'package:house_of_genuises/presentation/homepage/controller/home_controller.dart';
 
+// ignore: must_be_immutable
 class YearButton extends StatelessWidget {
   YearButton({
     super.key,

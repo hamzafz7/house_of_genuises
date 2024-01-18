@@ -70,6 +70,7 @@ class MyProfilePage extends GetView<MyProfileController> {
                                     CustomDialog(context,
                                         child: LogOutDialog(onPressed: () {
                                       controller.logOut();
+
                                       Get.back();
                                     }), height: 250, width: 390);
                                   },

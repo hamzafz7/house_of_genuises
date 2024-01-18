@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/categories_model.dart';
+import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/data/models/news_model.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/data/repositories/home_repo..dart';
@@ -63,6 +64,7 @@ class HomeController extends GetxController {
         updateCategoriesStatus(RequestStatus.noData);
       } else {
         updateCategoriesStatus(RequestStatus.success);
+        print(categoriesModel!.categories!.length);
         getCourses(categoriesModel!.categories![0].id!);
       }
     } else if (!response.success) {
@@ -74,18 +76,19 @@ class HomeController extends GetxController {
     }
   }
 
+  CoursesModel? coursesModel;
+
   Future<void> getCourses(int id) async {
     updatecourseStatus(RequestStatus.loading);
     var response = await _categoryRepository.getCourses(id);
     if (response.success) {
-      categoriesModel = CategoriesModel.fromJson(response.data);
-      // if (categoriesModel!.categories == null ||
-      //     categoriesModel!.categories!.isEmpty) {
-      //   updatecourseStatus(RequestStatus.noData);
-      // } else {
-      updatecourseStatus(RequestStatus.success);
-      print(response.data);
-      // }
+      coursesModel = CoursesModel.fromJson(response.data);
+      print(coursesModel!.courses);
+      if (coursesModel!.courses == null || coursesModel!.courses!.isEmpty) {
+        updatecourseStatus(RequestStatus.noData);
+      } else {
+        updatecourseStatus(RequestStatus.success);
+      }
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
         updatecourseStatus(RequestStatus.noInternentt);

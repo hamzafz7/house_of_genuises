@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/presentation/homepage/controller/home_controller.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/home_course_item.dart';
 
+// ignore: must_be_immutable
 class YearsCoursesPage extends StatelessWidget {
-  const YearsCoursesPage({super.key});
-
+  YearsCoursesPage({super.key});
+  var controller = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +16,7 @@ class YearsCoursesPage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          "السنة الأولى",
+          "${controller.categoriesModel!.categories![controller.currentCategoryIndex.value].name}",
           style:
               Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 20.sp),
         ),
@@ -28,7 +31,7 @@ class YearsCoursesPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Row(
               children: [
-                const Text("يتضمن هذا الكورس"),
+                const Text("يتضمن هذا القسم"),
                 SizedBox(
                   width: 10.w,
                 ),
@@ -45,7 +48,7 @@ class YearsCoursesPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "10",
+                        controller.coursesModel!.courses!.length.toString(),
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium!
@@ -69,7 +72,11 @@ class YearsCoursesPage extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            children: List.generate(10, (index) => const HomeCourseItem()),
+            children: List.generate(
+                controller.coursesModel!.courses!.length,
+                (index) => HomeCourseItem(
+                      courseModel: controller.coursesModel!.courses![index],
+                    )),
           )
         ]),
       ),

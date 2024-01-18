@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/presentation/homepage/controller/home_controller.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/home_course_item.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
+// ignore: must_be_immutable
 class CoursesWidget extends StatelessWidget {
   CoursesWidget({super.key});
 
@@ -20,18 +22,27 @@ class CoursesWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 14.w),
-                child: Text(
-                  controller.categoriesModel!
-                      .categories![controller.currentCategoryIndex.value].name!,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontSize: 18.sp),
+                child: SizedBox(
+                  width: 220.w,
+                  child: Text(
+                    controller
+                        .categoriesModel!
+                        .categories![controller.currentCategoryIndex.value]
+                        .name!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 14.sp),
+                  ),
                 ),
               ),
               const Spacer(),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoute.yearsPageRoute);
+                  },
                   child: Row(
                     children: [
                       Text(
@@ -62,7 +73,13 @@ class CoursesWidget extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
-          children: List.generate(10, (index) => HomeCourseItem()),
+          children: List.generate(
+              controller.coursesModel!.courses!.length >= 4
+                  ? 4
+                  : controller.coursesModel!.courses!.length,
+              (index) => HomeCourseItem(
+                    courseModel: controller.coursesModel!.courses![index],
+                  )),
         )
       ],
     );

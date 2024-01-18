@@ -41,6 +41,10 @@ class CacheProvider {
     _getStorage.write("token", val);
   }
 
+  static clearAppToken() {
+    _getStorage.remove("token");
+  }
+
   static getUserName() {
     return _getStorage.read("name");
   }
