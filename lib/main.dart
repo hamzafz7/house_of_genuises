@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
@@ -38,18 +39,36 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-        designSize: const Size(393, 852),
-        builder: (context, child) => GetMaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: lighttheme,
-              darkTheme: darkTheme,
-              themeMode: CacheProvider.getAppTheme()
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
-              locale: const Locale('ar'),
-              getPages: AppRoute.pages,
-              home: const SplashPage(),
-            ));
+    return FutureBuilder(
+        future: _isRealDevice(),
+        builder: (context, snapshot) => ScreenUtilInit(
+            designSize: const Size(393, 852),
+            builder: (context, child) =>
+                snapshot.hasData && snapshot.data == true
+                    ? GetMaterialApp(
+                        debugShowCheckedModeBanner: false,
+                        theme: lighttheme,
+                        darkTheme: darkTheme,
+                        themeMode: CacheProvider.getAppTheme()
+                            ? ThemeMode.dark
+                            : ThemeMode.light,
+                        locale: const Locale('ar'),
+                        getPages: AppRoute.pages,
+                        home: const SplashPage(),
+                      )
+                    : SizedBox()));
+  }
+
+  Future<bool> _isRealDevice() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.isPhysicalDevice;
+    } else if (Theme.of(context).platform == TargetPlatform.iOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.isPhysicalDevice;
+    } else {
+      return false;
+    }
   }
 }

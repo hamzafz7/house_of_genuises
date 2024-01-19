@@ -7,7 +7,7 @@ String logOutUrl = 'auth/logout';
 
 // User :
 String getProfileUrl = 'users/myProfile';
-String updateProfileUrl = 'users/updateProfile/';
+String updateProfileUrl = 'users/updateProfile';
 
 // News :
 String newsUrl = "news/visible";
@@ -16,3 +16,4 @@ String newsUrl = "news/visible";
 String categoriesUrl = "categories/visible";
 String coursesUrl = "courses/visible";
 String showCourseUrl = "courses/show";
+String signInCourseUrl = "courses/signIn";

@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class CourseDetailsHeader extends StatelessWidget {
-  const CourseDetailsHeader({super.key});
+  const CourseDetailsHeader({super.key, this.image, this.text});
+  final String? image;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {

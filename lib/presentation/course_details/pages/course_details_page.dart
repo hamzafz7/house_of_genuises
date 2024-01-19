@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_curriculum.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_describtion.dart';
@@ -20,43 +22,59 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
     return Scaffold(
       body: SizedBox(
         width: Get.width,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipPath(
-                  clipper: ContainerCustomClipper(),
-                  child: const CourseDetailsHeader()),
-              CustomPickButton(),
-              SizedBox(
-                height: 40.h,
-              ),
-              Obx(() => controller.currentWidgetIndex.value == 0
-                  ? const CourseDescribtionWidget()
-                  : const CourseCurriculum()),
-              SizedBox(
-                height: 10.h,
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.r),
-                child: CustomButton(
-                  onTap: () {
-                    CustomDialog(context, child: const CodeSuccessWidget());
-                  },
-                  height: 50.h,
-                  width: 382.w,
-                  borderRadius: 17.r,
-                  child: Text(
-                    "ٍسجل الآن",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 18.sp, color: Colors.white),
-                  ),
+        child: Obx(
+          () => switch (controller.getCourseInfoStatus.value) {
+            RequestStatus.success => SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipPath(
+                        clipper: ContainerCustomClipper(),
+                        child: const CourseDetailsHeader()),
+                    CustomPickButton(),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Obx(() => controller.currentWidgetIndex.value == 0
+                        ? const CourseDescribtionWidget()
+                        : const CourseCurriculum()),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16.r),
+                      child: CustomButton(
+                        onTap: () {
+                          CustomDialog(context,
+                              child: const CodeSuccessWidget());
+                        },
+                        height: 50.h,
+                        width: 382.w,
+                        borderRadius: 17.r,
+                        child: Text(
+                          "ٍسجل الآن",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 18.sp, color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            RequestStatus.begin => Container(),
+            RequestStatus.loading => Center(
+                child: appCircularProgress(),
+              ),
+            RequestStatus.onError => const Center(
+                child: Text("حدث خطأ"),
+              ),
+            RequestStatus.noData => const Center(
+                child: Text("لا يوجد بيانات "),
+              ),
+            RequestStatus.noInternentt => Container(),
+          },
         ),
       ),
     );

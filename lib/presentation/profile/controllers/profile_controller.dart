@@ -51,6 +51,25 @@ class MyProfileController extends GetxController {
     }
   }
 
+  Future<void> updaeProfile() async {
+    updateGetProfileStatus(RequestStatus.loading);
+    var response = await _repo.getMyProfile();
+    if (response.success) {
+      print(response.data);
+      prfoileResponse = ProfileResponse.fromJson(response.data);
+      phoneController =
+          TextEditingController(text: prfoileResponse!.data.phone ?? "لا يوجد");
+      nameController = TextEditingController(
+          text: prfoileResponse!.data.fullName ?? "لا يوجد");
+      addressController = TextEditingController(
+          text: prfoileResponse!.data.location ?? "لا يوجد");
+      updateGetProfileStatus(RequestStatus.success);
+    } else if (!response.success) {
+      updateLogOutStatus(RequestStatus.onError);
+      Get.snackbar("حدث خطأ", response.errorMessage!);
+    }
+  }
+
   Future<void> logOut() async {
     updateLogOutStatus(RequestStatus.loading);
     var response = await _repo.signOut();

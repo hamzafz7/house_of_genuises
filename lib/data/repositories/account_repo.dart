@@ -85,4 +85,24 @@ class AccountRepo {
       );
     }
   }
+
+  Future<AppResponse> updateProfile(int id, String number) async {
+    try {
+      final response = await ApiProvider.post(
+          url: "$updateProfileUrl/$id",
+          token: CacheProvider.getAppToken(),
+          body: {"phone": number});
+      return AppResponse(
+        errorMessage: null,
+        data: response.data,
+        success: true,
+      );
+    } on DioException catch (e) {
+      return AppResponse(
+        errorMessage: e.message ?? e.toString(),
+        data: null,
+        success: false,
+      );
+    }
+  }
 }
