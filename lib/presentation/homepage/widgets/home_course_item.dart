@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
-import 'package:house_of_genuises/presentation/course_details/pages/course_details_page.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -34,7 +34,7 @@ class HomeCourseItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.r),
               child: Image.network(
-                defPic,
+                courseModel.image ?? defPic,
                 height: 136.h,
                 width: 166.w,
                 fit: BoxFit.fill,
@@ -77,7 +77,7 @@ class HomeCourseItem extends StatelessWidget {
               child: SizedBox(
                 width: 150.w,
                 child: Text(
-                  'كورس دراسة الجدوى \nالاقتصادية',
+                  courseModel.name ?? "لا يوجد اسم لهذا الكورس",
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.bodyMedium,
                   maxLines: 3,
@@ -90,7 +90,8 @@ class HomeCourseItem extends StatelessWidget {
             ),
             CustomButton(
               onTap: () {
-                Get.to(() => const CourseDetailsPage());
+                Get.toNamed(AppRoute.courseDetailsPageRoute,
+                    arguments: courseModel);
               },
               height: 40.h,
               width: 110.w,

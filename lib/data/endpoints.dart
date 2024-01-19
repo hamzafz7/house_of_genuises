@@ -15,3 +15,4 @@ String newsUrl = "news/visible";
 // Categories:
 String categoriesUrl = "categories/visible";
 String coursesUrl = "courses/visible";
+String showCourseUrl = "courses/show";

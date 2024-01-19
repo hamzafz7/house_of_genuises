@@ -15,12 +15,12 @@ class CoursesModel {
 
 class CourseModel {
   final int id;
-  final String name;
-  final String image;
-  final String telegramChannelLink;
-  final bool isOpen;
-  final bool isVisible;
-  final bool isPaid;
+  final String? name;
+  final String? image;
+  final String? telegramChannelLink;
+  final bool? isOpen;
+  final bool? isVisible;
+  final bool? isPaid;
 
   CourseModel({
     required this.id,

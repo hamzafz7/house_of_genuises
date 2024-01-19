@@ -40,4 +40,22 @@ class CategoryRepository {
       );
     }
   }
+
+  Future<AppResponse> getCourseInfo(int id) async {
+    try {
+      var response = await ApiProvider.get(
+          url: "$showCourseUrl/$id", token: CacheProvider.getAppToken());
+      return AppResponse(
+        errorMessage: null,
+        data: response.data,
+        success: true,
+      );
+    } on DioException catch (e) {
+      return AppResponse(
+        errorMessage: e.message,
+        data: null,
+        success: false,
+      );
+    }
+  }
 }
