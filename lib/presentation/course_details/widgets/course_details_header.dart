@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
 
 class CourseDetailsHeader extends StatelessWidget {
   const CourseDetailsHeader({super.key, this.image, this.text});
@@ -16,13 +17,15 @@ class CourseDetailsHeader extends StatelessWidget {
         children: [
           SizedBox(
             width: Get.width,
-            child: Image.asset(
-              "assets/images/course_pic.png",
+            height: Get.height * 0.4,
+            child: Image.network(
+              image ?? defPic,
               fit: BoxFit.fill,
             ),
           ),
           SizedBox(
             width: Get.width,
+            height: Get.height * 0.4,
             child: Image.asset(
               "assets/images/grey_pic.png",
               fit: BoxFit.fill,
@@ -47,7 +50,7 @@ class CourseDetailsHeader extends StatelessWidget {
             child: SizedBox(
               width: 300.w,
               child: Text(
-                'كورس دراسة الجدوى الاقتصادية',
+                text ?? "لا يوجد اسم لهذا الكورس",
                 textAlign: TextAlign.right,
                 style: Theme.of(context)
                     .textTheme

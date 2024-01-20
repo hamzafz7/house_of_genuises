@@ -17,10 +17,7 @@ class CourseDefineTitle extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Text(titleName,
                 textAlign: TextAlign.right,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: kDarkBlueColor))),
+                style: Theme.of(context).textTheme.bodyMedium!)),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

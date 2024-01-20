@@ -9,7 +9,7 @@ class CustomNameText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
+      padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
       child: Text(name,
           textAlign: TextAlign.right,
           style: Theme.of(context)

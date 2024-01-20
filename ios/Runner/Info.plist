@@ -4,6 +4,10 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>Needed to access photos</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Needed to take pictures</string>
 	<key>CFBundleDisplayName</key>
 	<string>House Of Genuises</string>
 	<key>CFBundleExecutable</key>

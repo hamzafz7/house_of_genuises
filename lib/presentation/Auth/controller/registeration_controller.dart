@@ -52,6 +52,7 @@ class RegisterationController extends GetxController {
       Get.offAllNamed(AppRoute.mainPageRoute);
       uptateLoginRequestStatus(RequestStatus.success);
     } else {
+      print(response.errorMessage);
       uptateLoginRequestStatus(RequestStatus.onError);
       Get.snackbar("حدث خطأ", response.errorMessage!);
     }

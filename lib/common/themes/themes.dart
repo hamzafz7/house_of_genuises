@@ -62,34 +62,40 @@ var darkTheme = ThemeData(
     useMaterial3: true,
     textTheme: TextTheme(
       titleLarge: TextStyle(
+          letterSpacing: 0,
           fontSize: 48.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w400,
           color: Colors.white),
       titleMedium: TextStyle(
+          letterSpacing: 0,
           color: Colors.white,
           fontSize: 30.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w400),
       bodySmall: TextStyle(
           color: Colors.white,
+          letterSpacing: 0,
           fontSize: 12.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w500),
       bodyLarge: TextStyle(
           color: Colors.white,
+          letterSpacing: 0,
           fontSize: 24.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w400),
       bodyMedium: TextStyle(
           color: Colors.white,
           fontSize: 16.sp,
+          letterSpacing: 0,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w500),
       labelLarge: TextStyle(
         color: Colors.white,
         fontSize: 28.sp,
         fontFamily: 'Hacen Tunisia',
+        letterSpacing: 0,
         fontWeight: FontWeight.w400,
         height: 0,
       ),
@@ -98,6 +104,8 @@ var darkTheme = ThemeData(
         fontSize: 20.sp,
         fontFamily: 'Hacen Tunisia',
         fontWeight: FontWeight.w400,
+        letterSpacing: 0,
+
         // height: 0.07,
       ),
     ));

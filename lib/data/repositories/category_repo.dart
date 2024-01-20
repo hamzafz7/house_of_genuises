@@ -59,6 +59,24 @@ class CategoryRepository {
     }
   }
 
+  Future<AppResponse> getMyCourses(int id) async {
+    try {
+      var response = await ApiProvider.get(
+          url: "users/$id/courses", token: CacheProvider.getAppToken());
+      return AppResponse(
+        errorMessage: null,
+        data: response.data,
+        success: true,
+      );
+    } on DioException catch (e) {
+      return AppResponse(
+        errorMessage: e.message,
+        data: null,
+        success: false,
+      );
+    }
+  }
+
   Future<AppResponse> signInCourse(int id, String activationCode) async {
     try {
       var response = await ApiProvider.post(

@@ -1,6 +1,14 @@
 import 'package:house_of_genuises/data/models/chapter_model.dart';
 import 'package:house_of_genuises/data/models/value_of_course_modrel.dart';
 
+class CourseInfoResponse {
+  CourseInfoModel? course;
+  CourseInfoResponse.fromJson(Map<String, dynamic> json) {
+    course =
+        json['data'] != null ? CourseInfoModel.fromJson(json['data']) : null;
+  }
+}
+
 class CourseInfoModel {
   int? id;
   String? name;

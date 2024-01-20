@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 import 'package:house_of_genuises/presentation/my_courses/widgets/my_course_container.dart';
 import 'package:house_of_genuises/presentation/my_courses/widgets/my_courses_page_header.dart';
 
-class MyCoursesPage extends StatelessWidget {
+class MyCoursesPage extends GetView<MyCoursesController> {
   const MyCoursesPage({super.key});
-
   @override
   Widget build(BuildContext context) {
+    Get.put(MyCoursesController());
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -18,13 +20,6 @@ class MyCoursesPage extends StatelessWidget {
           const MyCoursesPageHeader(),
           SizedBox(
             height: 30.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SearchBar(
-              backgroundColor: MaterialStateColor.resolveWith(
-                  (states) => const Color(0xFFF1F1F1)),
-            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 28.w),

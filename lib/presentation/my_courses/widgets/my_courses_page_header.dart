@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class MyCoursesPageHeader extends StatelessWidget {
   const MyCoursesPageHeader({super.key});
@@ -21,7 +22,8 @@ class MyCoursesPageHeader extends StatelessWidget {
                       .textTheme
                       .bodyMedium!
                       .copyWith(color: kprimaryGreyColor)),
-              Text('طارق القاسم', style: Theme.of(context).textTheme.bodyLarge!)
+              Text(CacheProvider.getUserName() ?? "UnKnown",
+                  style: Theme.of(context).textTheme.bodyLarge!)
             ],
           ),
           const Spacer(),

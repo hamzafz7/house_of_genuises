@@ -30,13 +30,16 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                   children: [
                     ClipPath(
                         clipper: ContainerCustomClipper(),
-                        child: const CourseDetailsHeader()),
+                        child: CourseDetailsHeader(
+                          text: controller.courseInfoModel!.course!.name,
+                          image: controller.courseInfoModel!.course!.image,
+                        )),
                     CustomPickButton(),
                     SizedBox(
                       height: 40.h,
                     ),
                     Obx(() => controller.currentWidgetIndex.value == 0
-                        ? const CourseDescribtionWidget()
+                        ? CourseDescribtionWidget()
                         : const CourseCurriculum()),
                     SizedBox(
                       height: 10.h,

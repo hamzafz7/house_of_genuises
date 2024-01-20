@@ -53,6 +53,13 @@ class AppInterceptors extends Interceptor {
     } else if (err.response?.statusCode == 401) {
       if (Get.currentRoute != '/login') {
         Get.offAllNamed(AppRoute.loginPageRoute);
+      } else if (Get.currentRoute == '/login') {
+        return handler.next(
+          DioException(
+            requestOptions: err.requestOptions,
+            message: err.response?.data['message'] ?? " حدث خطأ ما",
+          ),
+        );
       }
     } else if (err.response?.statusCode == 422) {
       String? error = err.response?.data['message'] ?? "حدث خطأ ما ";

@@ -13,7 +13,7 @@ class CourseDetailsController extends GetxController {
   }
 
   CourseModel? _courseModel;
-  CourseInfoModel? courseInfoModel;
+  CourseInfoResponse? courseInfoModel;
 
   var getCourseInfoStatus = RequestStatus.begin.obs;
 
@@ -25,9 +25,10 @@ class CourseDetailsController extends GetxController {
   Future<void> getCourseInfo(int id) async {
     updateGetCourseInfo(RequestStatus.loading);
     var response = await _categoryRepository.getCourseInfo(id);
+    print(response.data);
     if (response.success) {
-      courseInfoModel = CourseInfoModel.fromJson(response.data);
-      if (courseInfoModel == null) {
+      courseInfoModel = CourseInfoResponse.fromJson(response.data);
+      if (courseInfoModel == null || courseInfoModel!.course == null) {
         updateGetCourseInfo(RequestStatus.noData);
       } else {
         updateGetCourseInfo(RequestStatus.success);

@@ -39,9 +39,12 @@ class CustomPickButton extends StatelessWidget {
                 child: Text(
                   "الوصف",
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: controller.currentWidgetIndex.value == 0
-                          ? Colors.white
-                          : kDarkBlueColor),
+                      color:
+                          //  controller.currentWidgetIndex.value == 0
+                          // ?
+                          Colors.white
+                      // : kDarkBlueColor
+                      ),
                 ),
               ),
             ),
@@ -61,9 +64,12 @@ class CustomPickButton extends StatelessWidget {
                 borderRadius: 13.r,
                 child: Text("المنهاج",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: controller.currentWidgetIndex.value == 1
-                            ? Colors.white
-                            : kDarkBlueColor)),
+                        color:
+                            //  controller.currentWidgetIndex.value == 1
+                            // ?
+                            Colors.white
+                        // : kDarkBlueColor
+                        )),
               ),
             )
           ],
