@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                         getPages: AppRoute.pages,
                         home: const SplashPage(),
                       )
-                    : SizedBox()));
+                    : const SizedBox()));
   }
 
   Future<bool> _isRealDevice() async {

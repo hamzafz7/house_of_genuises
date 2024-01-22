@@ -86,12 +86,14 @@ class AccountRepo {
     }
   }
 
-  Future<AppResponse> updateProfile(int id, String number) async {
+  Future<AppResponse> updateProfile(User user) async {
+    Map<String, dynamic> toJson = await user.updateUserToJSon();
+    print(toJson);
     try {
       final response = await ApiProvider.post(
-          url: "$updateProfileUrl/$id",
+          url: "$updateProfileUrl/${user.id}",
           token: CacheProvider.getAppToken(),
-          body: {"phone": number});
+          body: FormData.fromMap(toJson));
       return AppResponse(
         errorMessage: null,
         data: response.data,

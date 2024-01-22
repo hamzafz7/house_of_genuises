@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
@@ -230,6 +234,33 @@ class Utils {
       return "الهاتف المحمول يجب أن يكون من 10 أرقام ";
     } else {
       return null;
+    }
+  }
+
+  static Future<String?> imagePicker(ImageSource imageSource) async {
+    final pickedImage = await ImagePicker().pickImage(source: imageSource);
+    if (pickedImage != null) {
+      return pickedImage.path;
+    } else {
+      return null;
+    }
+  }
+
+  static Future<File?> compressImage(File file) async {
+    try {
+      final filePath = file.path;
+      final lastIndex = filePath.lastIndexOf(RegExp(r'.jp'));
+      final splitted = filePath.substring(0, (lastIndex));
+      final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+      var result = await FlutterImageCompress.compressAndGetFile(
+        file.absolute.path,
+        outPath,
+        quality: 88,
+      );
+
+      return File(result!.path);
+    } on CompressError catch (e) {
+      rethrow;
     }
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/utils/utils.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/profile/controllers/profile_controller.dart';
 import 'package:house_of_genuises/presentation/userinfo/widgets/profile_image_edit.dart';
 import 'package:house_of_genuises/presentation/userinfo/widgets/profile_text_feild.dart';
@@ -28,8 +30,9 @@ class UserInfoPage extends StatelessWidget {
             SizedBox(
               height: 20.h,
             ),
-            const ProfileImageEdit(),
-            Text('طارق القاسم', style: Theme.of(context).textTheme.bodyLarge),
+            ProfileImageEdit(),
+            Text(CacheProvider.getUserName() ?? "لا يوجد",
+                style: Theme.of(context).textTheme.bodyLarge),
             SizedBox(
               height: 30.h,
             ),
@@ -42,14 +45,24 @@ class UserInfoPage extends StatelessWidget {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      controller.changeIsEdit();
+                      if (controller.isEdited.value) {
+                        controller.changeIsEdit();
+                        controller.updateProfile();
+                      } else {
+                        controller.changeIsEdit();
+                      }
                     },
-                    child: Text('تعديل',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 14.sp,
-                            color: kprimaryBlueColor,
-                            decoration: TextDecoration.underline,
-                            decorationColor: kprimaryBlueColor)),
+                    child: Obx(
+                      () => Text(!controller.isEdited.value ? 'تعديل' : 'حفظ',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontSize: 14.sp,
+                                  color: kprimaryBlueColor,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: kprimaryBlueColor)),
+                    ),
                   )
                 ],
               ),
@@ -63,7 +76,7 @@ class UserInfoPage extends StatelessWidget {
                   titleText: "الاسم الكامل",
                   controller: controller.nameController,
                   onValidate: (val) {
-                    return null;
+                    return Utils.isFeildValidated(val?.trim());
                   }),
             ),
             SizedBox(
@@ -75,21 +88,21 @@ class UserInfoPage extends StatelessWidget {
                   titleText: "رقم الهاتف",
                   controller: controller.phoneController,
                   onValidate: (val) {
-                    return null;
+                    return Utils.isPhoneValidated(val?.trim());
                   }),
             ),
             SizedBox(
               height: 20.h,
             ),
-            Obx(
-              () => ProfileTextFeild(
-                  isEdited: controller.isEdited.value,
-                  titleText: "العنوان",
-                  controller: controller.addressController,
-                  onValidate: (val) {
-                    return null;
-                  }),
-            )
+            // Obx(
+            //   () => ProfileTextFeild(
+            //       isEdited: controller.isEdited.value,
+            //       titleText: "العنوان",
+            //       controller: controller.addressController,
+            //       onValidate: (val) {
+            //         return null;
+            //       }),
+            // )
           ]),
         ),
       ),

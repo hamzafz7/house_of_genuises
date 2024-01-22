@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class User {
@@ -47,6 +51,17 @@ class User {
       "password": password,
       "device_id": CacheProvider().getDeviceId(),
       "email": "hamzafz888@gmail.com"
+    };
+  }
+
+  Future<Map<String, dynamic>> updateUserToJSon() async {
+    return {
+      "full_name": fullName,
+      "phone": phone,
+      'image': image != null
+          ? await MultipartFile.fromFile(
+              (await Utils.compressImage(File(image!)))!.path)
+          : null
     };
   }
 }
