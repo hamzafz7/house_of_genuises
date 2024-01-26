@@ -19,6 +19,7 @@ class UserInfoPage extends StatelessWidget {
         text: "الملف الشخصي",
         onPressed: () {
           controller.isEdited.value = false;
+          controller.imagePicked.value = "";
           Get.back();
         },
       ),

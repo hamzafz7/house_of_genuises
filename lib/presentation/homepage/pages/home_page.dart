@@ -79,7 +79,7 @@ class HomePage extends GetView<HomeController> {
                           child: Text("لا يوجد بيانات"),
                         ),
                       RequestStatus.noInternentt => const Center(
-                          child: Text("لا يوجد اتصال بالاننرنت"),
+                          child: Text("لا يوجد اتصال بالانترنت"),
                         ),
                     }),
               ),
@@ -103,7 +103,7 @@ class HomePage extends GetView<HomeController> {
                         child: Text("لا يوجد بيانات"),
                       ),
                     RequestStatus.noInternentt => const Center(
-                        child: Text("لا يوجد اتصال بالاننرنت"),
+                        child: Text("لا يوجد اتصال بالانترنت"),
                       ),
                   }),
             ],

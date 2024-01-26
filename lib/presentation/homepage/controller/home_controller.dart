@@ -28,7 +28,7 @@ class HomeController extends GetxController {
   var categoriesStatus = RequestStatus.begin.obs;
   updateGetNewsStatus(RequestStatus status) => getNewsStatus.value = status;
 
-  var courseStatus = RequestStatus.loading.obs;
+  var courseStatus = RequestStatus.begin.obs;
   updatecourseStatus(RequestStatus status) => courseStatus.value = status;
   updateCategoriesStatus(RequestStatus status) =>
       categoriesStatus.value = status;
@@ -91,6 +91,7 @@ class HomeController extends GetxController {
       }
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
+        print("heelo from No Internet");
         updatecourseStatus(RequestStatus.noInternentt);
       } else {
         updatecourseStatus(RequestStatus.onError);

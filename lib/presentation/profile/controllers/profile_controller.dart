@@ -47,8 +47,8 @@ class MyProfileController extends GetxController {
     updateGetProfileStatus(RequestStatus.loading);
     var response = await _repo.getMyProfile();
     if (response.success) {
-      print(response.data);
       prfoileResponse = ProfileResponse.fromJson(response.data);
+      CacheProvider.setUserImage(prfoileResponse!.data.image);
       phoneController =
           TextEditingController(text: prfoileResponse!.data.phone ?? "لا يوجد");
       nameController = TextEditingController(
@@ -57,7 +57,11 @@ class MyProfileController extends GetxController {
           text: prfoileResponse!.data.location ?? "لا يوجد");
       updateGetProfileStatus(RequestStatus.success);
     } else if (!response.success) {
-      updateLogOutStatus(RequestStatus.onError);
+      if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
+        updateGetProfileStatus(RequestStatus.noInternentt);
+      } else {
+        updateGetProfileStatus(RequestStatus.onError);
+      }
       Get.snackbar("حدث خطأ", response.errorMessage!);
     }
   }
@@ -81,12 +85,9 @@ class MyProfileController extends GetxController {
           text: prfoileResponse!.data.fullName ?? "لا يوجد");
       addressController = TextEditingController(
           text: prfoileResponse!.data.location ?? "لا يوجد");
-
       Get.back();
-
       getMyProfile();
     } else {
-      print("zzzz");
       Get.snackbar(
           "حدث خطأ", response.errorMessage ?? "حدث خطأ في الاتصال مع الانترنت");
     }

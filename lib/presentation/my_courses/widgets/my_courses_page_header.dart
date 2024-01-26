@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/data/endpoints.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class MyCoursesPageHeader extends StatelessWidget {
@@ -28,13 +29,21 @@ class MyCoursesPageHeader extends StatelessWidget {
           ),
           const Spacer(),
           ClipRRect(
-              borderRadius: BorderRadius.circular(50.r),
-              child: CachedNetworkImage(
-                imageUrl:
-                    "https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1702746365~exp=1702746965~hmac=d69d2e417b17c8e24a04eabd7a5d0ca923eb3a5806a83f576d1f19f0da10318f",
+            borderRadius: BorderRadius.circular(50.r),
+            child: Container(
                 height: 50.h,
                 width: 50.w,
-              ))
+                decoration:
+                    BoxDecoration(border: Border.all(color: kprimaryBlueColor)),
+                child: CachedNetworkImage(
+                  imageUrl: CacheProvider.getUserImage() != null
+                      ? imagebaseUrl + CacheProvider.getUserImage()
+                      : "https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1702746365~exp=1702746965~hmac=d69d2e417b17c8e24a04eabd7a5d0ca923eb3a5806a83f576d1f19f0da10318f",
+                  height: 50.h,
+                  width: 50.w,
+                  fit: BoxFit.fill,
+                )),
+          )
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:house_of_genuises/data/endpoints.dart';
 import 'package:house_of_genuises/data/models/app_response.dart';
@@ -80,6 +82,13 @@ class AccountRepo {
     } on DioException catch (e) {
       return AppResponse(
         errorMessage: e.message ?? e.toString(),
+        data: null,
+        success: false,
+      );
+    } on HttpException catch (e) {
+      print("sssssss");
+      return AppResponse(
+        errorMessage: e.message,
         data: null,
         success: false,
       );

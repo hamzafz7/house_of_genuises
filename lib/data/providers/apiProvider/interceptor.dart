@@ -29,6 +29,7 @@ class AppInterceptors extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     debugPrint("response is getting");
+    print(response.statusCode);
 
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
@@ -36,13 +37,29 @@ class AppInterceptors extends Interceptor {
           requestOptions: response.requestOptions,
           message: "لا يوجد اتصال بالانترنت"));
     }
-
-    // if (response.statusCode == 401) {}
-    return handler.next(response);
+    if (!response.requestOptions.persistentConnection) {
+      return handler.reject(DioException(
+          requestOptions: response.requestOptions,
+          message: "لا يوجد اتصال بالانترنت"));
+    }
+    if (response.statusCode != 200 &&
+        response.statusCode != 201 &&
+        response.statusCode != 401 &&
+        response.statusCode != 403 &&
+        response.statusCode != 422) {
+      handler.reject(DioException(
+          requestOptions: response.requestOptions,
+          message: "لا يوجد اتصال بالانترنت"));
+    } else {
+      return handler.next(response);
+    }
   }
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.type == DioExceptionType.connectionError) {
+      print('Connection aborted');
+    }
     if (err.message == "لا يوجد اتصال بالانترنت") {
       return handler.next(
         DioException(

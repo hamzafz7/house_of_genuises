@@ -37,6 +37,14 @@ class CacheProvider {
     return _getStorage.read("id");
   }
 
+  static setUserImage(String? image) {
+    _getStorage.write("image", image);
+  }
+
+  static getUserImage() {
+    return _getStorage.read("image");
+  }
+
   static setAppToken(String val) {
     _getStorage.write("token", val);
   }

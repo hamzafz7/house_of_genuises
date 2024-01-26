@@ -39,6 +39,7 @@ class ApiProvider {
       'Accept': 'application/json',
       'Authorization': token != "" ? " Bearer $token" : "",
     };
+
     return await dio!.get(url, queryParameters: query);
   }
 

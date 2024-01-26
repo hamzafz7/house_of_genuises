@@ -28,13 +28,13 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'],
-      fullName: json['full_name'],
-      email: json['email'],
-      phone: json['phone'],
-      isBlocked: json['is_blocked'],
-      type: json['type'],
-    );
+        id: json['id'],
+        fullName: json['full_name'],
+        email: json['email'],
+        phone: json['phone'],
+        isBlocked: json['is_blocked'],
+        type: json['type'],
+        image: json['image']);
   }
   Map<String, dynamic> loginUserToJson() {
     return {

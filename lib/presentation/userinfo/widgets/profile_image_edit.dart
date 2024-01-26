@@ -18,7 +18,7 @@ class ProfileImageEdit extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
-          SizedBox(height: 130.h, child: const MyProfileImage()),
+          SizedBox(height: 125.h, child: MyProfileImage()),
           IconButton(
               onPressed: () {
                 if (!controller.isEdited.value) {

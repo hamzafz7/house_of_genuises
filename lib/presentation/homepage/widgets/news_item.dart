@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
@@ -25,8 +26,8 @@ class NewsItem extends StatelessWidget {
             ),
           ),
           child: Column(children: [
-            Image.network(
-              model.image ?? defPic,
+            CachedNetworkImage(
+              imageUrl: model.image ?? defPic,
               height: 157.h,
               width: 211.w,
               fit: BoxFit.cover,
