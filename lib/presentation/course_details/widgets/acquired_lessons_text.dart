@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/data/models/value_of_course_modrel.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class AcquiredLessonsText extends StatelessWidget {
   const AcquiredLessonsText({super.key, required this.lesson});
-  final String lesson;
+  final ValueOfCourse lesson;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +20,17 @@ class AcquiredLessonsText extends StatelessWidget {
           SizedBox(
             width: 5.w,
           ),
-          Text(
-            lesson,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: kprimaryGreyColor, fontSize: 14.sp),
+          SizedBox(
+            width: 300.w,
+            child: Text(
+              lesson.value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: kprimaryGreyColor, fontSize: 14.sp),
+            ),
           )
         ],
       ),

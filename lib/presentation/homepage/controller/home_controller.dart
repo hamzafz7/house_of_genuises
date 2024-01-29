@@ -34,7 +34,6 @@ class HomeController extends GetxController {
       categoriesStatus.value = status;
   final HomeRepository _homeRepository = HomeRepository();
   final CategoryRepository _categoryRepository = CategoryRepository();
-
   Future<void> getNews() async {
     updateGetNewsStatus(RequestStatus.loading);
     var response = await _homeRepository.getNews();
@@ -44,6 +43,7 @@ class HomeController extends GetxController {
         updateGetNewsStatus(RequestStatus.noData);
       } else {
         updateGetNewsStatus(RequestStatus.success);
+        print("from News: ${response.data}");
       }
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {

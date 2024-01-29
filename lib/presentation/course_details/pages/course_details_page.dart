@@ -40,7 +40,7 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                     ),
                     Obx(() => controller.currentWidgetIndex.value == 0
                         ? CourseDescribtionWidget()
-                        : const CourseCurriculum()),
+                        : CourseCurriculum()),
                     SizedBox(
                       height: 10.h,
                     ),

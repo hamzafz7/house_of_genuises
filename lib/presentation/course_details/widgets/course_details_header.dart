@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 
 class CourseDetailsHeader extends StatelessWidget {
   const CourseDetailsHeader({super.key, this.image, this.text});
@@ -18,9 +20,16 @@ class CourseDetailsHeader extends StatelessWidget {
           SizedBox(
             width: Get.width,
             height: Get.height * 0.4,
-            child: Image.network(
-              image ?? defPic,
+            child: CachedNetworkImage(
+              imageUrl: image ?? defPic,
               fit: BoxFit.fill,
+              placeholder: (context, url) {
+                return ShimmerPlaceholder(
+                    child: Container(
+                  height: Get.height * 0.4,
+                  color: Colors.black,
+                ));
+              },
             ),
           ),
           SizedBox(

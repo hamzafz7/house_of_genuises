@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 import 'package:house_of_genuises/data/models/news_model.dart';
 
 class NewsItem extends StatelessWidget {
@@ -31,11 +32,18 @@ class NewsItem extends StatelessWidget {
               height: 157.h,
               width: 211.w,
               fit: BoxFit.cover,
+              placeholder: (context, url) {
+                return ShimmerPlaceholder(
+                    child: Container(
+                  height: 157.h,
+                  color: Colors.black,
+                ));
+              },
             ),
             SizedBox(
                 width: 211.w,
                 child: Text(
-                  model.news ?? "لا يوجد",
+                  model.news ?? "",
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelSmall,

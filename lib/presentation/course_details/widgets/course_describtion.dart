@@ -6,7 +6,6 @@ import 'package:house_of_genuises/presentation/course_details/widgets/acquired_l
 import 'package:house_of_genuises/presentation/course_details/widgets/chapter_name.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_def_title.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/custom_name_text.dart';
-import 'package:house_of_genuises/presentation/course_details/widgets/main_requirment_text.dart';
 
 // ignore: must_be_immutable
 class CourseDescribtionWidget extends StatelessWidget {
@@ -31,21 +30,31 @@ class CourseDescribtionWidget extends StatelessWidget {
               name: controller.courseInfoModel!.course!.teachers![index]),
         ),
         CourseDefineTitle(titleName: "الفصول الرئيسية ", width: 145.w),
-        const ChapterName(),
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.courseInfoModel!.course!.chapters!.length,
+          itemBuilder: (context, index) => ChapterName(
+              chapterModel:
+                  controller.courseInfoModel!.course!.chapters![index]),
+        ),
         SizedBox(
           height: 15.h,
         ),
         CourseDefineTitle(titleName: "ماذا سوف نتعلم ؟ ", width: 170.w),
-        const AcquiredLessonsText(
-            lesson: "مجموعة الدالات الحسابية والرياضية المستخدمة"),
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.courseInfoModel!.course!.valuesOfCourse!.length,
+          itemBuilder: (context, index) => AcquiredLessonsText(
+              lesson:
+                  controller.courseInfoModel!.course!.valuesOfCourse![index]),
+        ),
         SizedBox(
           height: 15.h,
         ),
-        CourseDefineTitle(titleName: "المتطلبات الرئيسية", width: 145.w),
-        SizedBox(
-          height: 15.h,
-        ),
-        const MainRequirementText(name: "ما هي مستويات الإطار الفهمي")
       ],
     );
   }

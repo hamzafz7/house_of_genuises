@@ -32,15 +32,15 @@ class CourseInfoModel {
     isPaid = json['is_paid'];
     totalTime = json['total_time'];
     teachers =
-        json['teachers'] != null ? List<String>.from(json['teachers']) : null;
+        json['teachers'] != null ? List<String>.from(json['teachers']) : [];
     chapters = json['chapters'] != null
         ? List<ChapterModel>.from(
             json['chapters'].map((e) => ChapterModel.formJson(e)))
-        : null;
+        : [];
     valuesOfCourse = json['values_of_course'] != null
         ? List<ValueOfCourse>.from(
             json['values_of_course'].map((e) => ValueOfCourse.fromJson(e)))
-        : null;
+        : [];
     message = json['message'];
   }
 }

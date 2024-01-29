@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
@@ -20,114 +21,125 @@ class MyProfilePage extends GetView<MyProfileController> {
   Widget build(BuildContext context) {
     Get.put(MyProfileController());
     return Scaffold(
-      body: SingleChildScrollView(
-          child: Column(children: [
-        const MyProfileHeader(),
-        SizedBox(
-          height: 25.h,
-        ),
-        Obx(
-          () => controller.getProfileStatus.value == RequestStatus.loading
-              ? Center(
-                  child: appCircularProgress(),
-                )
-              : controller.getProfileStatus.value == RequestStatus.onError
-                  ? const Center(
-                      child: Text("حدث خطأ"),
-                    )
-                  : controller.getProfileStatus.value ==
-                          RequestStatus.noInternentt
-                      ? const Center(
-                          child: Text("لا يوجد اتصال في الإننرنت"),
-                        )
-                      : Column(
-                          children: [
-                            MyProfileImage(),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Text(CacheProvider.getUserName() ?? " ",
-                                style: Theme.of(context).textTheme.bodyLarge),
-                            SizedBox(
-                              height: 45.h,
-                            ),
-                            ProfileListItem(
-                                svgUrl: "assets/icons/person.svg",
-                                onTap: () {
-                                  Get.toNamed(AppRoute.userInfoPageRoute);
-                                },
-                                text: "الملف الشخصي"),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            ProfileListItem(
-                                svgUrl: "assets/icons/settings.svg",
-                                onTap: () {
-                                  Get.toNamed(AppRoute.settingsPageRoute);
-                                },
-                                text: "الإعدادات"),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            Obx(
-                              () => controller.logOutStatus.value ==
-                                      RequestStatus.loading
-                                  ? appCircularProgress()
-                                  : ProfileListItem(
-                                      svgUrl: "assets/icons/log-out.svg",
+      body: RefreshIndicator(
+        color: kprimaryBlueColor,
+        onRefresh: () async {
+          controller.getMyProfile();
+        },
+        child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(children: [
+              const MyProfileHeader(),
+              SizedBox(
+                height: 25.h,
+              ),
+              Obx(
+                () => controller.getProfileStatus.value == RequestStatus.loading
+                    ? Center(
+                        child: appCircularProgress(),
+                      )
+                    : controller.getProfileStatus.value == RequestStatus.onError
+                        ? const Center(
+                            child: Text("حدث خطأ"),
+                          )
+                        : controller.getProfileStatus.value ==
+                                RequestStatus.noInternentt
+                            ? const Center(
+                                child: Text("لا يوجد اتصال في الإننرنت"),
+                              )
+                            : Column(
+                                children: [
+                                  MyProfileImage(),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(CacheProvider.getUserName() ?? " ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge),
+                                  SizedBox(
+                                    height: 45.h,
+                                  ),
+                                  ProfileListItem(
+                                      svgUrl: "assets/icons/person.svg",
                                       onTap: () {
-                                        CustomDialog(context,
-                                            child: LogOutDialog(onPressed: () {
-                                          controller.logOut();
-
-                                          Get.back();
-                                        }), height: 250, width: 390);
+                                        Get.toNamed(AppRoute.userInfoPageRoute);
                                       },
-                                      text: "تسجيل الخروج"),
-                            ),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            Row(
-                              children: [
-                                ProfileListItem(
-                                    svgUrl: "assets/icons/sun.svg",
-                                    onTap: () {},
-                                    text: "السطوع"),
-                                const Spacer(),
-                                GetBuilder(
-                                    init: ThemeController(),
-                                    builder: (cnt) {
-                                      return Switch.adaptive(
-                                          activeColor: Colors.blue,
-                                          inactiveThumbColor: Colors.blue,
-                                          trackOutlineColor:
-                                              MaterialStateProperty.resolveWith(
-                                                  (states) => Colors.blue),
-                                          value: controller.isEdited.value ==
-                                              ThemeMode.dark,
-                                          onChanged: (val) {
-                                            cnt.switchTheme();
-                                            Get.changeThemeMode(
-                                                cnt.currentTheme);
-                                          });
-                                    }),
-                                SizedBox(
-                                  width: 40.w,
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            ProfileListItem(
-                                svgUrl: "assets/icons/x.svg",
-                                onTap: () {},
-                                text: "حذف الحساب")
-                          ],
-                        ),
-        ),
-      ])),
+                                      text: "الملف الشخصي"),
+                                  SizedBox(
+                                    height: 30.h,
+                                  ),
+                                  ProfileListItem(
+                                      svgUrl: "assets/icons/settings.svg",
+                                      onTap: () {
+                                        Get.toNamed(AppRoute.settingsPageRoute);
+                                      },
+                                      text: "الإعدادات"),
+                                  SizedBox(
+                                    height: 30.h,
+                                  ),
+                                  Obx(
+                                    () => controller.logOutStatus.value ==
+                                            RequestStatus.loading
+                                        ? appCircularProgress()
+                                        : ProfileListItem(
+                                            svgUrl: "assets/icons/log-out.svg",
+                                            onTap: () {
+                                              CustomDialog(context, child:
+                                                  LogOutDialog(onPressed: () {
+                                                controller.logOut();
+
+                                                Get.back();
+                                              }), height: 250, width: 390);
+                                            },
+                                            text: "تسجيل الخروج"),
+                                  ),
+                                  SizedBox(
+                                    height: 30.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      ProfileListItem(
+                                          svgUrl: "assets/icons/sun.svg",
+                                          onTap: () {},
+                                          text: "السطوع"),
+                                      const Spacer(),
+                                      GetBuilder(
+                                          init: ThemeController(),
+                                          builder: (cnt) {
+                                            return Switch.adaptive(
+                                                activeColor: Colors.blue,
+                                                inactiveThumbColor: Colors.blue,
+                                                trackOutlineColor:
+                                                    MaterialStateProperty
+                                                        .resolveWith((states) =>
+                                                            Colors.blue),
+                                                value:
+                                                    controller.isEdited.value ==
+                                                        ThemeMode.dark,
+                                                onChanged: (val) {
+                                                  cnt.switchTheme();
+                                                  Get.changeThemeMode(
+                                                      cnt.currentTheme);
+                                                });
+                                          }),
+                                      SizedBox(
+                                        width: 40.w,
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 30.h,
+                                  ),
+                                  ProfileListItem(
+                                      svgUrl: "assets/icons/x.svg",
+                                      onTap: () {},
+                                      text: "حذف الحساب")
+                                ],
+                              ),
+              ),
+            ])),
+      ),
     );
   }
 }

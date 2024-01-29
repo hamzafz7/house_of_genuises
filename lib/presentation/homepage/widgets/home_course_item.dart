@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
@@ -39,6 +40,20 @@ class HomeCourseItem extends StatelessWidget {
                 height: 136.h,
                 width: 166.w,
                 fit: BoxFit.fill,
+                placeholder: (context, string) {
+                  return ShimmerPlaceholder(
+                      child: Container(
+                    height: 136.h,
+                    color: Colors.black,
+                  ));
+                },
+                errorWidget: (context, url, obj) {
+                  return ShimmerPlaceholder(
+                      child: Container(
+                    height: 136.h,
+                    color: Colors.black,
+                  ));
+                },
               ),
             ),
             SizedBox(

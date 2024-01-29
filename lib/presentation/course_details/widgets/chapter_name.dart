@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/data/models/chapter_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class ChapterName extends StatelessWidget {
-  const ChapterName({super.key});
-
+  const ChapterName({super.key, this.chapterModel});
+  final ChapterModel? chapterModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,29 +14,36 @@ class ChapterName extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "01",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: kprimaryGreyColor),
-          ),
+          // Text(
+          //   "01",
+          //   style: Theme.of(context)
+          //       .textTheme
+          //       .bodyMedium!
+          //       .copyWith(color: kprimaryGreyColor),
+          // ),
+          Container(
+              height: 10.h,
+              width: 10.w,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: !CacheProvider.getAppTheme()
+                      ? Colors.black
+                      : Colors.white)),
           SizedBox(
             width: 5.w,
           ),
-          Text(
-            "البحث الأول :",
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+
           SizedBox(
-            width: 5.w,
-          ),
-          Text(
-            "مدخل إلى علم الإقتصاد",
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: kprimaryGreyColor),
+            width: 300.w,
+            child: Text(
+              chapterModel!.name ?? "لا يوجد اسم لهذا الفصل",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: kprimaryGreyColor),
+            ),
           )
         ],
       ),
