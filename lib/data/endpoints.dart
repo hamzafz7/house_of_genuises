@@ -1,4 +1,4 @@
-String baseUrl = "https://houseofgeniuses.tech/api/v1/";
+String baseUrl = "https://api.houseofgeniuses.tech/api/v1/";
 String imagebaseUrl = "https://houseofgeniuses.tech";
 
 // Registeration :

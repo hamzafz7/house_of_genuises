@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:house_of_genuises/common/routes/app_routes.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/repositories/account_repo.dart';
 import '../../endpoints.dart';
 
@@ -42,11 +43,12 @@ class AppInterceptors extends Interceptor {
           requestOptions: response.requestOptions,
           message: "لا يوجد اتصال بالانترنت"));
     }
-    if (response.statusCode != 200 &&
-        response.statusCode != 201 &&
-        response.statusCode != 401 &&
-        response.statusCode != 403 &&
-        response.statusCode != 422) {
+    if ((response.statusCode != 200 &&
+            response.statusCode != 201 &&
+            response.statusCode != 401 &&
+            response.statusCode != 403 &&
+            response.statusCode != 422) ||
+        response.statusCode == null) {
       handler.reject(DioException(
           requestOptions: response.requestOptions,
           message: "لا يوجد اتصال بالانترنت"));
@@ -57,9 +59,6 @@ class AppInterceptors extends Interceptor {
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.type == DioExceptionType.connectionError) {
-      print('Connection aborted');
-    }
     if (err.message == "لا يوجد اتصال بالانترنت") {
       return handler.next(
         DioException(
@@ -67,6 +66,24 @@ class AppInterceptors extends Interceptor {
           message: "لا يوجد اتصال في الانترنت",
         ),
       );
+    } else if (err.response?.statusCode == 404) {
+      if (Get.currentRoute != '/login') {
+        CacheProvider.clearAppToken();
+        Get.offAllNamed(AppRoute.loginPageRoute);
+        return handler.next(
+          DioException(
+            requestOptions: err.requestOptions,
+            message: "هذا الحساب لم يعد موجود",
+          ),
+        );
+      } else if (Get.currentRoute == '/login') {
+        return handler.next(
+          DioException(
+            requestOptions: err.requestOptions,
+            message: "هذا الحساب غير موجود",
+          ),
+        );
+      }
     } else if (err.response?.statusCode == 401) {
       if (Get.currentRoute != '/login') {
         Get.offAllNamed(AppRoute.loginPageRoute);

@@ -22,6 +22,7 @@ void main() async {
   } else {
     runApp(const MyApp());
   }
+  // runApp(MyAppTest());
 }
 
 Future<void> secureScreen() async {
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
                             : ThemeMode.light,
                         locale: const Locale('ar'),
                         getPages: AppRoute.pages,
-                        home: const SplashPage(),
+                        home: SplashPage(),
                       )
                     : const SizedBox()));
   }

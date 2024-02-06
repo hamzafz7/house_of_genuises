@@ -1,11 +1,12 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/homepage/controller/home_controller.dart';
+import 'package:house_of_genuises/presentation/homepage/widgets/custom_search_bar.dart';
 import 'package:house_of_genuises/presentation/homepage/widgets/news_item.dart';
 
 // ignore: must_be_immutable
@@ -17,34 +18,39 @@ class HomeStackHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: !CacheProvider.getAppTheme()
-                  ? [kprimaryBlueColor, Colors.white]
-                  : [
-                      const Color.fromARGB(255, 12, 25, 36),
-                      const Color.fromARGB(255, 16, 79, 131)
-                    ])),
-      height: Get.height / 1.5,
+          color: CacheProvider.getAppTheme()
+              ? const Color.fromARGB(255, 7, 37, 61)
+              : Colors.white),
+      height: Get.height / 1.65,
       width: Get.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 0.0.h, horizontal: 14.w),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.search),
-                  )),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.0.h, horizontal: 14.w),
+                    child: Text(
+                      "مرحباً",
+                      style: Theme.of(context).textTheme.labelLarge,
+                    )),
+                Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.0.h, horizontal: 20.w),
+                    child: Text(CacheProvider.getUserName() ?? "",
+                        style: Theme.of(context).textTheme.labelLarge)),
+              ]),
               const Spacer(),
               Padding(
                 padding:
-                    EdgeInsets.symmetric(vertical: 10.0.h, horizontal: 14.w),
+                    EdgeInsets.symmetric(vertical: 14.0.h, horizontal: 14.w),
                 child: Image.asset(
                   "assets/images/logo.png",
                   height: 45.h,
@@ -53,39 +59,11 @@ class HomeStackHeader extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: const Divider(),
-          ),
-          SizedBox(height: 10.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.w),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                      text: 'ابحث وستجد ',
-                      style: Theme.of(context).textTheme.labelLarge),
-                  TextSpan(
-                      text: 'أهم\n',
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: ksecondaryColor)),
-                  TextSpan(
-                      text: ' الكورسات والدورات المثالية لك! ',
-                      style: Theme.of(context).textTheme.labelLarge),
-                ],
-              ),
-              textAlign: TextAlign.right,
-            ),
-          ),
           SizedBox(
-            height: 10.h,
+            height: 20.h,
           ),
-          SizedBox(
-            height: 10.h,
-          ),
+          const Center(child: CustomSearchBar()),
+          SizedBox(height: 20.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.w),
             child: Text('أخر الأخبار',
@@ -93,16 +71,24 @@ class HomeStackHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.labelLarge),
           ),
           SizedBox(
-            height: 20.h,
-          ),
-          SizedBox(
-            height: 215.h,
+            height: 250.h,
             child: Obx(() => switch (controller.getNewsStatus.value) {
-                  RequestStatus.success => ListView.builder(
+                  RequestStatus.success => Swiper(
+                      viewportFraction: 0.8,
+                      scale: 0.9,
+                      loop: true,
+                      indicatorLayout: PageIndicatorLayout.SCALE,
+                      itemHeight: 300.h,
+                      itemWidth: 350.w,
+                      layout: SwiperLayout.DEFAULT,
+                      autoplay: true,
                       itemCount: controller.newsResponse!.news.length,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => NewsItem(
-                          model: controller.newsResponse!.news[index])),
+                      itemBuilder: (context, index) => Padding(
+                            padding: EdgeInsets.all(8.0.r),
+                            child: NewsItem(
+                                model: controller.newsResponse!.news[index]),
+                          )),
                   RequestStatus.begin => Container(),
                   RequestStatus.loading => Center(
                       child: appCircularProgress(),
