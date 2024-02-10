@@ -60,6 +60,7 @@ dependencies:
   vimeo_player_flutter: ^0.1.0
   webview_flutter: ^4.5.0
   flutter_cached_pdfview: ^0.4.2
+  flutter_tex: any
 
 dev_dependencies:
   flutter_test:
