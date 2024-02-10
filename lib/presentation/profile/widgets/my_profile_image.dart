@@ -24,7 +24,7 @@ class MyProfileImage extends StatelessWidget {
         border: Border.all(color: kprimaryBlueColor),
       ),
       child: Padding(
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.all(4.r),
         child: Obx(
           () => ClipRRect(
             borderRadius: BorderRadius.circular(64.r),
@@ -39,7 +39,7 @@ class MyProfileImage extends StatelessWidget {
                     imageUrl: controller.prfoileResponse!.data.image != null
                         ? imagebaseUrl + controller.prfoileResponse!.data.image!
                         : "https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1702746365~exp=1702746965~hmac=d69d2e417b17c8e24a04eabd7a5d0ca923eb3a5806a83f576d1f19f0da10318f",
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.fill,
                   ),
           ),
         ),

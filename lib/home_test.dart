@@ -41,7 +41,7 @@ class _HomeTestState extends State<HomeTest> {
               if (savedVideoPaths.isNotEmpty) {
                 print("zzz");
                 Get.to(VideoPlayerScreen(
-                  videoPath: savedVideoPaths[0],
+                  videoPath: savedVideoPaths[1],
                 ));
               }
             },

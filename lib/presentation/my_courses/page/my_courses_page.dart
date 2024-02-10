@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 import 'package:house_of_genuises/presentation/my_courses/widgets/my_course_container.dart';
@@ -50,11 +52,30 @@ class MyCoursesPage extends GetView<MyCoursesController> {
             ],
           ),
           Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) => const MyCourseCotainer()),
+            child: Obx(() => switch (controller.getMyCoursesStatus.value) {
+                  RequestStatus.success => ListView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: controller.model!.courses!.length,
+                      itemBuilder: (context, index) => MyCourseCotainer(
+                            courseModel: controller.model!.courses![index],
+                          )),
+                  RequestStatus.loading => Center(
+                      child: appCircularProgress(),
+                    ),
+                  RequestStatus.noData => const Center(
+                      child: Text("لا يوجد بيانات"),
+                    ),
+                  RequestStatus.onError => const Center(
+                      child: Text(" حدث خطأ"),
+                    ),
+                  RequestStatus.begin => const Center(
+                      child: Text(""),
+                    ),
+                  RequestStatus.noInternentt => const Center(
+                      child: Text("لا يوجد اتصال بالشبكة"),
+                    ),
+                }),
           ),
         ],
       ),

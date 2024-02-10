@@ -7,7 +7,7 @@ CustomDialog(context,
   return showDialog(
     context: context,
     builder: (context) => Dialog(
-        surfaceTintColor: Colors.transparent,
+        surfaceTintColor: const Color.fromARGB(0, 250, 206, 206),
 
         // contentPadding: EdgeInsets.zero,
         // title: "",

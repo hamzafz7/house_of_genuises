@@ -8,6 +8,28 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class Utils {
+  static void logPrint(Object? object) async {
+    int defaultPrintLength = 1020;
+    if (object == null || object.toString().length <= defaultPrintLength) {
+      print(object);
+    } else {
+      String log = object.toString();
+      int start = 0;
+      int endIndex = defaultPrintLength;
+      int logLength = log.length;
+      int tmpLogLength = log.length;
+      while (endIndex < logLength) {
+        print(log.substring(start, endIndex));
+        endIndex += defaultPrintLength;
+        start += defaultPrintLength;
+        tmpLogLength -= defaultPrintLength;
+      }
+      if (tmpLogLength > 0) {
+        print(log.substring(start, logLength));
+      }
+    }
+  }
+
   static bool isUrl(String text) {
     final isUrl = Uri.tryParse(text);
     return isUrl != null;
@@ -260,6 +282,7 @@ class Utils {
 
       return File(result!.path);
     } on CompressError catch (e) {
+      print(e);
       rethrow;
     }
   }

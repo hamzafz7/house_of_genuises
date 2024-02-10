@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/profile/controllers/profile_controller.dart';
@@ -47,6 +49,7 @@ class UserInfoPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       if (controller.isEdited.value) {
+                        print("caaaaaa");
                         controller.changeIsEdit();
                         controller.updateProfile();
                       } else {
@@ -54,15 +57,18 @@ class UserInfoPage extends StatelessWidget {
                       }
                     },
                     child: Obx(
-                      () => Text(!controller.isEdited.value ? 'تعديل' : 'حفظ',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  fontSize: 14.sp,
-                                  color: kprimaryBlueColor,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: kprimaryBlueColor)),
+                      () => controller.updateProfileStatus.value ==
+                              RequestStatus.loading
+                          ? appCircularProgress()
+                          : Text(!controller.isEdited.value ? 'تعديل' : 'حفظ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      fontSize: 14.sp,
+                                      color: kprimaryBlueColor,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: kprimaryBlueColor)),
                     ),
                   )
                 ],

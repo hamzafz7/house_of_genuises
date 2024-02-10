@@ -11,8 +11,7 @@ class MyAppTest extends StatefulWidget {
 }
 
 class MyAppState extends State<MyAppTest> {
-  final imgUrl =
-      "https://player.vimeo.com/video/463902394?title=0&portrait=0&byline=0&autoplay=1&muted=true";
+  final imgUrl = "https://vimeo.com/902521231?share=copy";
   bool downloading = false;
   var progressString = "";
 
@@ -29,18 +28,17 @@ class MyAppState extends State<MyAppTest> {
     try {
       var dir = await getApplicationDocumentsDirectory();
 
-      print("path ${dir.path}");
       await dio.download(imgUrl, "${dir.path}/demo2.mp4",
           onReceiveProgress: (rec, total) {
         print("Rec: $rec , Total: $total");
-
+        print("zzzz");
         setState(() {
           downloading = true;
           progressString = ((rec / total) * 100).toStringAsFixed(0) + "%";
         });
       });
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
 
     setState(() {

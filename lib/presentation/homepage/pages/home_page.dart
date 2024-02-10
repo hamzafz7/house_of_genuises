@@ -24,6 +24,7 @@ class HomePage extends GetView<HomeController> {
         },
         child: Scaffold(
           body: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -79,13 +80,12 @@ class HomePage extends GetView<HomeController> {
                         RequestStatus.loading => Center(
                             child: appCircularProgress(),
                           ),
-                        RequestStatus.onError => const SizedBox(
-                            height: 70,
-                            child: Text("حدث خطأ"),
+                        RequestStatus.onError => const Center(
+                            child: SizedBox(height: 70, child: Text("حدث خطأ")),
                           ),
-                        RequestStatus.noData => const SizedBox(
-                            height: 70,
-                            child: Text("لا يوجد بيانات"),
+                        RequestStatus.noData => const Center(
+                            child: SizedBox(
+                                height: 70, child: Text("لا يوجد بيانات")),
                           ),
                         RequestStatus.noInternentt => const Center(
                             child: Text("لا يوجد اتصال بالانترنت"),
