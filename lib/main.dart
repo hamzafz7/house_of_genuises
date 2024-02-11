@@ -22,7 +22,6 @@ void main() async {
   } else {
     runApp(const MyApp());
   }
-  // runApp(MyAppTest());
 }
 
 Future<void> secureScreen() async {

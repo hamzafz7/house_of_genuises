@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final String videoPath;
+  final String? videoPath;
 
-  VideoPlayerScreen({required this.videoPath});
+  VideoPlayerScreen({this.videoPath});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -19,7 +19,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.file(File(widget.videoPath),
+    _controller = VideoPlayerController.file(
+        File(
+            '/data/user/0/com.example.house_of_genuises/app_flutter/test3.mp4'),
         videoPlayerOptions: VideoPlayerOptions(
             mixWithOthers: true, allowBackgroundPlayback: true));
     _initializeVideoPlayerFuture = _controller.initialize();
