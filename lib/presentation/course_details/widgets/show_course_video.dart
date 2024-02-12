@@ -15,8 +15,7 @@ class _ShowCourseVideoState extends State<ShowCourseVideo> {
   @override
   void initState() {
     webViewController = WebViewController()
-      ..loadRequest(Uri.parse(
-          'https://api.houseofgeniuses.tech/api/watch//videos/902709114'))
+      ..loadRequest(Uri.parse(widget.video!))
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
     super.initState();
   }

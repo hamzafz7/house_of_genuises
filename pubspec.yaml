@@ -60,6 +60,7 @@ dependencies:
   flutter_cached_pdfview: ^0.4.2
   flutter_math_fork: any
   webview_flutter: ^4.7.0
+  expandable_page_view: ^1.0.17
 
 dev_dependencies:
   flutter_test:
