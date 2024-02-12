@@ -7,7 +7,8 @@ import 'package:house_of_genuises/presentation/quizzes/widgets/question_header_w
 
 // ignore: must_be_immutable
 class QuestionPage extends StatelessWidget {
-  QuestionPage({super.key});
+  QuestionPage({super.key, required this.index});
+  final int index;
   var controller = Get.find<QuizController>();
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,9 @@ class QuestionPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const QuestionHeaderWidget(),
+          QuestionHeaderWidget(
+            index: index,
+          ),
           SizedBox(
             height: 10.h,
           ),
@@ -39,9 +42,11 @@ class QuestionPage extends StatelessWidget {
           //   ),
           // )
           ListView.builder(
+              controller: ScrollController(
+                  initialScrollOffset: 0.0, keepScrollOffset: true),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 7,
+              itemCount: 4,
               itemBuilder: (context, index) => AnswerWidget()),
           SizedBox(
             height: 20.h,

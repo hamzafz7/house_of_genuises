@@ -9,7 +9,6 @@ import 'package:house_of_genuises/common/themes/themes.dart';
 import 'package:house_of_genuises/data/providers/apiProvider/api_provider.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/quizzes/pages/quiz_page.dart';
-import 'package:house_of_genuises/presentation/splashpage/page/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

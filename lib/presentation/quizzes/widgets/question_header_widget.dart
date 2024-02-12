@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 
 class QuestionHeaderWidget extends StatelessWidget {
-  const QuestionHeaderWidget({super.key});
+  const QuestionHeaderWidget({super.key, required this.index});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class QuestionHeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "السؤال الأول:",
+                "السؤال ${index + 1}:",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
