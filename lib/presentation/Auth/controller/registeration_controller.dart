@@ -47,7 +47,7 @@ class RegisterationController extends GetxController {
       print(authResponse!.data!.token);
       Get.snackbar("مرحباً !!", authResponse!.message!);
       CacheProvider.setUserId(authResponse!.data!.user!.id!);
-      // CacheProvider.setUserName(authResponse!.data!.user!.fullName!);
+      CacheProvider.setUserName(authResponse!.data!.user!.fullName!);
       CacheProvider.setAppToken(authResponse!.data!.token!);
       Get.offAllNamed(AppRoute.mainPageRoute);
       uptateLoginRequestStatus(RequestStatus.success);

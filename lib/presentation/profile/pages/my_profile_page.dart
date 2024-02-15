@@ -114,9 +114,8 @@ class MyProfilePage extends GetView<MyProfileController> {
                                                     MaterialStateProperty
                                                         .resolveWith((states) =>
                                                             Colors.blue),
-                                                value:
-                                                    controller.isEdited.value ==
-                                                        ThemeMode.dark,
+                                                value: cnt.currentTheme ==
+                                                    ThemeMode.dark,
                                                 onChanged: (val) {
                                                   cnt.switchTheme();
                                                   Get.changeThemeMode(
@@ -131,10 +130,10 @@ class MyProfilePage extends GetView<MyProfileController> {
                                   SizedBox(
                                     height: 30.h,
                                   ),
-                                  ProfileListItem(
-                                      svgUrl: "assets/icons/x.svg",
-                                      onTap: () {},
-                                      text: "حذف الحساب")
+                                  // ProfileListItem(
+                                  //     svgUrl: "assets/icons/x.svg",
+                                  //     onTap: () {},
+                                  //     text: "حذف الحساب")
                                 ],
                               ),
               ),

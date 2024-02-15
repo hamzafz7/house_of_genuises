@@ -8,7 +8,7 @@ import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/common/themes/themes.dart';
 import 'package:house_of_genuises/data/providers/apiProvider/api_provider.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
-import 'package:house_of_genuises/presentation/quizzes/pages/quiz_page.dart';
+import 'package:house_of_genuises/presentation/splashpage/page/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
                             : ThemeMode.light,
                         locale: const Locale('ar'),
                         getPages: AppRoute.pages,
-                        home: QuizzesPage(),
+                        home: const SplashPage(),
                       )
                     : const SizedBox()));
   }

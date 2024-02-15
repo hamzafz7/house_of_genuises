@@ -59,6 +59,16 @@ class AppInterceptors extends Interceptor {
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.data == null) {
+      print("********");
+
+      return handler.next(
+        DioException(
+          requestOptions: err.requestOptions,
+          message: "لا يوجد اتصال بالانترنت".tr,
+        ),
+      );
+    }
     if (err.message == "لا يوجد اتصال بالانترنت") {
       return handler.next(
         DioException(

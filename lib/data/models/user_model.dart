@@ -58,10 +58,9 @@ class User {
     return {
       "full_name": fullName,
       "phone": phone,
-      'image': image != null
-          ? await MultipartFile.fromFile(
-              (await Utils.compressImage(File(image!)))!.path)
-          : null
+      if (image != null && image != "")
+        'image': await MultipartFile.fromFile(
+            (await Utils.compressImage(File(image!)))!.path)
     };
   }
 }

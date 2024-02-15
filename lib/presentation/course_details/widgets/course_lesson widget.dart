@@ -16,12 +16,14 @@ class CourseLessonWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            if (lessionModel.type == 'video') {
-              Get.to(() => ShowCourseVideo(video: lessionModel.link));
-            } else {
-              Get.to(FileViewWidget(imagePath: lessionModel.link));
-              // print(lessionModel.link);
-            }
+            if (lessionModel.isOpen == 1) {
+              if (lessionModel.type == 'video') {
+                Get.to(() => ShowCourseVideo(video: lessionModel.link));
+              } else {
+                Get.to(FileViewWidget(imagePath: lessionModel.link));
+                // print(lessionModel.link);
+              }
+            } else {}
           },
           child: Padding(
             padding: EdgeInsets.all(8.r),
