@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
-import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
 import 'package:svg_flutter/svg.dart';
 
 class CompleteFailureWidget extends StatelessWidget {
@@ -11,7 +10,7 @@ class CompleteFailureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
             "assets/images/wrong_sign.svg",
@@ -22,14 +21,17 @@ class CompleteFailureWidget extends StatelessWidget {
           ),
           Text(
             "عذراً",
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Colors.black),
           ),
           Align(
             alignment: Alignment.center,
             child: SizedBox(
               width: 270.w,
               child: Text(
-                "لا يمكنك مشاهدة هذا الدرس  قبل الانضمام إلى الكورس",
+                "  لا يمكنك مشاهدة هذا الدرس  قبل الانضمام إلى الكورس",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
@@ -40,18 +42,18 @@ class CompleteFailureWidget extends StatelessWidget {
           SizedBox(
             height: 40.h,
           ),
-          CustomButton(
-            height: 42.h,
-            width: 311.w,
-            borderRadius: 8.r,
-            child: Text(
-              "انضم الآن",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.white, fontSize: 14.sp),
-            ),
-          )
+          // CustomButton(
+          //   height: 42.h,
+          //   width: 311.w,
+          //   borderRadius: 8.r,
+          //   child: Text(
+          //     "انضم الآن",
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .bodyMedium!
+          //         .copyWith(color: Colors.white, fontSize: 14.sp),
+          //   ),
+          // )
         ]);
   }
 }

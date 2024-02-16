@@ -11,7 +11,6 @@ class AboutUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: const CustomAppBar(text: "حولنا"),
       body: SizedBox(
         width: Get.width,

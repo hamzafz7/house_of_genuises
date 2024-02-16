@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ShowCourseVideo extends StatefulWidget {
@@ -15,7 +16,11 @@ class _ShowCourseVideoState extends State<ShowCourseVideo> {
   @override
   void initState() {
     webViewController = WebViewController()
-      ..loadRequest(Uri.parse(widget.video!))
+      ..loadRequest(Uri.parse(widget.video!), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': " Bearer ${CacheProvider.getAppToken()}",
+      })
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
     super.initState();
   }

@@ -70,6 +70,7 @@ class MyCourseCotainer extends StatelessWidget {
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SvgPicture.asset("assets/icons/users.svg"),
                       SizedBox(
@@ -77,15 +78,22 @@ class MyCourseCotainer extends StatelessWidget {
                       ),
                       SizedBox(
                           width: 95.w,
-                          child: Text(
-                            "الدكتورة هدى الروماني و الدكتور حمزة",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(
-                                    fontSize: 10.sp, color: kprimaryGreyColor),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                          child: Wrap(
+                            children: List.generate(
+                                courseModel.teachers!.length > 3
+                                    ? 3
+                                    : courseModel.teachers!.length,
+                                (index) => Text(
+                                      courseModel.teachers![index],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                              fontSize: 10.sp,
+                                              color: kprimaryGreyColor),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    )),
                           ))
                     ],
                   )

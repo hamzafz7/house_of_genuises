@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
-import 'package:house_of_genuises/data/endpoints.dart';
 import 'package:house_of_genuises/presentation/profile/controllers/profile_controller.dart';
 
 // ignore: must_be_immutable
@@ -38,7 +37,7 @@ class MyProfileImage extends StatelessWidget {
                     // height: 60.h,
                     // width: 80.w,
                     imageUrl: controller.prfoileResponse!.data.image != null
-                        ? imagebaseUrl + controller.prfoileResponse!.data.image!
+                        ? controller.prfoileResponse!.data.image!
                         : "https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?w=740&t=st=1702746365~exp=1702746965~hmac=d69d2e417b17c8e24a04eabd7a5d0ca923eb3a5806a83f576d1f19f0da10318f",
                     fit: BoxFit.cover,
                     placeholder: (context, url) {

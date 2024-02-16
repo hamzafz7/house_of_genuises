@@ -61,41 +61,42 @@ class HomeCourseItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/users.svg",
-                    height: 15.h,
-                    width: 15.w,
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  SizedBox(
-                      width: 120.w,
-                      height: 30.h,
-                      child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: courseModel.teachers!.length,
-                          itemBuilder: (context, index) {
-                            return Text(
-                              "${courseModel.teachers![index]}${index != courseModel.teachers!.length - 1 ? "," : ""}",
-                              maxLines: 2,
-                              overflow: TextOverflow.fade,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                      fontSize: 10.sp,
-                                      color: ksecondaryGreyColor),
-                            );
-                          })),
-                ],
-              ),
+              child:
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                SvgPicture.asset(
+                  "assets/icons/users.svg",
+                  height: 15.h,
+                  width: 15.w,
+                ),
+                SizedBox(
+                  width: 5.w,
+                ),
+                SizedBox(
+                    width: 120.w,
+                    height: 30.h,
+                    child: Wrap(
+                        // scrollDirection: Axis.horizontal,
+                        // padding: EdgeInsets.zero,
+                        // itemCount: courseModel.teachers!.length,
+                        children: List.generate(
+                            courseModel.teachers!.length > 3
+                                ? 3
+                                : courseModel.teachers!.length,
+                            (index) => Text(
+                                  "${courseModel.teachers![index]}${index != courseModel.teachers!.length - 1 ? "," : ""}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.fade,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          fontSize: 10.sp,
+                                          color: ksecondaryGreyColor),
+                                ))))
+              ]),
             ),
             SizedBox(
-              height: 6.h,
+              height: 15.h,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -111,7 +112,7 @@ class HomeCourseItem extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 25.h,
+              height: 15.h,
             ),
             CustomButton(
               onTap: () {

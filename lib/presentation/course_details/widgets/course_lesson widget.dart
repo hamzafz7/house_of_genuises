@@ -22,14 +22,17 @@ class CourseLessonWidget extends StatelessWidget {
           onTap: () {
             if (lessionModel.isOpen! ||
                 controller.courseInfoModel!.course!.isPaid! ||
-                controller.courseInfoModel!.course!.isTeachWithCourse != true) {
+                controller.courseInfoModel!.course!.isTeachWithCourse == true) {
+              print(lessionModel.isOpen);
+              print(controller.courseInfoModel!.course!.isPaid);
               if (lessionModel.type == 'video') {
                 Get.to(() => ShowCourseVideo(video: lessionModel.link));
               } else {
-                Get.to(FileViewWidget(imagePath: lessionModel.link));
+                Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);
               }
             } else {
+              print(controller.courseInfoModel!.course!.isPaid!);
               CustomDialog(context, child: const CompleteFailureWidget());
             }
           },
@@ -46,7 +49,7 @@ class CourseLessonWidget extends StatelessWidget {
         SizedBox(
             width: 250.w,
             child: Text(
-              lessionModel.title,
+              lessionModel.title ?? " ",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ))

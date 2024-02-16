@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 import 'package:house_of_genuises/data/models/news_model.dart';
@@ -46,11 +47,17 @@ class NewsItem extends StatelessWidget {
               ),
               SizedBox(
                   width: 211.w,
-                  child: Text(
-                    model.news ?? "",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      model.title ?? "",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(color: kDarkBlueColor, letterSpacing: 0.0),
+                    ),
                   ))
             ]),
           ),

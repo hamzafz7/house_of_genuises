@@ -66,7 +66,7 @@ class CoursesWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 36.h,
+          height: 20.h,
         ),
         GridView.count(
           childAspectRatio: 1 / 1.7,

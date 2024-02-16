@@ -40,6 +40,7 @@ class CourseDetailsController extends GetxController {
       updateSignInCourseStatus(RequestStatus.success);
       Get.back();
       CustomDialog(Get.context, child: const CodeSuccessWidget());
+      getCourseInfo(id);
     } else {
       updateSignInCourseStatus(RequestStatus.onError);
     }

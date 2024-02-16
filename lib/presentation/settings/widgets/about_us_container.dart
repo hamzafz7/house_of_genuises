@@ -32,7 +32,7 @@ class AboutUsConatiner extends StatelessWidget {
           width: 345.w,
           height: 168.h,
           decoration: BoxDecoration(
-            color: Colors.white,
+            // color: Colors.white,
             border: Border(
                 right: rightSide
                     ? BorderSide(
