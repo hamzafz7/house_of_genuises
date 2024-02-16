@@ -20,7 +20,7 @@ void main() async {
   await CacheProvider.init();
   await ApiProvider.init();
   await FireBaseAPi().initNotifications();
-  // secureScreen();
+  secureScreen();
   if (CacheProvider().getDeviceId() == null) {
     await CacheProvider().setDeviceId();
     runApp(const MyApp());

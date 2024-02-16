@@ -34,7 +34,7 @@ class ResultsPage extends StatelessWidget {
                 left: 30,
                 bottom: 500.h,
                 child: ResultGradeStack(
-                  res: controller.finalResults.value.toInt(),
+                  res: controller.finalResults.value,
                 )),
             Positioned(
                 top: 320.h,

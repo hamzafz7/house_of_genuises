@@ -5,7 +5,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 class ResultGradeStack extends StatelessWidget {
   const ResultGradeStack({super.key, required this.res});
-  final int res;
+  final double res;
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -41,7 +41,7 @@ class ResultGradeStack extends StatelessWidget {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${res}",
+                  "${(res * 100).toInt()}",
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
