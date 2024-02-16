@@ -73,15 +73,24 @@ class HomeCourseItem extends StatelessWidget {
                     width: 5.w,
                   ),
                   SizedBox(
-                    width: 120.w,
-                    child: Text(
-                      "حمزة الفواز وجواد تقي الدين",
-                      maxLines: 2,
-                      overflow: TextOverflow.fade,
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          fontSize: 10.sp, color: ksecondaryGreyColor),
-                    ),
-                  ),
+                      width: 120.w,
+                      height: 30.h,
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: courseModel.teachers!.length,
+                          itemBuilder: (context, index) {
+                            return Text(
+                              "${courseModel.teachers![index]}${index != courseModel.teachers!.length - 1 ? "," : ""}",
+                              maxLines: 2,
+                              overflow: TextOverflow.fade,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      fontSize: 10.sp,
+                                      color: ksecondaryGreyColor),
+                            );
+                          })),
                 ],
               ),
             ),

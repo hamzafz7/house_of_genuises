@@ -19,6 +19,7 @@ class CourseModel {
   final String? image;
   final String? telegramChannelLink;
   final bool? isOpen;
+  List<String>? teachers;
   final bool? isVisible;
   final bool? isPaid;
 
@@ -29,18 +30,21 @@ class CourseModel {
     required this.telegramChannelLink,
     required this.isOpen,
     required this.isVisible,
+    this.teachers,
     required this.isPaid,
   });
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
-      telegramChannelLink: json['telegram_channel_link'],
-      isOpen: json['is_open'],
-      isVisible: json['is_visible'],
-      isPaid: json['is_paid'],
-    );
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+        telegramChannelLink: json['telegram_channel_link'],
+        isOpen: json['is_open'],
+        isVisible: json['is_visible'],
+        isPaid: json['is_paid'],
+        teachers: json['teachers'] != null
+            ? List<String>.from(json['teachers'])
+            : []);
   }
 }

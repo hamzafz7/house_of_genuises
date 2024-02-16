@@ -51,30 +51,52 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                         padding: EdgeInsets.all(16.r),
                         child: CustomButton(
                           onTap: () {
-                            CustomDialog(context,
-                                child: CodeActivationWidget(
-                                  controller: controller.activationController,
-                                  onValidate: (val) {
-                                    return Utils.isFeildValidated(val);
-                                  },
-                                  onTap: () {
-                                    if (controller
-                                        .courseDetailFormKey.currentState!
-                                        .validate()) {
-                                      controller.signInCourse(
-                                          controller
-                                              .courseInfoModel!.course!.id!,
-                                          controller.activationController.text);
-                                    }
-                                  },
-                                ),
-                                height: 380);
+                            if (controller.courseInfoModel!.course != null) {
+                              if (!controller.courseInfoModel!.course!.isOpen! &&
+                                  !controller
+                                      .courseInfoModel!.course!.isPaid! &&
+                                  controller.courseInfoModel!.course!
+                                          .isTeachWithCourse !=
+                                      true) {
+                                CustomDialog(context,
+                                    child: CodeActivationWidget(
+                                      controller:
+                                          controller.activationController,
+                                      onValidate: (val) {
+                                        return Utils.isFeildValidated(val);
+                                      },
+                                      onTap: () {
+                                        if (controller
+                                            .courseDetailFormKey.currentState!
+                                            .validate()) {
+                                          controller.signInCourse(
+                                              controller
+                                                  .courseInfoModel!.course!.id!,
+                                              controller
+                                                  .activationController.text);
+                                        }
+                                      },
+                                    ),
+                                    height: 380);
+                              } else {
+                                controller.changeCurrentWidgetIndx(1);
+                              }
+                            }
                           },
                           height: 50.h,
                           width: 382.w,
                           borderRadius: 17.r,
                           child: Text(
-                            "ٍسجل الآن",
+                            controller.courseInfoModel!.course!.isPaid ==
+                                        true ||
+                                    controller
+                                            .courseInfoModel!.course!.isOpen ==
+                                        true ||
+                                    controller.courseInfoModel!.course!
+                                            .isTeachWithCourse ==
+                                        true
+                                ? "تابع المشاهدة"
+                                : "ٍسجل الآن",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!

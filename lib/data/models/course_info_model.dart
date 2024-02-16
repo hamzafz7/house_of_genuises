@@ -21,6 +21,7 @@ class CourseInfoModel {
   List<String>? teachers;
   List<ChapterModel>? chapters;
   List<ValueOfCourse>? valuesOfCourse;
+  bool? isTeachWithCourse;
   String? message;
   CourseInfoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -31,6 +32,7 @@ class CourseInfoModel {
     isVisible = json['is_visible'];
     isPaid = json['is_paid'];
     totalTime = json['total_time'];
+    isTeachWithCourse = json['is_teach_this_course'];
     teachers =
         json['teachers'] != null ? List<String>.from(json['teachers']) : [];
     chapters = json['chapters'] != null

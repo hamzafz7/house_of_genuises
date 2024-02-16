@@ -29,7 +29,7 @@ class CompleteFailureWidget extends StatelessWidget {
             child: SizedBox(
               width: 270.w,
               child: Text(
-                "لا يمكنك مشاهدة هذا الفيديو قبل الانضمام إلى الكورس",
+                "لا يمكنك مشاهدة هذا الدرس  قبل الانضمام إلى الكورس",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!
