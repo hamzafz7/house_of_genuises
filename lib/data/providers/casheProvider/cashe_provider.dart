@@ -78,6 +78,14 @@ class CacheProvider {
     _getStorage.write("is_Dark", val);
   }
 
+  static setdeviceToken(String? val) {
+    _getStorage.write("device_token", val);
+  }
+
+  static getdeviceToken() {
+    return _getStorage.read("device_token");
+  }
+
   Future<void> setDeviceId() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {

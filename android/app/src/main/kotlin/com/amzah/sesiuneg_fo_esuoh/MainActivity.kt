@@ -1,4 +1,4 @@
-package com.example.house_of_genuises
+package com.amzah.sesiuneg_fo_esuoh
 
 import io.flutter.embedding.android.FlutterActivity
 

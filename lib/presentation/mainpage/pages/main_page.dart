@@ -17,6 +17,7 @@ class MainPage extends GetView<MainPageController> {
         init: ThemeController(),
         builder: (cnt) => PersistentTabView(
           context,
+          controller: controller.bottomNavController,
           backgroundColor: cnt.currentTheme == ThemeMode.dark
               ? const Color.fromARGB(255, 7, 37, 61)
               : Colors.white,

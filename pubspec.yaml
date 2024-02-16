@@ -61,10 +61,13 @@ dependencies:
   flutter_math_fork: any
   webview_flutter: ^4.7.0
   expandable_page_view: ^1.0.17
+  firebase_core: ^2.25.4
+  firebase_messaging: ^14.7.15
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  change_app_package_name: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

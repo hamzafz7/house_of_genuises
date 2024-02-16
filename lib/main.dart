@@ -8,13 +8,18 @@ import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/common/themes/themes.dart';
 import 'package:house_of_genuises/data/providers/apiProvider/api_provider.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
+import 'package:house_of_genuises/data/providers/notificationProvider/notification_provider.dart';
 import 'package:house_of_genuises/presentation/splashpage/page/splash_page.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
+  await FireBaseAPi().initNotifications();
   secureScreen();
   if (CacheProvider().getDeviceId() == null) {
     await CacheProvider().setDeviceId();

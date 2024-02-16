@@ -40,7 +40,8 @@ class User {
     return {
       "phone": phone,
       "password": password,
-      "device_id": CacheProvider().getDeviceId()
+      "device_id": CacheProvider().getDeviceId(),
+      'device_notification_id': CacheProvider.getdeviceToken()
     };
   }
 
@@ -50,7 +51,8 @@ class User {
       "phone": phone,
       "password": password,
       "device_id": CacheProvider().getDeviceId(),
-      "email": "hamzafz888@gmail.com"
+      "email": "hamzafz888@gmail.com",
+      'device_notification_id': CacheProvider.getdeviceToken()
     };
   }
 
