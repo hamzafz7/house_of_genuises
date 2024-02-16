@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/presentation/quizzes/controllers/quiz_controller.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/quiz_info_widget.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/result_button_widget.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/result_grade_Stack.dart';
 
+// ignore: must_be_immutable
 class ResultsPage extends StatelessWidget {
-  const ResultsPage({super.key});
-
+  ResultsPage({super.key});
+  var controller = Get.find<QuizController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,9 @@ class ResultsPage extends StatelessWidget {
                 right: 30,
                 left: 30,
                 bottom: 500.h,
-                child: const ResultGradeStack()),
+                child: ResultGradeStack(
+                  res: controller.finalResults.value.toInt(),
+                )),
             Positioned(
                 top: 320.h,
                 bottom: 320.h,

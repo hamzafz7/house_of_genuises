@@ -16,7 +16,7 @@ class CourseCurriculum extends StatelessWidget {
             itemCount: controller.courseInfoModel!.course!.chapters!.length,
             itemBuilder: (context, index) => CustomListTile(
                 chapterModel:
-                    controller.courseInfoModel!.course!.chapters![index]))
+                    controller.courseInfoModel!.course!.chapters![index])),
       ],
     );
   }

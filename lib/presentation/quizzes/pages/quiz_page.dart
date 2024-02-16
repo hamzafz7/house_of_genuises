@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/quizzes/controllers/quiz_controller.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/progress_header_widget.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/question_widget.dart';
@@ -18,10 +19,14 @@ class QuizzesPage extends GetView<QuizController> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: CacheProvider.getAppTheme()
+            ? const Color.fromARGB(255, 7, 37, 61)
+            : null,
+        surfaceTintColor:
+            CacheProvider.getAppTheme() ? kDarkBlueColor : Colors.white,
         title: Text(
-          "الاختبار الاول",
-          style: Theme.of(context).textTheme.bodyLarge,
+          controller.model.title ?? "الاختبار",
+          style: Theme.of(context).textTheme.labelMedium,
         ),
         centerTitle: true,
       ),
@@ -34,10 +39,11 @@ class QuizzesPage extends GetView<QuizController> {
               physics: const NeverScrollableScrollPhysics(),
               animationDuration: const Duration(milliseconds: 0),
               controller: controller.pageController.value,
-              itemCount: 3,
+              itemCount: controller.model.questions!.length,
               itemBuilder: (context, index) {
                 return QuestionPage(
                   index: index,
+                  questionModel: controller.model.questions![index],
                 );
               },
             ),
@@ -52,6 +58,7 @@ class QuizzesPage extends GetView<QuizController> {
                           .jumpToPage(controller.currentIndex.value + 1);
                       controller.incrementQuistionsValue();
                     } else {
+                      controller.calcResult();
                       Get.toNamed(AppRoute.showQuizResultRoute);
                     }
                   },
@@ -71,7 +78,6 @@ class QuizzesPage extends GetView<QuizController> {
               child: TextButton(
                   onPressed: () {
                     if (controller.currentQuistions.value > 1) {
-                      print("zzzz");
                       controller.pageController.value
                           .jumpToPage(controller.currentIndex.value - 1);
                       controller.decrementQuistionsValue();

@@ -3,14 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 
 class QuestionHeaderWidget extends StatelessWidget {
-  const QuestionHeaderWidget({super.key, required this.index});
+  const QuestionHeaderWidget({super.key, required this.index, this.title});
   final int index;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Container(
-        decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+        width: 360.w,
+        decoration: const BoxDecoration(boxShadow: [
           BoxShadow(
               blurRadius: 1,
               spreadRadius: 1,
@@ -23,13 +25,16 @@ class QuestionHeaderWidget extends StatelessWidget {
             children: [
               Text(
                 "السؤال ${index + 1}:",
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.black),
               ),
               SizedBox(
                 height: 10.h,
               ),
               Text(
-                "للشيئ عموماً قيمتان ، قيمة تبادلية وقيمة استعمالية , ولكن  :",
+                title ?? "هذا السؤال بلا نص",
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium!

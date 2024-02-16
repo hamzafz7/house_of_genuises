@@ -43,6 +43,7 @@ class CourseInfoModel {
         ? List<ValueOfCourse>.from(
             json['values_of_course'].map((e) => ValueOfCourse.fromJson(e)))
         : [];
+
     message = json['message'];
   }
 }
