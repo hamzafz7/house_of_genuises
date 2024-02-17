@@ -6,7 +6,7 @@ import 'package:house_of_genuises/presentation/course_details/widgets/show_cours
 import 'package:house_of_genuises/presentation/mainpage/pages/main_page.dart';
 import 'package:house_of_genuises/presentation/onboarding/pages/on_boarding_page.dart';
 import 'package:house_of_genuises/presentation/quizzes/pages/quiz_page.dart';
-import 'package:house_of_genuises/presentation/quizzes/pages/results_page.dart';
+import 'package:house_of_genuises/presentation/quizzes/pages/quizz_statistic_page.dart';
 import 'package:house_of_genuises/presentation/settings/pages/about_us_page.dart';
 import 'package:house_of_genuises/presentation/settings/pages/settings_page.dart';
 import 'package:house_of_genuises/presentation/userinfo/page/user_info_page.dart';
@@ -24,7 +24,7 @@ class AppRoute {
   static String courseDetailsPageRoute = "/course_detail";
   static String showCourseVideoRoute = '/show_course_pdf';
   static String showCoursePdfRoute = '/show_course_pdf';
-  static String showQuizResultRoute = '/show_result_page';
+  static String quizStatisiticPageRoute = '/show_result_page';
   static String quizzPageRoute = '/quizz_page';
   static List<GetPage> pages = [
     GetPage(name: onboardingPageRoute, page: () => const OnBoardingPage()),
@@ -39,7 +39,7 @@ class AppRoute {
         name: courseDetailsPageRoute, page: () => const CourseDetailsPage()),
     GetPage(name: showCourseVideoRoute, page: () => const ShowCourseVideo()),
     GetPage(name: showCourseVideoRoute, page: () => const ShowCourseVideo()),
-    GetPage(name: showQuizResultRoute, page: () => ResultsPage()),
+    GetPage(name: quizStatisiticPageRoute, page: () => QuizStatisticPage()),
     GetPage(name: quizzPageRoute, page: () => const QuizzesPage()),
   ];
 }

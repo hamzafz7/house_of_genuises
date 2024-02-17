@@ -34,18 +34,20 @@ class QuizzesPage extends GetView<QuizController> {
         child: Column(
           children: [
             ProgressHeaderWidget(),
-            ExpandablePageView.builder(
-              onPageChanged: (val) {},
-              physics: const NeverScrollableScrollPhysics(),
-              animationDuration: const Duration(milliseconds: 0),
-              controller: controller.pageController.value,
-              itemCount: controller.model.questions!.length,
-              itemBuilder: (context, index) {
-                return QuestionPage(
-                  index: index,
-                  questionModel: controller.model.questions![index],
-                );
-              },
+            GetBuilder<QuizController>(
+              builder: (_) => ExpandablePageView.builder(
+                onPageChanged: (val) {},
+                physics: const NeverScrollableScrollPhysics(),
+                animationDuration: const Duration(milliseconds: 0),
+                controller: controller.pageController.value,
+                itemCount: controller.model.questions!.length,
+                itemBuilder: (context, index) {
+                  return QuestionPage(
+                    index: index,
+                    questionModel: controller.model.questions![index],
+                  );
+                },
+              ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
@@ -59,7 +61,7 @@ class QuizzesPage extends GetView<QuizController> {
                       controller.incrementQuistionsValue();
                     } else {
                       controller.calcResult();
-                      Get.toNamed(AppRoute.showQuizResultRoute);
+                      Get.toNamed(AppRoute.quizStatisiticPageRoute);
                     }
                   },
                   width: 354.w,

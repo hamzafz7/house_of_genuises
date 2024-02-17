@@ -43,7 +43,7 @@ class MyCourseCotainer extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.r),
                   child: CachedNetworkImage(
-                    imageUrl: defPic,
+                    imageUrl: courseModel.image ?? defPic,
                     height: 105.h,
                     width: 114.w,
                     fit: BoxFit.fill,

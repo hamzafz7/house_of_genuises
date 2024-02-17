@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/data/models/quiz_model.dart';
@@ -16,6 +15,7 @@ class QuizController extends GetxController {
   void onInit() {
     model = Get.arguments;
     totalQuistions = model.questions?.length.obs ?? 1.obs;
+    initalValue.value = (1 / totalQuistions.value);
     startCountdown();
     super.onInit();
   }
@@ -63,28 +63,50 @@ class QuizController extends GetxController {
   }
 
   Map<int, int> userSolutions = {};
+  RxInt skippedQuistions = 0.obs;
+  RxInt wrongAnswers = 0.obs;
+  RxInt timeElapsed = 0.obs;
 
   calcResult() {
+    timer.value.cancel();
+    timeElapsed.value = (timer.value.tick / 60).ceil();
     finalResults.value = 0.0;
+    skippedQuistions.value = 0;
+    wrongAnswers.value = 0;
     for (var element in model.questions!) {
       int ind = 0;
       for (int i = 0; i < element.choices!.length; i++) {
         if (element.choices![i].isTrue!) {
-          ind = element.id!;
+          ind = element.choices![i].id!;
           break;
         }
       }
       if (userSolutions.containsKey(element.id) &&
           userSolutions.containsValue(ind)) {
-        print("hehe");
         finalResults.value += 1 / totalQuistions.value;
+      } else if (userSolutions.containsKey(element.id) &&
+          !userSolutions.containsValue(ind)) {
+        wrongAnswers.value += 1;
+      } else if (!userSolutions.containsKey(element.id)) {
+        skippedQuistions.value += 1;
       }
     }
-    print(finalResults.value);
   }
 
   provideSolution(int key, int val) {
     userSolutions[key] = val;
+    update();
+  }
+
+  clearSolutions() {
+    _totalTimeInSeconds.value = 3600;
+    startCountdown();
+    currentIndex.value = 0;
+    currentQuistions.value = 1;
+    initalValue.value = 1 / totalQuistions.value;
+    userSolutions = {};
+    pageController.value.jumpToPage(0);
+
     update();
   }
 }
