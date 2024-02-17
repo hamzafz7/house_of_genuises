@@ -41,6 +41,26 @@ class CategoryRepository {
     }
   }
 
+  Future<AppResponse> searchCourses(String searchText) async {
+    try {
+      var response = await ApiProvider.get(
+          url: coursesUrl,
+          token: CacheProvider.getAppToken(),
+          query: {"search": searchText});
+      return AppResponse(
+        errorMessage: null,
+        data: response.data,
+        success: true,
+      );
+    } on DioException catch (e) {
+      return AppResponse(
+        errorMessage: e.message,
+        data: null,
+        success: false,
+      );
+    }
+  }
+
   Future<AppResponse> getCourseInfo(int id) async {
     try {
       var response = await ApiProvider.get(

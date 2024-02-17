@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
+import 'package:house_of_genuises/presentation/homepage/widgets/home_course_item.dart';
 import 'package:house_of_genuises/presentation/search/controller/search_controller.dart';
 import 'package:house_of_genuises/presentation/search/widgets/custom_seach_feild.dart';
 
@@ -14,7 +18,57 @@ class SearchPage extends GetView<SearchPageController> {
         width: Get.width,
         child: Column(
           children: [
-            CustomSearchFeild(searchController: controller.searchController)
+            SizedBox(
+              height: 40.h,
+            ),
+            CustomSearchFeild(
+              searchController: controller.searchController,
+              onChanged: (val) {
+                if (val != "") {
+                  controller.searchCourse(val);
+                }
+                if (val.isEmpty) {
+                  controller.updatecourseStatus(RequestStatus.begin);
+                }
+              },
+            ),
+            Obx(() => Center(
+                  child: switch (controller.courseStatus.value) {
+                    RequestStatus.success => GridView.count(
+                        childAspectRatio: 1 / 1.7,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        children: List.generate(
+                            controller.coursesModel!.courses!.length,
+                            (index) => HomeCourseItem(
+                                  courseModel:
+                                      controller.coursesModel!.courses![index],
+                                )),
+                      ),
+                    RequestStatus.begin => Container(),
+                    RequestStatus.loading => Center(
+                        child: appCircularProgress(),
+                      ),
+                    RequestStatus.onError => Center(
+                        child: Text(
+                          "حدث خطأ ما",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    RequestStatus.noData => Center(
+                        child: Text(
+                          "لا يوجد أي كورس بهذا الاسم",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ),
+                    RequestStatus.noInternentt => Center(
+                          child: Text(
+                        "لا يوجد إتصال بلإنترنت",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      )),
+                  },
+                ))
           ],
         ),
       ),
