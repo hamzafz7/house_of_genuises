@@ -30,7 +30,6 @@ class AppInterceptors extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     debugPrint("response is getting");
-    print(response.statusCode);
 
     final connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.none) {
@@ -60,8 +59,6 @@ class AppInterceptors extends Interceptor {
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.data == null) {
-      print("********");
-
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,
@@ -132,7 +129,6 @@ class AppInterceptors extends Interceptor {
       }
     } else {
       String? error = err.response?.data['message'] ?? "حدث خطأ ما";
-      print(error);
       return handler.next(
         DioException(
           requestOptions: err.requestOptions,

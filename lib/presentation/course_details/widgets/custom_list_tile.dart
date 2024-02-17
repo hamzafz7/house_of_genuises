@@ -15,6 +15,7 @@ class CustomListTile extends StatefulWidget {
 }
 
 class _CustomListTileState extends State<CustomListTile> {
+  // ignore: prefer_typing_uninitialized_variables
   var list1, list2;
   @override
   void initState() {

@@ -14,6 +14,7 @@ class CompleteFailureWidget extends StatelessWidget {
         children: [
           SvgPicture.asset(
             "assets/images/wrong_sign.svg",
+            // ignore: deprecated_member_use
             color: kprimaryPinkColor,
           ),
           SizedBox(

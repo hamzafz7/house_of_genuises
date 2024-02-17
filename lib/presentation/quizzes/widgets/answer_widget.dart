@@ -38,7 +38,6 @@ class AnswerWidget extends StatelessWidget {
                         controller.userSolutions.containsValue(choice!.id!),
                 onChanged: (value) {
                   controller.provideSolution(choice!.questionId!, choice!.id!);
-                  print(controller.userSolutions);
                 },
               ),
             ),

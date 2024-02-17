@@ -66,7 +66,6 @@ class CacheProvider {
   }
 
   getDeviceId() {
-    print(" from the method : ${_getStorage.read("device_id")}");
     return _getStorage.read("device_id");
   }
 
@@ -91,7 +90,6 @@ class CacheProvider {
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       _getStorage.write("device_id", androidInfo.id);
-      print("device id : ${androidInfo.id}");
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       _getStorage.write("device_id", iosInfo.identifierForVendor);

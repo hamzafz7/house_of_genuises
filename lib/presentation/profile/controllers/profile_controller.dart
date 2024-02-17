@@ -67,14 +67,12 @@ class MyProfileController extends GetxController {
   }
 
   Future<void> updateProfile() async {
-    print("heelllo");
     updateEditProfileStatus(RequestStatus.loading);
     User user = User(
         id: CacheProvider.getUserId(),
         fullName: nameController.text.trim(),
         phone: phoneController.text.trim(),
         image: imagePicked.value);
-    print(user.updateUserToJSon());
     var response = await _repo.updateProfile(user);
     if (response.success) {
       updateEditProfileStatus(RequestStatus.success);

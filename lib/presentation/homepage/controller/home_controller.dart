@@ -43,7 +43,6 @@ class HomeController extends GetxController {
         updateGetNewsStatus(RequestStatus.noData);
       } else {
         updateGetNewsStatus(RequestStatus.success);
-        print("from News: ${response.data}");
       }
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
@@ -64,7 +63,6 @@ class HomeController extends GetxController {
         updateCategoriesStatus(RequestStatus.noData);
       } else {
         updateCategoriesStatus(RequestStatus.success);
-        print(categoriesModel!.categories!.length);
         getCourses(categoriesModel!.categories![0].id!);
       }
     } else if (!response.success) {
@@ -83,7 +81,6 @@ class HomeController extends GetxController {
     var response = await _categoryRepository.getCourses(id);
     if (response.success) {
       coursesModel = CoursesModel.fromJson(response.data);
-      print(response.data);
       if (coursesModel!.courses == null || coursesModel!.courses!.isEmpty) {
         updatecourseStatus(RequestStatus.noData);
       } else {
@@ -91,7 +88,6 @@ class HomeController extends GetxController {
       }
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
-        print("heelo from No Internet");
         updatecourseStatus(RequestStatus.noInternentt);
       } else {
         updatecourseStatus(RequestStatus.onError);

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,8 +25,6 @@ class CourseLessonWidget extends StatelessWidget {
             if (lessionModel.isOpen! ||
                 controller.courseInfoModel!.course!.isPaid! ||
                 controller.courseInfoModel!.course!.isTeachWithCourse == true) {
-              print(lessionModel.isOpen);
-              print(controller.courseInfoModel!.course!.isPaid);
               if (lessionModel.type == 'video') {
                 Get.to(() => ShowCourseVideo(video: lessionModel.link));
               } else {
@@ -32,7 +32,6 @@ class CourseLessonWidget extends StatelessWidget {
                 // print(lessionModel.link);
               }
             } else {
-              print(controller.courseInfoModel!.course!.isPaid!);
               CustomDialog(context, child: const CompleteFailureWidget());
             }
           },

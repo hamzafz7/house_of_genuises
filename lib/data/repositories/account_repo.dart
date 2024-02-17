@@ -86,7 +86,6 @@ class AccountRepo {
         success: false,
       );
     } on HttpException catch (e) {
-      print("sssssss");
       return AppResponse(
         errorMessage: e.message,
         data: null,
@@ -97,7 +96,6 @@ class AccountRepo {
 
   Future<AppResponse> updateProfile(User user) async {
     Map<String, dynamic> toJson = await user.updateUserToJSon();
-    print(toJson);
     try {
       final response = await ApiProvider.post(
           url: "$updateProfileUrl/${user.id}",

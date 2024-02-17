@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:house_of_genuises/data/models/onboarding_model.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 

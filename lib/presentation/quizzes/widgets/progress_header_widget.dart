@@ -43,7 +43,7 @@ class ProgressHeaderWidget extends StatelessWidget {
                   " ${controller.totalQuistions.value}س",
                   style: const TextStyle(color: kprimaryBlueColor),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Text(

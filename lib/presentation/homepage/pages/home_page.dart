@@ -54,10 +54,6 @@ class HomePage extends GetView<HomeController> {
                                   itemCount: controller
                                       .categoriesModel!.categories!.length,
                                   itemBuilder: (context, index) {
-                                    print(
-                                      controller
-                                          .categoriesModel!.categories!.length,
-                                    );
                                     return Padding(
                                       padding: EdgeInsets.all(8.0.r),
                                       child: YearButton(
@@ -67,7 +63,6 @@ class HomePage extends GetView<HomeController> {
                                               index,
                                               controller.categoriesModel!
                                                   .categories![index].id!);
-                                          print("Zzz");
                                         },
                                         categoryModel: controller
                                             .categoriesModel!

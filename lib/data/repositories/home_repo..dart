@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:dio/dio.dart';
 import 'package:house_of_genuises/data/endpoints.dart';
 import 'package:house_of_genuises/data/models/app_response.dart';

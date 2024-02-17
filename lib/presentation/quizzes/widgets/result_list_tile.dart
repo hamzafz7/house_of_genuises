@@ -36,6 +36,8 @@ class ResultListTile extends StatelessWidget {
                   return const BorderSide(width: 1.0, color: Colors.green);
                 } else if (userSolution == true && !value) {
                   return const BorderSide(width: 1.0, color: Colors.red);
+                } else {
+                  return const BorderSide(width: 1.0, color: Colors.grey);
                 }
               }),
               value: value || userSolution!,

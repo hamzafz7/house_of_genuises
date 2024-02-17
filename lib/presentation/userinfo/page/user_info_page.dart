@@ -49,7 +49,6 @@ class UserInfoPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       if (controller.isEdited.value) {
-                        print("caaaaaa");
                         controller.changeIsEdit();
                         controller.updateProfile();
                       } else {

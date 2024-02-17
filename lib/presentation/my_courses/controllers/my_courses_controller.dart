@@ -22,7 +22,6 @@ class MyCoursesController extends GetxController {
     var response = await _categoryRepository.getMyCourses(id);
     if (response.success) {
       model = CoursesModel.fromJson(response.data);
-      print(response.data);
       if (model!.courses == null || model!.courses!.isEmpty) {
         updateGetCoursesStatus(RequestStatus.noData);
       } else {
