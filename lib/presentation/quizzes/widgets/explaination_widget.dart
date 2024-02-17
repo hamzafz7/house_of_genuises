@@ -13,8 +13,9 @@ class ExplainationWidget extends StatelessWidget {
     return SizedBox(
       width: 300.w,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("التوضيح :"),
+          const Text("التوضيح :"),
           if (image != null)
             CachedNetworkImage(
               width: 260.w,
