@@ -5,6 +5,7 @@ import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/time_elapsed_dialog.dart';
 import 'package:house_of_genuises/presentation/quizzes/controllers/quiz_controller.dart';
+import 'package:house_of_genuises/presentation/quizzes/pages/result_page.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/quiz_info_widget.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/result_button_widget.dart';
 import 'package:house_of_genuises/presentation/quizzes/widgets/result_grade_Stack.dart';
@@ -60,7 +61,12 @@ class QuizStatisticPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const ResultButtonWidget(
+                          ResultButtonWidget(
+                            ontap: () {
+                              Get.to(() => ResultPage(
+                                    model: controller.model,
+                                  ));
+                            },
                             color: kShowReslutsColor,
                             svgURL: "assets/images/eye.svg",
                             text: "رؤية النتائج",

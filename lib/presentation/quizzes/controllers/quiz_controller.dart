@@ -63,6 +63,7 @@ class QuizController extends GetxController {
   }
 
   Map<int, int> userSolutions = {};
+  Map<int, int> rightSolutions = {};
   RxInt skippedQuistions = 0.obs;
   RxInt wrongAnswers = 0.obs;
   RxInt timeElapsed = 0.obs;
@@ -78,6 +79,7 @@ class QuizController extends GetxController {
       for (int i = 0; i < element.choices!.length; i++) {
         if (element.choices![i].isTrue!) {
           ind = element.choices![i].id!;
+          rightSolutions[element.id!] = element.choices![i].id!;
           break;
         }
       }
@@ -100,6 +102,7 @@ class QuizController extends GetxController {
 
   clearSolutions() {
     _totalTimeInSeconds.value = 3600;
+    timeElapsed.value = 0;
     startCountdown();
     currentIndex.value = 0;
     currentQuistions.value = 1;

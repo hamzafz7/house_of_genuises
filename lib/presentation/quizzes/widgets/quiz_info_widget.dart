@@ -46,7 +46,7 @@ class QuizInfoWidget extends StatelessWidget {
             children: [
               InfoWidget(
                   color: Colors.red,
-                  text: "الإجايات الخاطئة",
+                  text: "الإجابات الخاطئة",
                   number: "${controller.wrongAnswers.value}"),
               SizedBox(
                 width: 60.w,

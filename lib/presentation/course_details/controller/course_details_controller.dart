@@ -4,9 +4,11 @@ import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/models/course_info_model.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/code_success.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
+import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 
 class CourseDetailsController extends GetxController {
   @override
@@ -41,6 +43,11 @@ class CourseDetailsController extends GetxController {
       Get.back();
       CustomDialog(Get.context, child: const CodeSuccessWidget());
       getCourseInfo(id);
+      Get.isRegistered<MyCoursesController>()
+          ? Get.find<MyCoursesController>()
+              .getMyCourses(CacheProvider.getUserId())
+          : Get.put(MyCoursesController())
+              .getMyCourses(CacheProvider.getUserId());
     } else {
       updateSignInCourseStatus(RequestStatus.onError);
     }

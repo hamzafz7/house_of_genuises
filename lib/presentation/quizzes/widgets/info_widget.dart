@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:house_of_genuises/common/constants/colors.dart';
 
 class InfoWidget extends StatelessWidget {
   const InfoWidget(
@@ -39,7 +40,13 @@ class InfoWidget extends StatelessWidget {
               ],
             ),
           ),
-          Text(text)
+          Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: kDarkBlueColor),
+          )
         ],
       ),
     );
