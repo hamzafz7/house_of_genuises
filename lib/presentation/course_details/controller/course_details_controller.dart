@@ -9,6 +9,7 @@ import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/code_success.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetailsController extends GetxController {
   @override
@@ -76,5 +77,17 @@ class CourseDetailsController extends GetxController {
   RxInt currentWidgetIndex = 0.obs;
   changeCurrentWidgetIndx(int val) {
     currentWidgetIndex.value = val;
+  }
+
+  void launchTelegramURL(String? url) async {
+    if (url != null) {
+      // ignore: deprecated_member_use
+      if (await canLaunch(url)) {
+        // ignore: deprecated_member_use
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
   }
 }
