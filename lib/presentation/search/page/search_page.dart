@@ -24,10 +24,11 @@ class SearchPage extends GetView<SearchPageController> {
             CustomSearchFeild(
               searchController: controller.searchController,
               onChanged: (val) {
-                if (val != "") {
+                if (val.isNotEmpty &&
+                    controller.searchController.text.isNotEmpty) {
                   controller.searchCourse(val);
                 }
-                if (val.isEmpty) {
+                if (val.isEmpty || controller.searchController.text.isEmpty) {
                   controller.updatecourseStatus(RequestStatus.begin);
                 }
               },

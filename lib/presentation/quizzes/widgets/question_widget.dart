@@ -23,6 +23,7 @@ class QuestionPage extends StatelessWidget {
           QuestionHeaderWidget(
             index: index,
             title: questionModel!.title,
+            image: questionModel!.image,
           ),
           SizedBox(
             height: 10.h,

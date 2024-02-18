@@ -44,7 +44,7 @@ class CategoryRepository {
   Future<AppResponse> searchCourses(String searchText) async {
     try {
       var response = await ApiProvider.get(
-          url: coursesUrl,
+          url: searchCoursesUrl,
           token: CacheProvider.getAppToken(),
           query: {"search": searchText});
       return AppResponse(

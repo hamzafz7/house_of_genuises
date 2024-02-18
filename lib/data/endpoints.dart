@@ -18,3 +18,4 @@ String categoriesUrl = "categories/visible";
 String coursesUrl = "courses/visible";
 String showCourseUrl = "courses/show";
 String signInCourseUrl = "courses/signIn";
+String searchCoursesUrl = "courses/search";

@@ -15,19 +15,23 @@ var lighttheme = ThemeData(
           fontSize: 48.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w400,
+          letterSpacing: 0,
           color: kDarkBlueColor),
       titleMedium: TextStyle(
           fontSize: 30.sp,
           fontFamily: 'Hacen Tunisia',
+          letterSpacing: 0,
           fontWeight: FontWeight.w400,
           color: kDarkBlueColor),
       bodySmall: TextStyle(
           fontSize: 12.sp,
           fontFamily: 'Hacen Tunisia',
+          letterSpacing: 0,
           fontWeight: FontWeight.w500,
           color: kDarkBlueColor),
       bodyLarge: TextStyle(
           fontSize: 24.sp,
+          letterSpacing: 0,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w400,
           color: kDarkBlueColor),
@@ -35,12 +39,14 @@ var lighttheme = ThemeData(
           fontSize: 16.sp,
           fontFamily: 'Hacen Tunisia',
           fontWeight: FontWeight.w500,
+          letterSpacing: 0,
           color: kDarkBlueColor),
       labelLarge: TextStyle(
         color: kDarkBlueColor,
         fontSize: 28.sp,
         fontFamily: 'Hacen Tunisia',
         fontWeight: FontWeight.w400,
+        letterSpacing: 0,
         height: 0,
       ),
       labelMedium: TextStyle(
@@ -48,6 +54,7 @@ var lighttheme = ThemeData(
         fontSize: 20.sp,
         fontFamily: 'Hacen Tunisia',
         fontWeight: FontWeight.w400,
+        letterSpacing: 0,
         // height: 0.07,
       ),
     ));

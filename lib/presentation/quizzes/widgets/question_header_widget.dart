@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 
 class QuestionHeaderWidget extends StatelessWidget {
-  const QuestionHeaderWidget({super.key, required this.index, this.title});
+  const QuestionHeaderWidget(
+      {super.key, required this.index, this.title, this.image});
   final int index;
   final String? title;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,23 @@ class QuestionHeaderWidget extends StatelessWidget {
                     .bodyMedium!
                     .copyWith(color: kprimaryGreyColor),
               ),
+              SizedBox(
+                height: 10.h,
+              ),
+              if (image != null)
+                CachedNetworkImage(
+                  width: 260.w,
+                  height: 200.h,
+                  fit: BoxFit.cover,
+                  imageUrl: image!,
+                  placeholder: ((context, url) => ShimmerPlaceholder(
+                        child: Container(
+                          height: 150.h,
+                          width: 200.w,
+                          color: Colors.black,
+                        ),
+                      )),
+                ),
             ],
           ),
         ),
