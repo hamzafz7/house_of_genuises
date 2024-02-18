@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 
 class AboutUsConatiner extends StatelessWidget {
   const AboutUsConatiner(
@@ -17,6 +18,7 @@ class AboutUsConatiner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+          color: !CacheProvider.getAppTheme() ? Colors.white : null,
           borderRadius: BorderRadius.all(Radius.circular(10.r)),
           boxShadow: const [
             BoxShadow(

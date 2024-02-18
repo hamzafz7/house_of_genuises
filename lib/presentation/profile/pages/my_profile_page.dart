@@ -102,7 +102,7 @@ class MyProfilePage extends GetView<MyProfileController> {
                                       ProfileListItem(
                                           svgUrl: "assets/icons/sun.svg",
                                           onTap: () {},
-                                          text: "السطوع"),
+                                          text: "الوضع الليلي"),
                                       const Spacer(),
                                       GetBuilder(
                                           init: ThemeController(),

@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.amzah.sesiuneg_fo_esuoh"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
     
 

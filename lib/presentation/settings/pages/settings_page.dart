@@ -3,13 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/presentation/profile/widgets/profile_list_item.dart';
+import 'package:house_of_genuises/presentation/settings/controller/setting_controller.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_appbar.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends GetView<SettingController> {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SettingController());
     return Scaffold(
       appBar: const CustomAppBar(text: "الإعدادات"),
       body: Column(
@@ -35,7 +37,9 @@ class SettingsPage extends StatelessWidget {
           ),
           ProfileListItem(
               svgUrl: "assets/icons/Message.svg",
-              onTap: () {},
+              onTap: () {
+                controller.launchTelegramURL();
+              },
               text: "تواصل معنا")
         ],
       ),
