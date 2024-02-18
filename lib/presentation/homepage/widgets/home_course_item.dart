@@ -123,7 +123,12 @@ class HomeCourseItem extends StatelessWidget {
               width: 110.w,
               borderRadius: 6.r,
               child: Text(
-                "انضم الأن",
+                courseModel.isPaid != true &&
+                        courseModel.isOpen != true &&
+                        (courseModel.isTeachWithCourse != true ||
+                            courseModel.isTeachWithCourse == null)
+                    ? "انضم الأن"
+                    : 'تابع',
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall!

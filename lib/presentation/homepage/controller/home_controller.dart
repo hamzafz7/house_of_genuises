@@ -81,6 +81,7 @@ class HomeController extends GetxController {
     var response = await _categoryRepository.getCourses(id);
     if (response.success) {
       coursesModel = CoursesModel.fromJson(response.data);
+      print(response.data);
       if (coursesModel!.courses == null || coursesModel!.courses!.isEmpty) {
         updatecourseStatus(RequestStatus.noData);
       } else {

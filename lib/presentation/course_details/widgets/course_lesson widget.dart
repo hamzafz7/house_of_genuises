@@ -24,6 +24,7 @@ class CourseLessonWidget extends StatelessWidget {
           onTap: () {
             if (lessionModel.isOpen! ||
                 controller.courseInfoModel!.course!.isPaid! ||
+                controller.courseInfoModel!.course!.isOpen! ||
                 controller.courseInfoModel!.course!.isTeachWithCourse == true) {
               if (lessionModel.type == 'video') {
                 Get.to(() => ShowCourseVideo(video: lessionModel.link));

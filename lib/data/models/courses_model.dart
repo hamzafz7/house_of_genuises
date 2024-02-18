@@ -20,6 +20,7 @@ class CourseModel {
   final String? telegramChannelLink;
   final bool? isOpen;
   List<String>? teachers;
+  bool? isTeachWithCourse;
   final bool? isVisible;
   final bool? isPaid;
 
@@ -31,6 +32,7 @@ class CourseModel {
     required this.isOpen,
     required this.isVisible,
     this.teachers,
+    this.isTeachWithCourse,
     required this.isPaid,
   });
 
@@ -43,6 +45,7 @@ class CourseModel {
         isOpen: json['is_open'],
         isVisible: json['is_visible'],
         isPaid: json['is_paid'],
+        isTeachWithCourse: json['is_teach_this_course'],
         teachers: json['teachers'] != null
             ? List<String>.from(json['teachers'])
             : []);
