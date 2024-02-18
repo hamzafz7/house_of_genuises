@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:svg_flutter/svg.dart';
 
 class MyProfileHeader extends StatelessWidget {
@@ -21,10 +20,7 @@ class MyProfileHeader extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Text('حسابي',
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelMedium!
-                      .copyWith(color: kDarkBlueColor)),
+                  style: Theme.of(context).textTheme.labelMedium!),
             ),
           )
         ],

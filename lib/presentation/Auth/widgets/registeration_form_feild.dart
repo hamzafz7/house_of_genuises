@@ -35,8 +35,10 @@ class RegisterationFormFeild extends StatelessWidget {
           obscureText: visibility,
           controller: controller,
           validator: validator,
-          style:
-              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18.sp),
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontSize: 18.sp, color: kDarkBlueColor),
           decoration: InputDecoration(
               suffixIcon: suffix,
               hintText: hintText,

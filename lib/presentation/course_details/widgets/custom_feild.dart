@@ -26,7 +26,7 @@ class CustomActivationFeild extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextFormField(
-          style: TextStyle(fontSize: 12.sp),
+          style: TextStyle(fontSize: 14.sp, color: kDarkBlueColor),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           textInputAction: TextInputAction.newline,
           maxLines: feildHeight == null ? 1 : null,
