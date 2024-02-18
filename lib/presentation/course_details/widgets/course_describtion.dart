@@ -55,29 +55,30 @@ class CourseDescribtionWidget extends StatelessWidget {
         SizedBox(
           height: 15.h,
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Row(
-            children: [
-              Text("رابط القناة"),
-              SizedBox(
-                width: 160.w,
-              ),
-              GestureDetector(
-                onTap: () {
-                  controller.launchTelegramURL(
-                      controller.courseInfoModel!.course!.telegramChannelLink);
-                },
-                child: Image.asset(
-                  "assets/images/telegram.png",
-                  height: 25.h,
-                  width: 25.w,
-                  fit: BoxFit.fill,
+        if (controller.courseInfoModel!.course!.telegramChannelLink != null)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Row(
+              children: [
+                Text("رابط القناة"),
+                SizedBox(
+                  width: 240.w,
                 ),
-              )
-            ],
-          ),
-        )
+                GestureDetector(
+                  onTap: () {
+                    controller.launchTelegramURL(controller
+                        .courseInfoModel!.course!.telegramChannelLink);
+                  },
+                  child: Image.asset(
+                    "assets/images/telegram.png",
+                    height: 25.h,
+                    width: 25.w,
+                    fit: BoxFit.fill,
+                  ),
+                )
+              ],
+            ),
+          )
       ],
     );
   }
