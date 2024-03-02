@@ -1,5 +1,6 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -19,6 +20,8 @@ void main() async {
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await FireBaseAPi().initNotifications();
   secureScreen();
   if (CacheProvider().getDeviceId() == null) {

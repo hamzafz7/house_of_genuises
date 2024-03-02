@@ -27,7 +27,7 @@ class CourseLessonWidget extends StatelessWidget {
                 controller.courseInfoModel!.course!.isOpen! ||
                 controller.courseInfoModel!.course!.isTeachWithCourse == true) {
               if (lessionModel.type == 'video') {
-                Get.to(() => ShowCourseVideo(video: lessionModel.link));
+                Get.to(() => ShowCourseVideo(), arguments: lessionModel.link);
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);

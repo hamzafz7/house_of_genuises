@@ -116,4 +116,33 @@ class CategoryRepository {
       );
     }
   }
+
+  Future<AppResponse> watchVideo(String link) async {
+    try {
+      print(CacheProvider.getAppToken());
+      var appResponse = await ApiProvider.get(
+          url: watchVidUrl,
+          token: CacheProvider.getAppToken(),
+          query: {"link": link});
+      return AppResponse(
+          success: true, data: appResponse.data, errorMessage: null);
+    } on DioException catch (e) {
+      return AppResponse(
+          success: true, data: null, errorMessage: e.message ?? e.toString());
+    }
+  }
+
+  Future<AppResponse> downloadVideo(String link) async {
+    try {
+      var appResponse = await ApiProvider.get(
+          url: downloadVidUrl,
+          token: CacheProvider.getAppToken(),
+          query: {"link": link});
+      return AppResponse(
+          success: true, data: appResponse.data, errorMessage: null);
+    } on DioException catch (e) {
+      return AppResponse(
+          success: true, data: null, errorMessage: e.message ?? e.toString());
+    }
+  }
 }
