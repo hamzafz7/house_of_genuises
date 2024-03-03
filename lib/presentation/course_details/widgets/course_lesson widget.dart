@@ -29,7 +29,11 @@ class CourseLessonWidget extends StatelessWidget {
                 controller.courseInfoModel!.course!.isTeachWithCourse == true ||
                 CacheProvider.getUserType() == 'admin') {
               if (lessionModel.type == 'video') {
-                Get.to(() => ShowCourseVideo(), arguments: lessionModel.link);
+                Get.to(
+                    () => ShowCourseVideo(
+                          description: lessionModel.description,
+                        ),
+                    arguments: lessionModel.link);
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);
@@ -49,12 +53,21 @@ class CourseLessonWidget extends StatelessWidget {
           ),
         ),
         SizedBox(
-            width: 250.w,
+            width: 240.w,
             child: Text(
               lessionModel.title ?? " ",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-            ))
+            )),
+        if (lessionModel.type == 'video')
+          IconButton(
+              onPressed: () {
+                controller.downloadVideo(lessionModel.link!);
+              },
+              icon: Icon(
+                Icons.download,
+                color: kprimaryBlueColor,
+              ))
       ],
     );
   }

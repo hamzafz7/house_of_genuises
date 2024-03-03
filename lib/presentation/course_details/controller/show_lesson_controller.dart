@@ -1,7 +1,6 @@
 import "dart:io";
 import "package:house_of_genuises/common/utils/utils.dart";
 import 'package:http/http.dart' as http;
-import "package:dio/dio.dart";
 import "package:get/get.dart";
 import "package:house_of_genuises/common/constants/enums/request_enum.dart";
 import "package:house_of_genuises/data/repositories/category_repo.dart";
@@ -12,8 +11,7 @@ class ShowLessonController extends GetxController {
   @override
   void onInit() {
     String link = Get.arguments;
-    // watchVideo(link);
-    downloadVideo(link);
+    watchVideo(link);
     super.onInit();
   }
 
@@ -27,7 +25,8 @@ class ShowLessonController extends GetxController {
     updateWatchVideoStatus(RequestStatus.loading);
     var response = await _categoryRepository.watchVideo(link);
     if (response.success) {
-      print(response.data['link'].first['link']);
+      print(response.data);
+      // print(response.data['link'].first['link']);
       videoPlayerController = VideoPlayerController.networkUrl(
           Uri.parse(response.data['link'].first['link']))
         ..initialize();
@@ -58,6 +57,7 @@ class ShowLessonController extends GetxController {
           Utils.logPrint(bytes);
           print("DONE ************");
           await file.writeAsBytes(bytes);
+          watchthevideo(file);
           // print(file.path);
         });
       } else {

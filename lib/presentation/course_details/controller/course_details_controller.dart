@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
@@ -7,6 +9,8 @@ import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetailsController extends GetxController {
@@ -92,6 +96,34 @@ class CourseDetailsController extends GetxController {
       } else {
         throw 'Could not launch $url';
       }
+    }
+  }
+
+  Future<void> downloadVideo(String link) async {
+    var response = await _categoryRepository.downloadVideo(link);
+    if (response.success) {
+      print(response.data);
+    }
+  }
+
+  Future<void> saveAndDownload(String url) async {
+    var request = http.MultipartRequest('GET', Uri.parse(url));
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      final documentsDirectory = await getApplicationDocumentsDirectory();
+      final file = File('${documentsDirectory.path}/video.mp4');
+      var bytes = <int>[];
+      response.stream.listen((newBytes) {
+        print(newBytes);
+        bytes.addAll(newBytes);
+      }, onDone: () async {
+        Utils.logPrint(bytes);
+        print("DONE ************");
+        await file.writeAsBytes(bytes);
+        // save file;
+      });
+    } else {
+      print(response.statusCode);
     }
   }
 }
