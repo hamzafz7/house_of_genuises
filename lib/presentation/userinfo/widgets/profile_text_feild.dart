@@ -59,7 +59,13 @@ class _ProfileTextFeildState extends State<ProfileTextFeild> {
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-                    child: Text(widget.controller.text),
+                    child: Text(
+                      widget.controller.text,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: kDarkBlueColor),
+                    ),
                   ),
                 )
               ],

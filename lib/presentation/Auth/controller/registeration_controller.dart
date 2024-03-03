@@ -48,6 +48,7 @@ class RegisterationController extends GetxController {
       CacheProvider.setUserId(authResponse!.data!.user!.id!);
       CacheProvider.setUserName(authResponse!.data!.user!.fullName!);
       CacheProvider.setAppToken(authResponse!.data!.token!);
+      CacheProvider.setUserType(authResponse!.data!.user!.type);
       Get.offAllNamed(AppRoute.mainPageRoute);
       uptateLoginRequestStatus(RequestStatus.success);
     } else {
@@ -74,6 +75,8 @@ class RegisterationController extends GetxController {
       CacheProvider.setUserId(authResponse!.data!.user!.id!);
       CacheProvider.setUserName(authResponse!.data!.user!.fullName!);
       CacheProvider.setAppToken(authResponse!.data!.token!);
+      CacheProvider.setUserType(authResponse!.data!.user!.type);
+
       Get.offAllNamed(AppRoute.mainPageRoute);
       uptateRegisterRequestStatus(RequestStatus.success);
     } else {

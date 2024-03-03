@@ -61,6 +61,7 @@ class CourseDetailsController extends GetxController {
     updateGetCourseInfo(RequestStatus.loading);
     var response = await _categoryRepository.getCourseInfo(id);
     if (response.success) {
+      print(response.data);
       courseInfoModel = CourseInfoResponse.fromJson(response.data);
       Utils.logPrint(response.data);
       if (courseInfoModel == null || courseInfoModel!.course == null) {

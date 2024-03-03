@@ -85,6 +85,14 @@ class CacheProvider {
     return _getStorage.read("device_token");
   }
 
+  static setUserType(String? val) {
+    _getStorage.write("type", val);
+  }
+
+  static getUserType() {
+    return _getStorage.read("type");
+  }
+
   Future<void> setDeviceId() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {

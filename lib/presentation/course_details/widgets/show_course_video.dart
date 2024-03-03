@@ -52,9 +52,9 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
                   flickManager: FlickManager(
                       videoPlayerController:
                           controller.videoPlayerController!)))
-          : Center(
+          :controller.watchVideoStatus.value == RequestStatus.loading? Center(
               child: CircularProgressIndicator(),
-            )),
+            ) : Center(child:Text("حدث خطأ ما أثناء تحميل الفيديو")),)
     );
   }
 }

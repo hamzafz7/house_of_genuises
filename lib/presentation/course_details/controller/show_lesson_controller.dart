@@ -7,7 +7,6 @@ class ShowLessonController extends GetxController {
   @override
   void onInit() {
     String link = Get.arguments;
-    print(link);
     watchVideo(link);
     super.onInit();
   }
@@ -25,17 +24,12 @@ class ShowLessonController extends GetxController {
       videoPlayerController = VideoPlayerController.networkUrl(
           Uri.parse(response.data['link'].first['link']))
         ..initialize();
-      videoPlayerController!.play();
+
       updateWatchVideoStatus(RequestStatus.success);
     } else {
+      updateWatchVideoStatus(RequestStatus.onError);
       print(response.errorMessage);
     }
-  }
-
-  Future<void> downloadVideo(String link) async {
-    var response = await _categoryRepository.downloadVideo(link);
-    print(response.data);
-    print(response.errorMessage);
   }
 
   @override

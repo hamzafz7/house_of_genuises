@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/data/models/lession_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_pdf.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/show_course_video.dart';
@@ -25,7 +26,8 @@ class CourseLessonWidget extends StatelessWidget {
             if (lessionModel.isOpen! ||
                 controller.courseInfoModel!.course!.isPaid! ||
                 controller.courseInfoModel!.course!.isOpen! ||
-                controller.courseInfoModel!.course!.isTeachWithCourse == true) {
+                controller.courseInfoModel!.course!.isTeachWithCourse == true ||
+                CacheProvider.getUserType() == 'admin') {
               if (lessionModel.type == 'video') {
                 Get.to(() => ShowCourseVideo(), arguments: lessionModel.link);
               } else {

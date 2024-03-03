@@ -56,6 +56,7 @@ class MyProfileController extends GetxController {
       addressController = TextEditingController(
           text: prfoileResponse!.data.location ?? "لا يوجد");
       updateGetProfileStatus(RequestStatus.success);
+      print(response.data);
     } else if (!response.success) {
       if (response.errorMessage == "لا يوجد اتصال بالانترنت") {
         updateGetProfileStatus(RequestStatus.noInternentt);

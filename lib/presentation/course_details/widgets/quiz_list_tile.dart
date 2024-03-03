@@ -7,6 +7,8 @@ import 'package:house_of_genuises/common/routes/app_routes.dart';
 
 import 'package:house_of_genuises/data/models/quiz_model.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/complete_failure.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 
 class QuizListTile extends StatelessWidget {
   QuizListTile({super.key, required this.quizzModel});
@@ -28,7 +30,11 @@ class QuizListTile extends StatelessWidget {
           GestureDetector(
             onTap: () {
               print(quizzModel.description);
-              Get.toNamed(AppRoute.quizzPageRoute, arguments: quizzModel);
+              if (quizzModel.isFree == 1) {
+                Get.toNamed(AppRoute.quizzPageRoute, arguments: quizzModel);
+              } else {
+                CustomDialog(context, child: const CompleteFailureWidget());
+              }
             },
             child: Padding(
                 padding: EdgeInsets.all(8.r),

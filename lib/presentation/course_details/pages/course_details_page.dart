@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_curriculum.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_describtion.dart';
@@ -57,7 +58,8 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                                       .courseInfoModel!.course!.isPaid! &&
                                   controller.courseInfoModel!.course!
                                           .isTeachWithCourse !=
-                                      true) {
+                                      true &&
+                                  CacheProvider.getUserType() != 'admin') {
                                 CustomDialog(context,
                                     child: CodeActivationWidget(
                                       controller:
@@ -94,7 +96,8 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                                         true ||
                                     controller.courseInfoModel!.course!
                                             .isTeachWithCourse ==
-                                        true
+                                        true ||
+                                    CacheProvider.getUserType() == 'admin'
                                 ? "تابع المشاهدة"
                                 : "ٍسجل الآن",
                             style: Theme.of(context)

@@ -7,6 +7,7 @@ import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/shimmer_effect.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -126,7 +127,8 @@ class HomeCourseItem extends StatelessWidget {
                 courseModel.isPaid != true &&
                         courseModel.isOpen != true &&
                         (courseModel.isTeachWithCourse != true ||
-                            courseModel.isTeachWithCourse == null)
+                            courseModel.isTeachWithCourse == null) &&
+                        CacheProvider.getUserType() != 'admin'
                     ? "انضم الأن"
                     : 'تابع',
                 style: Theme.of(context)
