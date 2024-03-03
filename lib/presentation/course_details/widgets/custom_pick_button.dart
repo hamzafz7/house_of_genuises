@@ -30,8 +30,8 @@ class CustomPickButton extends StatelessWidget {
                 bottomColor: controller.currentWidgetIndex.value == 0
                     ? kprimaryBlueColor
                     : ksecondaryBlueColor.withOpacity(0.008),
-                width: 166,
-                height: 48,
+                width: 110.w,
+                height: 48.h,
                 onTap: () {
                   controller.changeCurrentWidgetIndx(0);
                 },
@@ -56,13 +56,37 @@ class CustomPickButton extends StatelessWidget {
                 bottomColor: controller.currentWidgetIndex.value == 1
                     ? kprimaryBlueColor
                     : ksecondaryBlueColor.withOpacity(0.008),
-                width: 166,
-                height: 48,
+                width: 110.w,
+                height: 48.h,
                 onTap: () {
                   controller.changeCurrentWidgetIndx(1);
                 },
                 borderRadius: 13.r,
                 child: Text("المنهاج",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color:
+                            //  controller.currentWidgetIndex.value == 1
+                            // ?
+                            Colors.white
+                        // : kDarkBlueColor
+                        )),
+              ),
+            ),
+            SizedBox(
+              width: 5.w,
+            ),
+            Obx(
+              () => CustomButton(
+                bottomColor: controller.currentWidgetIndex.value == 2
+                    ? kprimaryBlueColor
+                    : ksecondaryBlueColor.withOpacity(0.008),
+                width: 110.w,
+                height: 48.h,
+                onTap: () {
+                  controller.changeCurrentWidgetIndx(2);
+                },
+                borderRadius: 13.r,
+                child: Text("المحفوظات",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color:
                             //  controller.currentWidgetIndex.value == 1

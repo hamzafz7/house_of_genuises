@@ -45,16 +45,21 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
   Widget build(BuildContext context) {
     Get.put(ShowLessonController());
     return Scaffold(
-      body: Obx(() => controller.watchVideoStatus.value == RequestStatus.success
-          ? AspectRatio(
-              aspectRatio: 1 / 0.7,
-              child: FlickVideoPlayer(
-                  flickManager: FlickManager(
-                      videoPlayerController:
-                          controller.videoPlayerController!)))
-          :controller.watchVideoStatus.value == RequestStatus.loading? Center(
-              child: CircularProgressIndicator(),
-            ) : Center(child:Text("حدث خطأ ما أثناء تحميل الفيديو")),)
-    );
+        body: Obx(
+            () => controller.watchVideoStatus.value == RequestStatus.success
+                ? AspectRatio(
+                    aspectRatio: 1 / 0.7,
+                    child: FlickVideoPlayer(
+                        flickManager: FlickManager(
+                            videoPlayerController:
+                                controller.videoPlayerController!)))
+                :
+                //  controller.watchVideoStatus.value == RequestStatus.loading
+                // ?
+                Center(
+                    child: CircularProgressIndicator(),
+                  )
+            // : Center(child: Text("حدث خطأ ما أثناء تحميل الفيديو")),
+            ));
   }
 }

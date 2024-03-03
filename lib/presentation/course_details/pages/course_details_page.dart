@@ -11,6 +11,7 @@ import 'package:house_of_genuises/presentation/course_details/widgets/course_des
 import 'package:house_of_genuises/presentation/course_details/widgets/course_details_header.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/custom_pick_button.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/custom_shape.dart';
+import 'package:house_of_genuises/presentation/course_details/widgets/downloaded_videos.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/code_activate_dialog.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:house_of_genuises/presentation/widgets/custom_button.dart';
@@ -44,7 +45,9 @@ class CourseDetailsPage extends GetView<CourseDetailsController> {
                       ),
                       Obx(() => controller.currentWidgetIndex.value == 0
                           ? CourseDescribtionWidget()
-                          : CourseCurriculum()),
+                          : controller.currentWidgetIndex.value == 1
+                              ? CourseCurriculum()
+                              : DownloadedVideosWidget()),
                       SizedBox(
                         height: 10.h,
                       ),
