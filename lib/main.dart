@@ -9,6 +9,7 @@ import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/common/themes/themes.dart';
 import 'package:house_of_genuises/data/providers/apiProvider/api_provider.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
+import 'package:house_of_genuises/data/providers/databaseProvider/video_database.dart';
 import 'package:house_of_genuises/data/providers/notificationProvider/notification_provider.dart';
 import 'package:house_of_genuises/presentation/splashpage/page/splash_page.dart';
 import 'firebase_options.dart';
@@ -20,6 +21,7 @@ void main() async {
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
+  await VideoDatabase.database;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await FireBaseAPi().initNotifications();

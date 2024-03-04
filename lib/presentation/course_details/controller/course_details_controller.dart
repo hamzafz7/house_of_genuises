@@ -1,15 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/models/course_info_model.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
+import 'package:house_of_genuises/data/models/download_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
+import 'package:house_of_genuises/data/providers/databaseProvider/video_database.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -99,27 +98,34 @@ class CourseDetailsController extends GetxController {
     }
   }
 
+  DownloadResponse? downloadResponse;
+  var downloadStatus = RequestStatus.begin.obs;
+  updateDownloadStatus(RequestStatus status) => downloadStatus.value = status;
+
   Future<void> downloadVideo(String link) async {
+    updateDownloadStatus(RequestStatus.loading);
     var response = await _categoryRepository.downloadVideo(link);
     if (response.success) {
-      print(response.data);
+      downloadResponse = DownloadResponse.fromJson(response.data['link']);
+      updateDownloadStatus(RequestStatus.success);
+    } else {
+      updateDownloadStatus(RequestStatus.onError);
     }
   }
 
-  Future<void> saveAndDownload(String url) async {
+  Future<void> saveAndDownload(
+      String url, String courseName, String courseVidName) async {
     var request = http.MultipartRequest('GET', Uri.parse(url));
     var response = await request.send();
     if (response.statusCode == 200) {
-      final documentsDirectory = await getApplicationDocumentsDirectory();
-      final file = File('${documentsDirectory.path}/video.mp4');
       var bytes = <int>[];
       response.stream.listen((newBytes) {
         print(newBytes);
         bytes.addAll(newBytes);
       }, onDone: () async {
         Utils.logPrint(bytes);
-        print("DONE ************");
-        await file.writeAsBytes(bytes);
+        VideoDatabase.insertVideo(courseName, courseVidName, bytes);
+
         // save file;
       });
     } else {
