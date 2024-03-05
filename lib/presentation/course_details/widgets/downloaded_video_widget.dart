@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
+import 'package:house_of_genuises/presentation/course_details/widgets/show_downloaded_video.dart';
 import 'package:svg_flutter/svg.dart';
 
 class DownloadedVideoWidget extends StatelessWidget {
@@ -10,21 +11,28 @@ class DownloadedVideoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0.sp),
+      padding: EdgeInsets.symmetric(horizontal: 28.w),
       child: Container(
         width: Get.width,
-        child: Row(children: [
-          SvgPicture.asset('assets/icons/play-circle.svg'),
-          Spacer(),
-          SizedBox(
-            width: 240.w,
-            child: Text(
-              video.videoName,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+        child: GestureDetector(
+          onTap: () {
+            Get.to(() => ShowDownloadedVideo(), arguments: video);
+          },
+          child: Row(children: [
+            SvgPicture.asset('assets/icons/play-circle.svg'),
+            SizedBox(
+              width: 20.w,
             ),
-          )
-        ]),
+            SizedBox(
+              width: 240.w,
+              child: Text(
+                video.videoName,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ]),
+        ),
       ),
     );
   }

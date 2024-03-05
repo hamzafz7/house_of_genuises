@@ -30,6 +30,7 @@ class AppRoute {
   static String quizzPageRoute = '/quizz_page';
   static String quizResultPageRoute = '/quiz_result_page';
   static String searchPageRoute = '/search_page';
+
   static List<GetPage> pages = [
     GetPage(name: onboardingPageRoute, page: () => const OnBoardingPage()),
     GetPage(name: loginPageRoute, page: () => const LoginPage()),
@@ -46,6 +47,6 @@ class AppRoute {
     GetPage(name: quizStatisiticPageRoute, page: () => QuizStatisticPage()),
     GetPage(name: quizzPageRoute, page: () => const QuizzesPage()),
     GetPage(name: quizResultPageRoute, page: () => ResultPage()),
-    GetPage(name: searchPageRoute, page: () => const SearchPage())
+    GetPage(name: searchPageRoute, page: () => const SearchPage()),
   ];
 }
