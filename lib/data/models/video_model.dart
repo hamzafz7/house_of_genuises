@@ -1,27 +1,15 @@
-import 'dart:typed_data';
-
-import 'package:house_of_genuises/data/providers/databaseProvider/video_database.dart';
-
 class Video {
   final String courseName;
   final String videoName;
-  final Uint8List encryptedVideoBytes;
+  final String key;
 
-  Video(
-      {required this.courseName,
-      required this.videoName,
-      required this.encryptedVideoBytes});
+  Video({required this.courseName, required this.videoName, required this.key});
 
   factory Video.fromMap(Map<String, dynamic> map) {
     return Video(
       courseName: map['courseName'],
       videoName: map['videoName'],
-      encryptedVideoBytes: map['encryptedVideoBytes'],
+      key: map['encryptedKey'],
     );
-  }
-  Future<List<int>> getDecryptedVideoBytes() async {
-    final videoBytes =
-        await VideoDatabase.decryptVideoBytes(encryptedVideoBytes);
-    return videoBytes;
   }
 }

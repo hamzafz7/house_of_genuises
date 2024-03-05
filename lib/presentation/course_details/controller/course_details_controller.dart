@@ -1,23 +1,37 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/models/course_info_model.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/data/models/download_model.dart';
+import 'package:house_of_genuises/data/models/video_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/providers/databaseProvider/video_database.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/pick_quality_dialog.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CourseDetailsController extends GetxController {
   @override
   void onInit() {
     _courseModel = Get.arguments;
-    getCourseInfo(_courseModel!.id);
+    getCourseInfo(_courseModel!.id).then((value) {
+      getDownloadedVideos();
+    });
     super.onInit();
+  }
+
+  List<Video> downloadedVideos = [];
+  getDownloadedVideos() async {
+    downloadedVideos = await VideoDatabase.getVideosByCourseName(
+        courseInfoModel!.course!.name ?? "none");
   }
 
   TextEditingController activationController = TextEditingController();
@@ -102,19 +116,30 @@ class CourseDetailsController extends GetxController {
   var downloadStatus = RequestStatus.begin.obs;
   updateDownloadStatus(RequestStatus status) => downloadStatus.value = status;
 
-  Future<void> downloadVideo(String link) async {
+  Future<void> downloadVideo(
+      String link, context, String courseName, String videoName) async {
     updateDownloadStatus(RequestStatus.loading);
     var response = await _categoryRepository.downloadVideo(link);
     if (response.success) {
       downloadResponse = DownloadResponse.fromJson(response.data['link']);
+
+      CustomDialog(context,
+          child: PickQualityDialog(
+              response: downloadResponse!,
+              videoName: videoName,
+              courseName: courseName));
+
       updateDownloadStatus(RequestStatus.success);
     } else {
       updateDownloadStatus(RequestStatus.onError);
     }
   }
 
+  final _secureStorage = const FlutterSecureStorage();
+
   Future<void> saveAndDownload(
       String url, String courseName, String courseVidName) async {
+    updateDownloadStatus(RequestStatus.loading);
     var request = http.MultipartRequest('GET', Uri.parse(url));
     var response = await request.send();
     if (response.statusCode == 200) {
@@ -123,13 +148,26 @@ class CourseDetailsController extends GetxController {
         print(newBytes);
         bytes.addAll(newBytes);
       }, onDone: () async {
-        Utils.logPrint(bytes);
-        VideoDatabase.insertVideo(courseName, courseVidName, bytes);
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/$courseVidName.mp4';
+        final file = File(filePath);
+        await file.writeAsBytes(bytes);
 
-        // save file;
+        final key = 'video_$courseName-$courseVidName';
+        await _secureStorage.write(key: key, value: filePath);
+        VideoDatabase.insertVideo(courseName, courseVidName, key);
+        updateDownloadStatus(RequestStatus.success);
+        print("success downloading video");
       });
     } else {
-      print(response.statusCode);
+      updateDownloadStatus(RequestStatus.onError);
     }
+  }
+
+  watchFromSQflit(List<int> decryptedBytes) async {
+    final tempDir = await getTemporaryDirectory();
+    final tempVideoFile = File('${tempDir.path}/temp_video.mp4');
+    await tempVideoFile.writeAsBytes(decryptedBytes);
+    return tempVideoFile;
   }
 }

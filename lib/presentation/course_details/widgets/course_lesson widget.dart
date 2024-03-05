@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -62,7 +60,11 @@ class CourseLessonWidget extends StatelessWidget {
         if (lessionModel.type == 'video')
           IconButton(
               onPressed: () {
-                controller.downloadVideo(lessionModel.link!);
+                controller.downloadVideo(
+                    lessionModel.link!,
+                    context,
+                    controller.courseInfoModel!.course!.name!,
+                    lessionModel.title!);
               },
               icon: Icon(
                 Icons.download,

@@ -2,8 +2,6 @@ import 'package:house_of_genuises/data/models/video_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'dart:typed_data';
-import 'package:encrypt/encrypt.dart';
 
 class VideoDatabase {
   static final VideoDatabase instance = VideoDatabase._init();
@@ -30,42 +28,40 @@ class VideoDatabase {
       CREATE TABLE videos (
         courseName TEXT PRIMARY KEY,
         videoName TEXT,
-        encryptedVideoBytes BLOB
+        key TEXT
       )
     ''');
   }
 
   static Future<void> insertVideo(
-      String courseName, String videoName, List<int> videoBytes) async {
+      String courseName, String videoName, String key) async {
     final db = await VideoDatabase.database;
-
-    final encryptedBytes = _encryptVideoBytes(videoBytes);
 
     await db.insert(
       'videos',
       {
         'courseName': courseName,
         'videoName': videoName,
-        'encryptedVideoBytes': encryptedBytes,
+        'encryptedKey': key,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  static Uint8List _encryptVideoBytes(List<int> videoBytes) {
-    final key = Key.fromLength(32); // Generate a 256-bit encryption key
-    final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
+  // static Uint8List _encryptVideoBytes(List<int> videoBytes) {
+  //   final key = Key.fromLength(32); // Generate a 256-bit encryption key
+  //   final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
 
-    final encrypter = Encrypter(AES(key));
+  //   final encrypter = Encrypter(AES(key));
 
-    final Uint8List uint8VideoBytes = Uint8List.fromList(videoBytes);
+  //   final Uint8List uint8VideoBytes = Uint8List.fromList(videoBytes);
 
-    final encrypted = encrypter.encryptBytes(uint8VideoBytes, iv: iv);
+  //   final encrypted = encrypter.encryptBytes(uint8VideoBytes, iv: iv);
 
-    return encrypted.bytes;
-  }
+  //   return encrypted.bytes;
+  // }
 
-  Future<List<Video>> getVideosByCourseName(String courseName) async {
+  static Future<List<Video>> getVideosByCourseName(String courseName) async {
     final db = await VideoDatabase.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -80,20 +76,21 @@ class VideoDatabase {
       final video = Video.fromMap(map);
       videos.add(video);
     }
+    print(videos[0].videoName);
 
     return videos;
   }
 
-  static List<int> decryptVideoBytes(Uint8List encryptedBytes) {
-    final key = Key.fromLength(32); // Generate a 256-bit encryption key
-    final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
+  // static List<int> decryptVideoBytes(Uint8List encryptedBytes) {
+  //   final key = Key.fromLength(32); // Generate a 256-bit encryption key
+  //   final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
 
-    final encrypter = Encrypter(AES(key));
+  //   final encrypter = Encrypter(AES(key));
 
-    final encrypted = Encrypted(encryptedBytes);
+  //   final encrypted = Encrypted(encryptedBytes);
 
-    final decrypted = encrypter.decryptBytes(encrypted, iv: iv);
+  //   final decrypted = encrypter.decryptBytes(encrypted, iv: iv);
 
-    return decrypted;
-  }
+  //   return decrypted;
+  // }
 }

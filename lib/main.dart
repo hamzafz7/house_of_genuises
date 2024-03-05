@@ -21,6 +21,7 @@ void main() async {
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();
+
   await VideoDatabase.database;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
