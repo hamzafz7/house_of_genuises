@@ -24,13 +24,15 @@ class VideoDatabase {
   }
 
   static Future<void> _createDB(Database db, int version) async {
-    await db.execute('''
+    await db.execute(
+      '''
       CREATE TABLE videos (
         courseName TEXT PRIMARY KEY,
         videoName TEXT,
-        key TEXT
+        encryptedKey TEXT
       )
-    ''');
+    ''',
+    );
   }
 
   static Future<void> insertVideo(
@@ -61,7 +63,7 @@ class VideoDatabase {
   //   return encrypted.bytes;
   // }
 
-  static Future<List<Video>> getVideosByCourseName(String courseName) async {
+  static Future<List<Video>?>? getVideosByCourseName(String courseName) async {
     final db = await VideoDatabase.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -76,7 +78,7 @@ class VideoDatabase {
       final video = Video.fromMap(map);
       videos.add(video);
     }
-    print(videos[0].videoName);
+    print(videos[0].key);
 
     return videos;
   }

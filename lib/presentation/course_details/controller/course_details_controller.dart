@@ -31,7 +31,10 @@ class CourseDetailsController extends GetxController {
   List<Video> downloadedVideos = [];
   getDownloadedVideos() async {
     downloadedVideos = await VideoDatabase.getVideosByCourseName(
-        courseInfoModel!.course!.name ?? "none");
+            courseInfoModel!.course!.name ?? "none") ??
+        [];
+    print("length ${downloadedVideos[0].key}");
+    update();
   }
 
   TextEditingController activationController = TextEditingController();
