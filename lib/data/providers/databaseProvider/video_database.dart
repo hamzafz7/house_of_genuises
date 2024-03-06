@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -78,7 +80,6 @@ class VideoDatabase {
       final video = Video.fromMap(map);
       videos.add(video);
     }
-    print(videos[0].key);
 
     return videos;
   }
@@ -95,4 +96,16 @@ class VideoDatabase {
 
   //   return decrypted;
   // }
+  static final _secureStorage = FlutterSecureStorage();
+  static Future<void> deleteVideo(String courseName, String courseVid) async {
+    var path = await _secureStorage.read(key: 'video_$courseName-$courseVid');
+    final file = File(path!);
+    await file.delete();
+
+    final db = await VideoDatabase.database;
+    db.delete('videos',
+        where: 'courseName = ? AND videoName = ?',
+        whereArgs: [courseName, courseVid]);
+    await _secureStorage.delete(key: 'video_$courseName-$courseVid');
+  }
 }

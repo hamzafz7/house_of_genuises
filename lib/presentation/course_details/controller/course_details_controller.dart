@@ -33,7 +33,10 @@ class CourseDetailsController extends GetxController {
     downloadedVideos = await VideoDatabase.getVideosByCourseName(
             courseInfoModel!.course!.name ?? "none") ??
         [];
-    print("length ${downloadedVideos[0].key}");
+    if (downloadedVideos.isEmpty) {
+      print(courseInfoModel!.course!.name);
+    }
+
     update();
   }
 
@@ -158,19 +161,24 @@ class CourseDetailsController extends GetxController {
 
         final key = 'video_$courseName-$courseVidName';
         await _secureStorage.write(key: key, value: filePath);
-        VideoDatabase.insertVideo(courseName, courseVidName, key);
-        updateDownloadStatus(RequestStatus.success);
-        print("success downloading video");
+        VideoDatabase.insertVideo(courseName, courseVidName, key).then((value) {
+          updateDownloadStatus(RequestStatus.success);
+          print("success downloading video");
+        });
       });
     } else {
       updateDownloadStatus(RequestStatus.onError);
     }
   }
 
-  watchFromSQflit(List<int> decryptedBytes) async {
-    final tempDir = await getTemporaryDirectory();
-    final tempVideoFile = File('${tempDir.path}/temp_video.mp4');
-    await tempVideoFile.writeAsBytes(decryptedBytes);
-    return tempVideoFile;
+  // watchFromSQflit(List<int> decryptedBytes) async {
+  //   final tempDir = await getTemporaryDirectory();
+  //   final tempVideoFile = File('${tempDir.path}/temp_video.mp4');
+  //   await tempVideoFile.writeAsBytes(decryptedBytes);
+  //   return tempVideoFile;
+  // }
+  deleteVideo(String courseName, String courseVid) {
+    VideoDatabase.deleteVideo(courseName, courseVid);
+    getDownloadedVideos();
   }
 }

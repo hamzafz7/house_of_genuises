@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/data/models/download_model.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
@@ -18,17 +19,25 @@ class PickQualityDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ListView.builder(
-          itemCount: response.downloadOptions.length,
-          itemBuilder: (item, index) => QualityButton(
-              onPressed: () {
-                controller.saveAndDownload(
-                    response.downloadOptions[index].link!,
-                    courseName,
-                    videoName);
-                Get.back();
-              },
-              quality: response.downloadOptions[index].quality!)),
+      child: Column(children: [
+        Padding(
+          padding: EdgeInsets.all(16.r),
+          child: Text("اختر الدقة المناسبة:"),
+        ),
+        Expanded(
+          child: ListView.builder(
+              itemCount: response.downloadOptions.length,
+              itemBuilder: (item, index) => QualityButton(
+                  onPressed: () {
+                    controller.saveAndDownload(
+                        response.downloadOptions[index].link!,
+                        courseName,
+                        videoName);
+                    Get.back();
+                  },
+                  quality: response.downloadOptions[index].quality!)),
+        ),
+      ]),
     );
   }
 }

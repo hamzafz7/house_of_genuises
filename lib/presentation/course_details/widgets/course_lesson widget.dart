@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
+import 'package:house_of_genuises/common/constants/constants.dart';
+import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/lession_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
@@ -58,18 +60,22 @@ class CourseLessonWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             )),
         if (lessionModel.type == 'video')
-          IconButton(
-              onPressed: () {
-                controller.downloadVideo(
-                    lessionModel.link!,
-                    context,
-                    controller.courseInfoModel!.course!.name!,
-                    lessionModel.title!);
-              },
-              icon: Icon(
-                Icons.download,
-                color: kprimaryBlueColor,
-              ))
+          Obx(
+            () => controller.downloadStatus.value == RequestStatus.loading
+                ? appCircularProgress()
+                : IconButton(
+                    onPressed: () {
+                      controller.downloadVideo(
+                          lessionModel.link!,
+                          context,
+                          controller.courseInfoModel!.course!.name!,
+                          lessionModel.title!);
+                    },
+                    icon: Icon(
+                      Icons.download,
+                      color: kprimaryBlueColor,
+                    )),
+          )
       ],
     );
   }
