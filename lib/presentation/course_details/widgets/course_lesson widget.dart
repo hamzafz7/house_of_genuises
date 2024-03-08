@@ -35,7 +35,7 @@ class CourseLessonWidget extends StatelessWidget {
                         ),
                     arguments: lessionModel.link);
                 controller.isWatched(lessionModel.id);
-                print(lessionModel.isWatched);
+                print("is_watched:${lessionModel.isWatched}");
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);

@@ -173,6 +173,8 @@ class CourseDetailsController extends GetxController {
         VideoDatabase.insertVideo(courseName, courseVidName, key).then((value) {
           updateDownloadStatus(RequestStatus.success);
           getDownloadedVideos();
+          Get.snackbar("تم الأمر بنجاح",
+              "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات ");
           print("success downloading video");
         });
       });
@@ -195,6 +197,6 @@ class CourseDetailsController extends GetxController {
 
   Future<void> isWatched(int lesson_id) async {
     var response = await _categoryRepository.isWatched(lesson_id);
-    print(response.data);
+    print(response.success);
   }
 }
