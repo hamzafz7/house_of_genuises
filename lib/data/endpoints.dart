@@ -23,3 +23,4 @@ String searchCoursesUrl = "courses/search";
 // videos :
 String watchVidUrl = 'watch/';
 String downloadVidUrl = 'download/';
+String isWatchedUrl = 'lesions/watch';

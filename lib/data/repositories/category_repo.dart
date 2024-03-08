@@ -145,4 +145,18 @@ class CategoryRepository {
           success: true, data: null, errorMessage: e.message ?? e.toString());
     }
   }
+
+  Future<AppResponse> isWatched(int id) async {
+    try {
+      var appResponse = await ApiProvider.post(
+        url: "$isWatchedUrl/$id",
+        token: CacheProvider.getAppToken(),
+      );
+      return AppResponse(
+          success: true, data: appResponse.data, errorMessage: null);
+    } on DioException catch (e) {
+      return AppResponse(
+          success: true, data: null, errorMessage: e.message ?? e.toString());
+    }
+  }
 }

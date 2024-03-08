@@ -34,6 +34,8 @@ class CourseLessonWidget extends StatelessWidget {
                           description: lessionModel.description,
                         ),
                     arguments: lessionModel.link);
+                controller.isWatched(lessionModel.id);
+                print(lessionModel.isWatched);
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);
@@ -42,34 +44,50 @@ class CourseLessonWidget extends StatelessWidget {
               CustomDialog(context, child: const CompleteFailureWidget());
             }
           },
-          child: Padding(
-            padding: EdgeInsets.all(8.r),
-            child: lessionModel.type == 'video'
-                ? SvgPicture.asset('assets/icons/play-circle.svg')
-                : const Icon(
-                    Icons.file_copy,
-                    color: kprimaryBlueColor,
-                  ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.r),
+                child: lessionModel.type == 'video'
+                    ? SvgPicture.asset(
+                        'assets/icons/play-circle.svg',
+                        color:
+                            lessionModel.isWatched == true ? Colors.blue : null,
+                      )
+                    : const Icon(
+                        Icons.file_copy,
+                        color: kprimaryBlueColor,
+                      ),
+              ),
+              SizedBox(
+                  width: 240.w,
+                  child: Text(
+                    lessionModel.title ?? " ",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+            ],
           ),
         ),
-        SizedBox(
-            width: 240.w,
-            child: Text(
-              lessionModel.title ?? " ",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )),
         if (lessionModel.type == 'video')
           Obx(
             () => controller.downloadStatus.value == RequestStatus.loading
                 ? appCircularProgress()
                 : IconButton(
                     onPressed: () {
-                      controller.downloadVideo(
-                          lessionModel.link!,
-                          context,
-                          controller.courseInfoModel!.course!.name!,
-                          lessionModel.title!);
+                      if (lessionModel.isOpen! ||
+                          controller.courseInfoModel!.course!.isPaid! ||
+                          controller.courseInfoModel!.course!.isOpen! ||
+                          controller
+                                  .courseInfoModel!.course!.isTeachWithCourse ==
+                              true ||
+                          CacheProvider.getUserType() == 'admin') {
+                        controller.downloadVideo(
+                            lessionModel.link!,
+                            context,
+                            controller.courseInfoModel!.course!.name!,
+                            lessionModel.title!);
+                      }
                     },
                     icon: Icon(
                       Icons.download,

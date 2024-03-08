@@ -28,13 +28,22 @@ class CourseDetailsController extends GetxController {
     super.onInit();
   }
 
-  List<Video> downloadedVideos = [];
+  RxInt currentTabIndex = 0.obs;
+
+  void updateCurrentTabIndex(int index) {
+    currentTabIndex.value = index;
+  }
+
+  RxList<Video> downloadedVideos = <Video>[].obs;
   getDownloadedVideos() async {
-    downloadedVideos = await VideoDatabase.getVideosByCourseName(
+    downloadedVideos.clear();
+    downloadedVideos.value = await VideoDatabase.getVideosByCourseName(
             courseInfoModel!.course!.name ?? "none") ??
         [];
     if (downloadedVideos.isEmpty) {
       print(courseInfoModel!.course!.name);
+    } else {
+      print(downloadedVideos);
     }
 
     update();
@@ -163,6 +172,7 @@ class CourseDetailsController extends GetxController {
         await _secureStorage.write(key: key, value: filePath);
         VideoDatabase.insertVideo(courseName, courseVidName, key).then((value) {
           updateDownloadStatus(RequestStatus.success);
+          getDownloadedVideos();
           print("success downloading video");
         });
       });
@@ -177,8 +187,14 @@ class CourseDetailsController extends GetxController {
   //   await tempVideoFile.writeAsBytes(decryptedBytes);
   //   return tempVideoFile;
   // }
-  deleteVideo(String courseName, String courseVid) {
-    VideoDatabase.deleteVideo(courseName, courseVid);
-    getDownloadedVideos();
+  deleteVideo(String courseName, String courseVid) async {
+    await VideoDatabase.deleteVideo(courseName, courseVid).then((value) {
+      getDownloadedVideos();
+    });
+  }
+
+  Future<void> isWatched(int lesson_id) async {
+    var response = await _categoryRepository.isWatched(lesson_id);
+    print(response.data);
   }
 }

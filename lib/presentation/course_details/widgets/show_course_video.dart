@@ -50,8 +50,9 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
     return Scaffold(
         body: Obx(
       () => controller.watchVideoStatus.value == RequestStatus.success
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ? Stack(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              alignment: Alignment.topRight,
               children: [
                 AspectRatio(
                     aspectRatio: 1 / 0.7,
@@ -59,20 +60,25 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
                         flickManager: FlickManager(
                             videoPlayerController:
                                 controller.videoPlayerController!))),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0.r),
-                  child: Text("الوصف الخاص في هذا الدرس:",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: kprimaryGreyColor)),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(16.0.r),
-                  child: Text(description ?? 'لا يوجد وصف لهذا الفيديو'),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 300.h,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(12.0.r),
+                      child: Text("الوصف الخاص في هذا الدرس:",
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(color: kprimaryGreyColor)),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(16.0.r),
+                      child: Text(description ?? 'لا يوجد وصف لهذا الفيديو'),
+                    ),
+                  ],
                 ),
               ],
             )

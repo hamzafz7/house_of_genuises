@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/data/models/download_model.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/widgets/quality_button.dart';
@@ -22,7 +23,13 @@ class PickQualityDialog extends StatelessWidget {
       child: Column(children: [
         Padding(
           padding: EdgeInsets.all(16.r),
-          child: Text("اختر الدقة المناسبة:"),
+          child: Text(
+            "اختر الدقة المناسبة:",
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: kDarkBlueColor),
+          ),
         ),
         Expanded(
           child: ListView.builder(

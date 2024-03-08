@@ -7,17 +7,17 @@ class OnBoardingPageController extends GetxController {
   final List<OnBoardingModel> onboardingScreens = [
     OnBoardingModel(
         body:
-            "لكن يجب أن أشرح لك كيف ولدت كل هذه الفكرة الخاطئة المتمثلة في إدانة السرور ومدح الألم",
+            "مكتبة بيت العباقرة سعيدة جداً باهتمامك للإنضمام لها , والحصول على أفضل المعلومات والشروحات",
         imageSrc: "assets/images/onBoarding1.svg",
         title: "جميع الدورات المطلوبة"),
     OnBoardingModel(
         body:
-            "لكن يجب أن أشرح لك كيف ولدت كل هذه الفكرة الخاطئة المتمثلة في إدانة السرور ومدح الألم",
+            "تهتم بيت العباقرة بشرح المواد الخاصة بطلاب الاقتصاد , ومحاولة تبسيط الدروس للحصول على أفضل الدرجات",
         imageSrc: "assets/images/onBoarding2.svg",
         title: "في جميع الأوقات"),
     OnBoardingModel(
         body:
-            "لكن يجب أن أشرح لك كيف ولدت كل هذه الفكرة الخاطئة المتمثلة في إدانة السرور ومدح الألم",
+            "تقدم بيت العباقرة منهجية متكاملة ومدروسة لتحسين مستوى الطالب باستمرار , سارع بالإنضمام الآن",
         imageSrc: "assets/images/onBoarding3.svg",
         title: "اختبر مدى فهمك "),
   ];
