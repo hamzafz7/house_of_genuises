@@ -23,18 +23,16 @@ class ShowLessonController extends GetxController {
 
   Future<void> watchVideo(String link) async {
     updateWatchVideoStatus(RequestStatus.loading);
-    var response = await _categoryRepository.watchVideo(link);
-    if (response.success) {
-      print(response.data);
-      // print(response.data['link'].first['link']);
-      videoPlayerController = VideoPlayerController.networkUrl(
-          Uri.parse(response.data['link'].first['link']))
+    // var response = await _categoryRepository.watchVideo(link);
+    // if (response.success) {
+    //   print(response.data);
+    //   // print(response.data['link'].first['link']);
+    try {
+      videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(link))
         ..initialize();
-
       updateWatchVideoStatus(RequestStatus.success);
-    } else {
+    } catch (e) {
       updateWatchVideoStatus(RequestStatus.onError);
-      print(response.errorMessage);
     }
   }
 

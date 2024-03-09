@@ -8,7 +8,6 @@ import 'package:house_of_genuises/data/models/lession_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/course_details/widgets/course_pdf.dart';
-import 'package:house_of_genuises/presentation/course_details/widgets/show_course_video.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/complete_failure.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -29,13 +28,10 @@ class CourseLessonWidget extends StatelessWidget {
                 controller.courseInfoModel!.course!.isTeachWithCourse == true ||
                 CacheProvider.getUserType() == 'admin') {
               if (lessionModel.type == 'video') {
-                Get.to(
-                    () => ShowCourseVideo(
-                          description: lessionModel.description,
-                        ),
-                    arguments: lessionModel.link);
-                controller.isWatched(lessionModel.id);
-                print("is_watched:${lessionModel.isWatched}");
+                controller.watchResponseFromUrl(context,
+                    link: lessionModel.link!,
+                    id: lessionModel.id,
+                    description: lessionModel.description);
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);
@@ -49,11 +45,20 @@ class CourseLessonWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.r),
                 child: lessionModel.type == 'video'
-                    ? SvgPicture.asset(
-                        'assets/icons/play-circle.svg',
-                        color:
-                            lessionModel.isWatched == true ? Colors.blue : null,
-                      )
+                    ? lessionModel.isWatched == false
+                        ? SvgPicture.asset(
+                            'assets/icons/play-circle.svg',
+                          )
+                        : Container(
+                            height: 26.h,
+                            width: 26.w,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: Colors.green),
+                            child: Icon(
+                              Icons.check,
+                              color: const Color.fromARGB(255, 207, 197, 197),
+                            ),
+                          )
                     : const Icon(
                         Icons.file_copy,
                         color: kprimaryBlueColor,
@@ -69,7 +74,8 @@ class CourseLessonWidget extends StatelessWidget {
             ],
           ),
         ),
-        if (lessionModel.type == 'video')
+        if (lessionModel.type == 'video' &&
+            !controller.isVideoDownloaded(lessionModel.title ?? "nonr"))
           Obx(
             () => controller.downloadStatus.value == RequestStatus.loading
                 ? appCircularProgress()

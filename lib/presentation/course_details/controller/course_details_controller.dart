@@ -7,12 +7,14 @@ import 'package:house_of_genuises/common/utils/utils.dart';
 import 'package:house_of_genuises/data/models/course_info_model.dart';
 import 'package:house_of_genuises/data/models/courses_model.dart';
 import 'package:house_of_genuises/data/models/download_model.dart';
+import 'package:house_of_genuises/data/models/video_link_response.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/data/providers/databaseProvider/video_database.dart';
 import 'package:house_of_genuises/data/repositories/category_repo.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/pick_quality_dialog.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/pick_quality_from_url.dart';
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
@@ -26,6 +28,18 @@ class CourseDetailsController extends GetxController {
       getDownloadedVideos();
     });
     super.onInit();
+  }
+
+  bool isVideoDownloaded(String videoName) {
+    bool isdownloaded = false;
+    downloadedVideos.forEach((element) {
+      print(element.videoName);
+      print(videoName);
+      if (element.videoName == videoName) {
+        isdownloaded = true;
+      }
+    });
+    return isdownloaded;
   }
 
   RxInt currentTabIndex = 0.obs;
@@ -47,6 +61,17 @@ class CourseDetailsController extends GetxController {
     }
 
     update();
+  }
+
+  VideoLinksResponse? watchResponse;
+  watchResponseFromUrl(context,
+      {required String link, required int id, String? description}) async {
+    var response = await _categoryRepository.watchVideo(link);
+    if (response.success) {
+      watchResponse = VideoLinksResponse.fromJson(response.data);
+      CustomDialog(context,
+          child: PickQualityFromUrl(response: watchResponse!, id: id));
+    }
   }
 
   TextEditingController activationController = TextEditingController();
