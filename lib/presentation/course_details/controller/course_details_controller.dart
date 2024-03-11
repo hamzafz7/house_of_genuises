@@ -70,7 +70,11 @@ class CourseDetailsController extends GetxController {
     if (response.success) {
       watchResponse = VideoLinksResponse.fromJson(response.data);
       CustomDialog(context,
-          child: PickQualityFromUrl(response: watchResponse!, id: id));
+          child: PickQualityFromUrl(
+            response: watchResponse!,
+            id: id,
+            description: description,
+          ));
     }
   }
 

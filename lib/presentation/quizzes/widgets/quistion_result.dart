@@ -97,7 +97,7 @@ class QuestionResultWidget extends StatelessWidget {
                         .containsValue(model.choices![index].id),
               ),
             ),
-            if (model.clarificationImage != null &&
+            if (model.clarificationImage != null ||
                 model.clarificationText != null)
               ExplainationWidget(
                 image: model.clarificationImage,

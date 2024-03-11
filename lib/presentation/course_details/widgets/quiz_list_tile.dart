@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:house_of_genuises/common/routes/app_routes.dart';
 
 import 'package:house_of_genuises/data/models/quiz_model.dart';
+import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/course_details/controller/course_details_controller.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/complete_failure.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
@@ -30,7 +31,10 @@ class QuizListTile extends StatelessWidget {
           GestureDetector(
             onTap: () {
               print(quizzModel.description);
-              if (quizzModel.isFree == 1) {
+              if (quizzModel.isFree == 1 ||
+                  CacheProvider.getUserType() == 'admin' ||
+                  controller.courseInfoModel!.course!.isOpen == true ||
+                  controller.courseInfoModel!.course!.isPaid == true) {
                 Get.toNamed(AppRoute.quizzPageRoute, arguments: quizzModel);
               } else {
                 CustomDialog(context, child: const CompleteFailureWidget());

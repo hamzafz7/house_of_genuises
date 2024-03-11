@@ -25,7 +25,7 @@ class downloadedVideoController extends GetxController {
     updateWatchVideoStatus(RequestStatus.loading);
     if (video != null) {
       try {
-        final key = 'video_${video?.courseName}-${video!.videoName}';
+        final key = 'video_${video?.courseName}-${video?.videoName}';
         final path = await _secureStorage.read(key: key);
         File file = File(path!);
         videoPlayerController = VideoPlayerController.file(file)..initialize();
