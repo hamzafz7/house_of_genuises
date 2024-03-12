@@ -42,8 +42,9 @@ import 'package:house_of_genuises/presentation/course_details/widgets/flick_vide
 //   }
 // }
 class ShowCourseVideo extends GetView<ShowLessonController> {
-  const ShowCourseVideo({super.key, this.description});
+  const ShowCourseVideo({super.key, this.description, this.name});
   final String? description;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +109,23 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
                       SizedBox(
                         height: 270.h,
                       ),
-                      if (description != null && description!.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(12.0.r),
+                            child: Text("اسم الفيديو :",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: kprimaryGreyColor)),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.0.w, vertical: 8.h),
+                            child: Text(name!),
+                          ),
+                          if (description != null && description!.isNotEmpty)
                             Padding(
                               padding: EdgeInsets.all(12.0.r),
                               child: Text("الوصف الخاص في هذا الدرس:",
@@ -120,13 +134,14 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
                                       .labelMedium!
                                       .copyWith(color: kprimaryGreyColor)),
                             ),
+                          if (description != null && description!.isNotEmpty)
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.0.w, vertical: 8.h),
                               child: Text(description!),
                             ),
-                          ],
-                        ),
+                        ],
+                      ),
                     ],
                   ),
                 ],

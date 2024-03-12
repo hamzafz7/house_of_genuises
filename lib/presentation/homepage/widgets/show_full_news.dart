@@ -25,9 +25,9 @@ class ShowFullNewsPage extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: newsModel.image ?? defPic,
-                height: 250.h,
+                height: 300.h,
                 width: Get.width,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
                 placeholder: (context, url) {
                   return ShimmerPlaceholder(
                       child: Container(

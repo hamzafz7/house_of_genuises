@@ -45,7 +45,7 @@ class NewsItem extends StatelessWidget {
                         imageUrl: model.image ?? defPic,
                         height: 170.h,
                         width: 350.w,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                         placeholder: (context, url) {
                           return ShimmerPlaceholder(
                               child: Container(

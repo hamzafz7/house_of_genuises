@@ -38,7 +38,7 @@ class SettingsPage extends GetView<SettingController> {
           ProfileListItem(
               svgUrl: "assets/icons/Message.svg",
               onTap: () {
-                controller.launchTelegramURL();
+                controller.launchWhatsAppURL();
               },
               text: "تواصل معنا")
         ],

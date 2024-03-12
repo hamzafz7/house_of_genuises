@@ -69,7 +69,10 @@ class CourseDetailsController extends GetxController {
 
   VideoLinksResponse? watchResponse;
   watchResponseFromUrl(context,
-      {required String link, required int id, String? description}) async {
+      {required String link,
+      required int id,
+      String? description,
+      required String name}) async {
     var response = await _categoryRepository.watchVideo(link);
     if (response.success) {
       watchResponse = VideoLinksResponse.fromJson(response.data);
@@ -78,6 +81,7 @@ class CourseDetailsController extends GetxController {
             response: watchResponse!,
             id: id,
             description: description,
+            name: name,
           ));
     }
   }

@@ -9,9 +9,15 @@ import 'package:house_of_genuises/presentation/widgets/quality_button.dart';
 
 class PickQualityFromUrl extends StatelessWidget {
   PickQualityFromUrl(
-      {super.key, required this.response, this.description, required this.id});
+      {super.key,
+      required this.response,
+      this.description,
+      required this.id,
+      required this.name});
   final VideoLinksResponse response;
   final String? description;
+  final String name;
+
   final int id;
   final controller = Get.find<CourseDetailsController>();
 
@@ -37,10 +43,12 @@ class PickQualityFromUrl extends StatelessWidget {
                     Get.back();
 
                     Get.to(
-                        () => ShowCourseVideo(
-                              description: description,
-                            ),
-                        arguments: response.link[index].link);
+                      () => ShowCourseVideo(
+                        description: description,
+                        name: name,
+                      ),
+                      arguments: response.link[index].link,
+                    );
                     controller.isWatched(id);
                   },
                   quality: response.link[index].rendition)),

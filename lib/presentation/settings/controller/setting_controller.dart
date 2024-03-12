@@ -13,4 +13,15 @@ class SettingController extends GetxController {
       throw 'Could not launch $url';
     }
   }
+
+  void launchWhatsAppURL() async {
+    const phoneNumber = '0945364375';
+    final url = 'whatsapp://send?phone=$phoneNumber';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }

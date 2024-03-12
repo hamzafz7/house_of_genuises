@@ -30,7 +30,8 @@ class CourseLessonWidget extends StatelessWidget {
                 controller.watchResponseFromUrl(context,
                     link: lessionModel.link!,
                     id: lessionModel.id,
-                    description: lessionModel.description);
+                    description: lessionModel.description,
+                    name: lessionModel.title ?? "لا يوجد اسم");
               } else {
                 Get.to(FileViewWidget(imagePath: lessionModel.link!));
                 // print(lessionModel.link);
