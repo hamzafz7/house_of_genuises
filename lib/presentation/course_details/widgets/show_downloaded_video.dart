@@ -68,7 +68,8 @@ class ShowDownloadedVideo extends GetView<downloadedVideoController> {
               )
             : controller.watchVideoStatus.value == RequestStatus.loading
                 ? Center(
-                    child: CircularProgressIndicator(),
+                    child:
+                        Center(child: Text("جاري تحميل الفيديو الخاص بك ..")),
                   )
                 : Center(child: Text("حدث خطأ ما أثناء تحميل الفيديو")),
       )),

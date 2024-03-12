@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:pointycastle/api.dart';
+import 'package:pointycastle/block/aes_fast.dart';
+import 'package:pointycastle/stream/ctr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -181,6 +185,23 @@ class CourseDetailsController extends GetxController {
 
   final _secureStorage = const FlutterSecureStorage();
 
+  Future<void> encryptFile(File file, String key) async {
+    final plainText = await file.readAsBytes();
+    final keyBytes = Uint8List.fromList(key.codeUnits);
+    final iv = Uint8List(16);
+    final cipher = CTRStreamCipher(AESFastEngine())
+      ..init(
+        true,
+        ParametersWithIV(
+          KeyParameter(keyBytes),
+          iv,
+        ),
+      );
+
+    final encryptedBytes = cipher.process(plainText);
+    await file.writeAsBytes(encryptedBytes);
+  }
+
   Future<void> saveAndDownload(
       String url, String courseName, String courseVidName) async {
     updateDownloadStatus(RequestStatus.loading);
@@ -192,12 +213,13 @@ class CourseDetailsController extends GetxController {
         print(newBytes);
         bytes.addAll(newBytes);
       }, onDone: () async {
+        final key = 'video_$courseName-$courseVidName';
+
         final directory = await getApplicationDocumentsDirectory();
         final filePath = '${directory.path}/$courseVidName.mp4';
         final file = File(filePath);
         await file.writeAsBytes(bytes);
-
-        final key = 'video_$courseName-$courseVidName';
+        await encryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
         await _secureStorage.write(key: key, value: filePath);
         VideoDatabase.insertVideo(courseName, courseVidName, key).then((value) {
           updateDownloadStatus(RequestStatus.success);

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
-import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/lession_model.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
@@ -65,7 +64,7 @@ class CourseLessonWidget extends StatelessWidget {
                       ),
               ),
               SizedBox(
-                  width: 240.w,
+                  width: 210.w,
                   child: Text(
                     lessionModel.title ?? " ",
                     maxLines: 2,
@@ -74,11 +73,32 @@ class CourseLessonWidget extends StatelessWidget {
             ],
           ),
         ),
+        Spacer(),
         if (lessionModel.type == 'video' &&
             !controller.isVideoDownloaded(lessionModel.title ?? "nonr"))
           Obx(
             () => controller.downloadStatus.value == RequestStatus.loading
-                ? appCircularProgress()
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 70.w,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 140, 186, 224)
+                              .withOpacity(0.6),
+                          borderRadius: BorderRadius.circular(10.w)),
+                      child: Center(
+                        child: Text(
+                          "جاري التحميل ..",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  color: kprimaryBlueColor, fontSize: 10.sp),
+                        ),
+                      ),
+                    ),
+                  )
                 : IconButton(
                     onPressed: () {
                       if (lessionModel.isOpen! ||

@@ -1,9 +1,13 @@
 import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pointycastle/api.dart';
+import 'package:pointycastle/block/aes_fast.dart';
+import 'package:pointycastle/stream/ctr.dart';
 import 'package:video_player/video_player.dart';
 
 class downloadedVideoController extends GetxController {
@@ -21,20 +25,48 @@ class downloadedVideoController extends GetxController {
   VideoPlayerController? videoPlayerController;
   final _secureStorage = const FlutterSecureStorage();
 
+  Future<File> decryptFile(File file, String key) async {
+    final encryptedText = await file.readAsBytes();
+    final keyBytes = Uint8List.fromList(key.codeUnits);
+    final iv = Uint8List(16);
+    final cipher = CTRStreamCipher(AESFastEngine())
+      ..init(
+        false,
+        ParametersWithIV(
+          KeyParameter(keyBytes),
+          iv,
+        ),
+      );
+
+    final decryptedBytes = cipher.process(encryptedText);
+
+    final directory = await getTemporaryDirectory();
+    final tempFilePath = '${directory.path}/temp.mp4';
+    File tempFile = File(tempFilePath);
+    await tempFile.writeAsBytes(decryptedBytes);
+
+    return tempFile;
+  }
+
   Future<void> watchVideo() async {
     updateWatchVideoStatus(RequestStatus.loading);
     if (video != null) {
+      await Future.delayed(Duration(seconds: 4));
       try {
         final key = 'video_${video?.courseName}-${video?.videoName}';
         final path = await _secureStorage.read(key: key);
         File file = File(path!);
-        videoPlayerController = VideoPlayerController.file(file)..initialize();
+        File tempFile =
+            await decryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+        print("zzzzz");
+        videoPlayerController = VideoPlayerController.file(tempFile)
+          ..initialize();
         updateWatchVideoStatus(RequestStatus.success);
       } catch (e) {
-        updateWatchVideoStatus(RequestStatus.success);
+        updateWatchVideoStatus(RequestStatus.onError);
       }
     } else {
-      updateWatchVideoStatus(RequestStatus.success);
+      updateWatchVideoStatus(RequestStatus.onError);
     }
   }
 
