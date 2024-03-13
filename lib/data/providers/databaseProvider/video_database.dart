@@ -29,9 +29,9 @@ class VideoDatabase {
     await db.execute(
       '''
       CREATE TABLE videos (
-        videoId TEXT PRIMARY KEY,
+        videoId INTEGER  PRIMARY KEY,
         videoName TEXT ,
-        description TEXT
+        description TEXT ,
         courseName TEXT ,
         encryptedKey TEXT
       )
