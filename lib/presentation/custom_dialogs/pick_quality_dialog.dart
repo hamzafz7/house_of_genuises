@@ -11,9 +11,13 @@ class PickQualityDialog extends StatelessWidget {
       {super.key,
       required this.response,
       required this.videoName,
-      required this.courseName});
+      required this.courseName,
+      required this.description,
+      required this.videoId});
   final DownloadResponse response;
   final String videoName;
+  final String? description;
+  final int videoId;
   final String courseName;
   final controller = Get.find<CourseDetailsController>();
 
@@ -37,9 +41,11 @@ class PickQualityDialog extends StatelessWidget {
               itemBuilder: (item, index) => QualityButton(
                   onPressed: () {
                     controller.saveAndDownload(
-                        response.downloadOptions[index].link!,
-                        courseName,
-                        videoName);
+                        url: response.downloadOptions[index].link!,
+                        courseName: courseName,
+                        courseVidName: videoName,
+                        videoId: videoId,
+                        description: description);
                     Get.back();
                   },
                   quality: response.downloadOptions[index].quality!)),

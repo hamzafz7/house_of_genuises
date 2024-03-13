@@ -19,7 +19,7 @@ class ProfileListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 28.w),
-      child: InkWell(
+      child: GestureDetector(
           onTap: onTap,
           child: Row(
             children: [

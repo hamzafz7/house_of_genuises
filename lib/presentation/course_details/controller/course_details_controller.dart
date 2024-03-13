@@ -168,18 +168,21 @@ class CourseDetailsController extends GetxController {
   var downloadStatus = RequestStatus.begin.obs;
   updateDownloadStatus(RequestStatus status) => downloadStatus.value = status;
 
-  Future<void> downloadVideo(
-      String link, context, String courseName, String videoName) async {
+  Future<void> downloadVideo(String link, context, String courseName,
+      String videoName, int videoId, String? description) async {
     updateDownloadStatus(RequestStatus.loading);
     var response = await _categoryRepository.downloadVideo(link);
     if (response.success) {
       downloadResponse = DownloadResponse.fromJson(response.data['link']);
 
+      print("course video :$videoName");
       CustomDialog(context,
           child: PickQualityDialog(
               response: downloadResponse!,
               videoName: videoName,
-              courseName: courseName));
+              courseName: courseName,
+              videoId: videoId,
+              description: description));
 
       updateDownloadStatus(RequestStatus.success);
     } else {
@@ -206,8 +209,18 @@ class CourseDetailsController extends GetxController {
     await file.writeAsBytes(encryptedBytes);
   }
 
+  RxList<int> currentDownloadedVidId = <int>[].obs;
+
+  updateCurrentId(int id) {
+    currentDownloadedVidId.add(id);
+  }
+
   Future<void> saveAndDownload(
-      String url, String courseName, String courseVidName) async {
+      {required String url,
+      required String courseName,
+      required String courseVidName,
+      required int videoId,
+      required String? description}) async {
     updateDownloadStatus(RequestStatus.loading);
     var request = http.MultipartRequest('GET', Uri.parse(url));
     var response = await request.send();
@@ -225,7 +238,14 @@ class CourseDetailsController extends GetxController {
         await file.writeAsBytes(bytes);
         await encryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
         await _secureStorage.write(key: key, value: filePath);
-        VideoDatabase.insertVideo(courseName, courseVidName, key).then((value) {
+        print("course video :$courseVidName");
+        VideoDatabase.insertVideo(
+                courseName: courseName,
+                videoName: courseVidName,
+                key: key,
+                videoId: videoId,
+                description: description)
+            .then((value) {
           updateDownloadStatus(RequestStatus.success);
           getDownloadedVideos();
           Get.snackbar("تم الأمر بنجاح",

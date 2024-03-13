@@ -29,41 +29,38 @@ class VideoDatabase {
     await db.execute(
       '''
       CREATE TABLE videos (
-        courseName TEXT PRIMARY KEY,
-        videoName TEXT,
+        videoId TEXT PRIMARY KEY,
+        videoName TEXT ,
+        description TEXT
+        courseName TEXT ,
         encryptedKey TEXT
       )
     ''',
     );
   }
 
-  static Future<void> insertVideo(
-      String courseName, String videoName, String key) async {
+  static Future<void> insertVideo({
+    required String courseName,
+    required String videoName,
+    required String key,
+    required int videoId,
+    required String? description,
+  }) async {
     final db = await VideoDatabase.database;
 
+    Map<String, dynamic> row = {
+      'videoId': videoId,
+      'videoName': videoName,
+      'description': description,
+      'courseName': courseName,
+      'encryptedKey': key,
+    };
     await db.insert(
       'videos',
-      {
-        'courseName': courseName,
-        'videoName': videoName,
-        'encryptedKey': key,
-      },
+      row,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
-  // static Uint8List _encryptVideoBytes(List<int> videoBytes) {
-  //   final key = Key.fromLength(32); // Generate a 256-bit encryption key
-  //   final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
-
-  //   final encrypter = Encrypter(AES(key));
-
-  //   final Uint8List uint8VideoBytes = Uint8List.fromList(videoBytes);
-
-  //   final encrypted = encrypter.encryptBytes(uint8VideoBytes, iv: iv);
-
-  //   return encrypted.bytes;
-  // }
 
   static Future<List<Video>?>? getVideosByCourseName(String courseName) async {
     final db = await VideoDatabase.database;
@@ -84,19 +81,8 @@ class VideoDatabase {
     return videos;
   }
 
-  // static List<int> decryptVideoBytes(Uint8List encryptedBytes) {
-  //   final key = Key.fromLength(32); // Generate a 256-bit encryption key
-  //   final iv = IV.fromLength(16); // Generate a 128-bit initialization vector
-
-  //   final encrypter = Encrypter(AES(key));
-
-  //   final encrypted = Encrypted(encryptedBytes);
-
-  //   final decrypted = encrypter.decryptBytes(encrypted, iv: iv);
-
-  //   return decrypted;
-  // }
   static final _secureStorage = FlutterSecureStorage();
+
   static Future<void> deleteVideo(String courseName, String courseVid) async {
     var path = await _secureStorage.read(key: 'video_$courseName-$courseVid');
     final file = File(path!);

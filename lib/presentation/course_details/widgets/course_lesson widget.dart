@@ -78,7 +78,8 @@ class CourseLessonWidget extends StatelessWidget {
         if (lessionModel.type == 'video' &&
             !controller.isVideoDownloaded(lessionModel.title ?? "nonr"))
           Obx(
-            () => controller.downloadStatus.value == RequestStatus.loading
+            () => controller.downloadStatus.value == RequestStatus.loading &&
+                    controller.currentDownloadedVidId.contains(lessionModel.id)
                 ? Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -109,11 +110,14 @@ class CourseLessonWidget extends StatelessWidget {
                                   .courseInfoModel!.course!.isTeachWithCourse ==
                               true ||
                           CacheProvider.getUserType() == 'admin') {
+                        controller.updateCurrentId(lessionModel.id);
                         controller.downloadVideo(
                             lessionModel.link!,
                             context,
                             controller.courseInfoModel!.course!.name!,
-                            lessionModel.title!);
+                            lessionModel.title!,
+                            lessionModel.id,
+                            lessionModel.description);
                       }
                     },
                     icon: Icon(
