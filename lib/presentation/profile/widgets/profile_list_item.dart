@@ -1,5 +1,4 @@
 // ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
@@ -21,30 +20,32 @@ class ProfileListItem extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 28.w),
       child: GestureDetector(
           onTap: onTap,
-          child: Row(
-            children: [
-              Container(
-                width: 36.w,
-                height: 34.h,
-                decoration: ShapeDecoration(
-                  color: const Color(0x190794EB),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
+          child: SizedBox(
+            child: Row(
+              children: [
+                Container(
+                  width: 36.w,
+                  height: 34.h,
+                  decoration: ShapeDecoration(
+                    color: const Color(0x190794EB),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                  ),
+                  child: SvgPicture.asset(
+                    svgUrl,
+                    color: kprimaryBlueColor,
                   ),
                 ),
-                child: SvgPicture.asset(
-                  svgUrl,
-                  color: kprimaryBlueColor,
+                SizedBox(
+                  width: 10.w,
                 ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Text(
-                text,
-                style: Theme.of(context).textTheme.labelMedium!,
-              )
-            ],
+                Text(
+                  text,
+                  style: Theme.of(context).textTheme.labelMedium!,
+                )
+              ],
+            ),
           )),
     );
   }

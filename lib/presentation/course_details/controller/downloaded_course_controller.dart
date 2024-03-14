@@ -15,6 +15,7 @@ class downloadedVideoController extends GetxController {
   @override
   void onInit() {
     video = Get.arguments;
+    print(video!.description);
     if (video != null) watchVideo();
     super.onInit();
   }
@@ -51,7 +52,7 @@ class downloadedVideoController extends GetxController {
   Future<void> watchVideo() async {
     updateWatchVideoStatus(RequestStatus.loading);
     if (video != null) {
-      await Future.delayed(Duration(seconds: 4));
+      await Future.delayed(Duration(seconds: 2));
       try {
         final key = 'video_${video?.courseName}-${video?.videoName}';
         final path = await _secureStorage.read(key: key);
@@ -59,8 +60,8 @@ class downloadedVideoController extends GetxController {
         File tempFile =
             await decryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
         print("zzzzz");
-        videoPlayerController = VideoPlayerController.file(tempFile)
-          ..initialize();
+        videoPlayerController = VideoPlayerController.file(tempFile);
+        await videoPlayerController?.initialize();
         updateWatchVideoStatus(RequestStatus.success);
       } catch (e) {
         updateWatchVideoStatus(RequestStatus.onError);

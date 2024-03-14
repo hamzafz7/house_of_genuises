@@ -53,98 +53,109 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
       child: Scaffold(
           body: Obx(
         () => controller.watchVideoStatus.value == RequestStatus.success
-            ? Stack(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                alignment: Alignment.topRight,
-                children: [
-                  AspectRatio(
-                    aspectRatio: 1 / 0.6,
-                    child: Stack(
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      alignment: Alignment.topRight,
                       children: [
-                        FlickVideoPlayer(
-                          flickManager: FlickManager(
-                              videoPlayerController:
-                                  controller.videoPlayerController!),
-                          flickVideoWithControls: const FlickVideoWithControls(
-                            controls: FlickPortraitControls(),
-                          ),
-                          flickVideoWithControlsFullscreen:
-                              FlickVideoWithControls(
-                            videoFit: BoxFit.fitWidth,
-                            controls: Container(
-                              child: Stack(
-                                children: [
-                                  FlickVideoSpeedControlWidget(
-                                      flickManager: FlickManager(
-                                          videoPlayerController: controller
-                                              .videoPlayerController!)),
-                                  Align(
-                                    alignment: AlignmentDirectional.topEnd,
-                                    child: const FlickLandscapeControls(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            playerLoadingFallback:
-                                Center(child: CircularProgressIndicator()),
-                            iconThemeData:
-                                IconThemeData(size: 30, color: Colors.white),
-                            textStyle:
-                                TextStyle(color: Colors.white, fontSize: 16),
-                            backgroundColor: Colors.black,
-                          ),
-                        ),
-                        Align(
-                            alignment: AlignmentDirectional.topEnd,
-                            child: FlickVideoSpeedControlWidget(
+                        AspectRatio(
+                          aspectRatio: 1 / 0.6,
+                          child: Stack(
+                            children: [
+                              FlickVideoPlayer(
                                 flickManager: FlickManager(
                                     videoPlayerController:
-                                        controller.videoPlayerController!))),
+                                        controller.videoPlayerController!),
+                                flickVideoWithControls:
+                                    const FlickVideoWithControls(
+                                  controls: FlickPortraitControls(),
+                                ),
+                                flickVideoWithControlsFullscreen:
+                                    FlickVideoWithControls(
+                                  videoFit: BoxFit.fitWidth,
+                                  controls: Container(
+                                    child: Stack(
+                                      children: [
+                                        FlickVideoSpeedControlWidget(
+                                            flickManager: FlickManager(
+                                                videoPlayerController: controller
+                                                    .videoPlayerController!)),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional.topEnd,
+                                          child: const FlickLandscapeControls(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  playerLoadingFallback: Center(
+                                      child: CircularProgressIndicator()),
+                                  iconThemeData: IconThemeData(
+                                      size: 30, color: Colors.white),
+                                  textStyle: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                  backgroundColor: Colors.black,
+                                ),
+                              ),
+                              Align(
+                                  alignment: AlignmentDirectional.topEnd,
+                                  child: FlickVideoSpeedControlWidget(
+                                      flickManager: FlickManager(
+                                          videoPlayerController: controller
+                                              .videoPlayerController!))),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 270.h,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(12.0.r),
+                                  child: Text("اسم الفيديو :",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(color: kprimaryGreyColor)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16.0.w, vertical: 8.h),
+                                  child: Text(name!),
+                                ),
+                                if (description != null &&
+                                    description!.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.all(12.0.r),
+                                    child: Text("الوصف الخاص في هذا الدرس:",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .copyWith(
+                                                color: kprimaryGreyColor)),
+                                  ),
+                                if (description != null &&
+                                    description!.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.0.w, vertical: 8.h),
+                                    child: Text(description!),
+                                  ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 270.h,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(12.0.r),
-                            child: Text("اسم الفيديو :",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(color: kprimaryGreyColor)),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0.w, vertical: 8.h),
-                            child: Text(name!),
-                          ),
-                          if (description != null && description!.isNotEmpty)
-                            Padding(
-                              padding: EdgeInsets.all(12.0.r),
-                              child: Text("الوصف الخاص في هذا الدرس:",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(color: kprimaryGreyColor)),
-                            ),
-                          if (description != null && description!.isNotEmpty)
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0.w, vertical: 8.h),
-                              child: Text(description!),
-                            ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               )
             : controller.watchVideoStatus.value == RequestStatus.loading
                 ? Center(

@@ -28,8 +28,8 @@ class ShowLessonController extends GetxController {
     //   print(response.data);
     //   // print(response.data['link'].first['link']);
     try {
-      videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(link))
-        ..initialize();
+      videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(link));
+      await videoPlayerController?.initialize();
       updateWatchVideoStatus(RequestStatus.success);
     } catch (e) {
       updateWatchVideoStatus(RequestStatus.onError);
@@ -71,6 +71,7 @@ class ShowLessonController extends GetxController {
 
   @override
   void onClose() {
+    print("*******************");
     videoPlayerController?.dispose();
     super.onClose();
   }
