@@ -14,10 +14,14 @@ import 'package:house_of_genuises/data/providers/notificationProvider/notificati
 import 'package:house_of_genuises/presentation/splashpage/page/splash_page.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await FlutterDownloader.initialize(debug: false
+      // optional: set to false to disable printing logs to console
+      );
   await GetStorage.init();
   await CacheProvider.init();
   await ApiProvider.init();

@@ -1,5 +1,10 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
+import 'dart:ui';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/block/aes_fast.dart';
 import 'package:pointycastle/stream/ctr.dart';
@@ -23,6 +28,7 @@ import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 class CourseDetailsController extends GetxController {
   @override
@@ -190,9 +196,94 @@ class CourseDetailsController extends GetxController {
     }
   }
 
+  RxList<int> currentDownloadedVidId = <int>[].obs;
+
+  updateCurrentId(int id) {
+    currentDownloadedVidId.add(id);
+  }
+
   final _secureStorage = const FlutterSecureStorage();
 
-  Future<void> encryptFile(File file, String key) async {
+  // Future<void> encryptFile(File file, String key) async {
+  //   final plainText = await file.readAsBytes();
+  //   final keyBytes = Uint8List.fromList(key.codeUnits);
+  //   final iv = Uint8List(16);
+  //   final cipher = CTRStreamCipher(AESFastEngine())
+  //     ..init(
+  //       true,
+  //       ParametersWithIV(
+  //         KeyParameter(keyBytes),
+  //         iv,
+  //       ),
+  //     );
+
+  //   final encryptedBytes = cipher.process(plainText);
+  //   await file.writeAsBytes(encryptedBytes);
+  // }
+
+  // // 2
+  // Future<void> saveAndDownload({
+  //   required String url,
+  //   required String courseName,
+  //   required String courseVidName,
+  //   required int videoId,
+  //   required String? description,
+  // }) async {
+  //   updateDownloadStatus(RequestStatus.loading);
+  //   var request = http.Request('GET', Uri.parse(url));
+  //   var response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     var bytes = <int>[];
+  //     response.stream.listen((newBytes) {
+  //       print(newBytes);
+  //       bytes.addAll(newBytes);
+  //     }, onDone: () async {
+  //       final key = 'video_$courseName-$courseVidName';
+  //       final directory = await getApplicationDocumentsDirectory();
+  //       final filePath = '${directory.path}/$courseVidName.mp4';
+  //       final file = File(filePath);
+  //       await file.writeAsBytes(bytes);
+  //       await encryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+  //       await _secureStorage.write(key: key, value: filePath);
+  //       print("course video :$courseVidName");
+  //       VideoDatabase.insertVideo(
+  //               courseName: courseName,
+  //               videoName: courseVidName,
+  //               key: key,
+  //               videoId: videoId,
+  //               description: description)
+  //           .then((value) {
+  //         updateDownloadStatus(RequestStatus.success);
+  //         getDownloadedVideos();
+  //         Get.snackbar("تم الأمر بنجاح",
+  //             "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات ");
+  //         print("success downloading video");
+  //       });
+  //     });
+  //   } else {
+  //     updateDownloadStatus(RequestStatus.onError);
+  //   }
+  // }
+
+  deleteVideo(String courseName, String courseVid) async {
+    await VideoDatabase.deleteVideo(courseName, courseVid).then((value) {
+      getDownloadedVideos();
+    });
+  }
+
+  Future<void> isWatched(int lesson_id) async {
+    var response = await _categoryRepository.isWatched(lesson_id);
+    print(response.success);
+  }
+
+  // Define encryptFile at the top level
+  static FutureOr<void> encryptFile(String filePathAndKey) async {
+    final parts = filePathAndKey
+        .split('|'); // Assuming filePath and key are separated by '|'
+    final filePath = parts[0];
+    final key = parts[1];
+
+    final file = File(filePath);
     final plainText = await file.readAsBytes();
     final keyBytes = Uint8List.fromList(key.codeUnits);
     final iv = Uint8List(16);
@@ -209,69 +300,256 @@ class CourseDetailsController extends GetxController {
     await file.writeAsBytes(encryptedBytes);
   }
 
-  RxList<int> currentDownloadedVidId = <int>[].obs;
+  // Future<void> saveAndDownload({
+  //   required String url,
+  //   required String courseName,
+  //   required String courseVidName,
+  //   required int videoId,
+  //   required String? description,
+  // }) async {
+  //   updateDownloadStatus(RequestStatus.loading);
+  //   var request = http.Request('GET', Uri.parse(url));
+  //   var response = await request.send();
+  //   if (response.statusCode == 200) {
+  //     var bytes = <int>[];
+  //     response.stream.listen((newBytes) {
+  //       print(newBytes);
+  //       bytes.addAll(newBytes);
+  //     }, onDone: () async {
+  //       final key = 'video_$courseName-$courseVidName';
+  //       final directory = await getApplicationDocumentsDirectory();
+  //       final filePath = '${directory.path}/$courseVidName.mp4';
+  //       final file = File(filePath);
+  //       await file.writeAsBytes(bytes);
 
-  updateCurrentId(int id) {
-    currentDownloadedVidId.add(id);
-  }
+  //       // Use compute to run encryptFile in a separate isolate
+  //       await compute(
+  //           encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
 
-  Future<void> saveAndDownload(
-      {required String url,
-      required String courseName,
-      required String courseVidName,
-      required int videoId,
-      required String? description}) async {
+  //       await _secureStorage.write(key: key, value: filePath);
+  //       print("course video :$courseVidName");
+  //       VideoDatabase.insertVideo(
+  //               courseName: courseName,
+  //               videoName: courseVidName,
+  //               key: key,
+  //               videoId: videoId,
+  //               description: description)
+  //           .then((value) {
+  //         updateDownloadStatus(RequestStatus.success);
+  //         getDownloadedVideos();
+  //         Get.snackbar("تم الأمر بنجاح",
+  //             "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات ");
+  //         print("success downloading video");
+  //       });
+  //     });
+  //   } else {
+  //     updateDownloadStatus(RequestStatus.onError);
+  //   }
+  // }
+
+  Future<void> saveAndDownload({
+    required String url,
+    required String courseName,
+    required String courseVidName,
+    required int videoId,
+    required String? description,
+  }) async {
     updateDownloadStatus(RequestStatus.loading);
-    var request = http.MultipartRequest('GET', Uri.parse(url));
-    var response = await request.send();
-    if (response.statusCode == 200) {
-      var bytes = <int>[];
-      response.stream.listen((newBytes) {
-        print(newBytes);
-        bytes.addAll(newBytes);
-      }, onDone: () async {
-        final key = 'video_$courseName-$courseVidName';
 
+    try {
+      final dio = Dio();
+      final response = await dio.get(
+        url,
+        options: Options(responseType: ResponseType.stream),
+      );
+      if (response.statusCode == 200) {
         final directory = await getApplicationDocumentsDirectory();
         final filePath = '${directory.path}/$courseVidName.mp4';
         final file = File(filePath);
-        await file.writeAsBytes(bytes);
-        await encryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+        final completer = Completer<void>();
+        response.data.stream.listen(
+          (data) {
+            file.writeAsBytes(data, mode: FileMode.append, flush: true);
+          },
+          onDone: () {
+            completer.complete();
+          },
+          onError: (error) {
+            completer.completeError(error);
+          },
+        );
+
+        await completer.future;
+
+        // Use compute to run encryptFile in a separate isolate
+        await compute(
+            encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+        final key = 'video_$courseName-$courseVidName';
         await _secureStorage.write(key: key, value: filePath);
-        print("course video :$courseVidName");
-        VideoDatabase.insertVideo(
-                courseName: courseName,
-                videoName: courseVidName,
-                key: key,
-                videoId: videoId,
-                description: description)
-            .then((value) {
-          updateDownloadStatus(RequestStatus.success);
-          getDownloadedVideos();
-          Get.snackbar("تم الأمر بنجاح",
-              "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات ");
-          print("success downloading video");
-        });
-      });
-    } else {
+
+        await VideoDatabase.insertVideo(
+          courseName: courseName,
+          videoName: courseVidName,
+          key: key,
+          videoId: videoId,
+          description: description,
+        );
+
+        updateDownloadStatus(RequestStatus.success);
+        getDownloadedVideos();
+
+        Get.snackbar(
+          "تم الأمر بنجاح",
+          "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات",
+        );
+
+        print("success downloading video");
+      } else {
+        updateDownloadStatus(RequestStatus.onError);
+      }
+    } catch (error) {
+      print(error);
       updateDownloadStatus(RequestStatus.onError);
     }
   }
 
-  // watchFromSQflit(List<int> decryptedBytes) async {
-  //   final tempDir = await getTemporaryDirectory();
-  //   final tempVideoFile = File('${tempDir.path}/temp_video.mp4');
-  //   await tempVideoFile.writeAsBytes(decryptedBytes);
-  //   return tempVideoFile;
-  // }
-  deleteVideo(String courseName, String courseVid) async {
-    await VideoDatabase.deleteVideo(courseName, courseVid).then((value) {
-      getDownloadedVideos();
-    });
-  }
+  // Future<void> saveAndDownload({
+  //   required String url,
+  //   required String courseName,
+  //   required String courseVidName,
+  //   required int videoId,
+  //   required String? description,
+  // }) async {
+  //   updateDownloadStatus(RequestStatus.loading);
 
-  Future<void> isWatched(int lesson_id) async {
-    var response = await _categoryRepository.isWatched(lesson_id);
-    print(response.success);
-  }
+  //   // Define the directory path where you want to save the downloaded files
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final savedDir = '${directory.path}'; // Adjust the path as needed
+
+  //   // Check if the directory exists and create it if it doesn't
+  //   final savedDirPath = Directory(savedDir);
+  //   bool hasExisted = await savedDirPath.exists();
+  //   if (!hasExisted) {
+  //     await savedDirPath.create(recursive: true); // Create the directory
+  //   }
+
+  //   final taskId = await FlutterDownloader.enqueue(
+  //     url: url,
+  //     savedDir: savedDir, // Use the directory path here
+  //     showNotification: true,
+  //     openFileFromNotification: false,
+  //   );
+
+  //   FlutterDownloader.registerCallback((id, status, progress) async {
+  //     if (id == taskId) {
+  //       if (status == DownloadTaskStatus.complete) {
+  //         final key = 'video_$courseName-$courseVidName';
+  //         final filePath = '$savedDir/$courseVidName.mp4';
+
+  //         // Use compute to run encryptFile in a separate isolate
+  //         await compute(
+  //             encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+  //         await _secureStorage.write(key: key, value: filePath);
+  //         print("course video :$courseVidName");
+  //         VideoDatabase.insertVideo(
+  //                 courseName: courseName,
+  //                 videoName: courseVidName,
+  //                 key: key,
+  //                 videoId: videoId,
+  //                 description: description)
+  //             .then((value) {
+  //           updateDownloadStatus(RequestStatus.success);
+  //           getDownloadedVideos();
+  //           Get.snackbar("تم الأمر بنجاح",
+  //               "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات ");
+  //           print("success downloading video");
+  //         });
+  //       } else if (status == DownloadTaskStatus.failed) {
+  //         updateDownloadStatus(RequestStatus.onError);
+  //       }
+  //     }
+  //   });
+  // }
+
+//
+
+  // Future<void> saveAndDownload({
+  //   required String url,
+  //   required String courseName,
+  //   required String courseVidName,
+  //   required int videoId,
+  //   required String? description,
+  // }) async {
+  //   updateDownloadStatus(RequestStatus.loading);
+
+  //   final directory = await getApplicationSupportDirectory();
+  //   final savedDir = directory.path;
+  //   final savedDirPath = Directory(savedDir);
+  //   bool hasExisted = await savedDirPath.exists();
+  //   if (!hasExisted) {
+  //     await savedDirPath.create(recursive: true);
+  //   }
+
+  //   final taskId = await FlutterDownloader.enqueue(
+  //     url: url,
+  //     savedDir: savedDir,
+  //     showNotification: true,
+  //     openFileFromNotification: false,
+  //     saveInPublicStorage: false,
+  //   );
+
+  //   ReceivePort _port = ReceivePort();
+  //   IsolateNameServer.registerPortWithName(
+  //     _port.sendPort,
+  //     'downloader_send_port',
+  //   );
+  //   _port.listen((dynamic data) {
+  //     String id = data[0];
+  //     DownloadTaskStatus status = DownloadTaskStatus.values[data[1]];
+  //     int progress = data[2];
+  //     if (id == taskId && status == DownloadTaskStatus.complete) {
+  //       final key = 'video_$courseName-$courseVidName';
+  //       final filePath = '$savedDir/$courseVidName.mp4';
+
+  //       try {
+  //         // Use compute to run encryptFile in a separate isolate
+  //         compute(encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+  //         // Assuming _secureStorage and VideoDatabase are accessible here
+  //         _secureStorage.write(key: key, value: filePath);
+  //         VideoDatabase.insertVideo(
+  //           courseName: courseName,
+  //           videoName: courseVidName,
+  //           key: key,
+  //           videoId: videoId,
+  //           description: description,
+  //         ).then((value) {
+  //           updateDownloadStatus(RequestStatus.success);
+  //           getDownloadedVideos();
+  //           Get.snackbar(
+  //             "تم الأمر بنجاح",
+  //             "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات",
+  //           );
+  //           print("success downloading video");
+  //         });
+  //       } catch (error) {
+  //         print("Error encrypting file: $error");
+  //         updateDownloadStatus(RequestStatus.onError);
+  //       }
+  //     } else if (status == DownloadTaskStatus.failed) {
+  //       updateDownloadStatus(RequestStatus.onError);
+  //     }
+  //   });
+
+  //   FlutterDownloader.registerCallback(downloadCallback);
+  // }
 }
+
+// void downloadCallback(String id, int status, int progress) {
+//   final SendPort send =
+//       IsolateNameServer.lookupPortByName('downloader_send_port')!;
+//   send.send([id, status, progress]);
+// }

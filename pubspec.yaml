@@ -66,6 +66,7 @@ dependencies:
   flutter_secure_storage: ^8.1.0
   pointycastle: ^3.7.4
   flutter_isolate: ^2.0.5-pre
+  flutter_downloader: ^1.11.6
 
 dev_dependencies:
   flutter_test:
