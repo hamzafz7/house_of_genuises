@@ -67,6 +67,8 @@ dependencies:
   pointycastle: ^3.7.4
   flutter_isolate: ^2.0.5-pre
   flutter_downloader: ^1.11.6
+  flutter_file_downloader: ^1.2.1
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

@@ -35,6 +35,7 @@ class ShowDownloadedVideo extends GetView<downloadedVideoController> {
                           children: [
                             FlickVideoPlayer(
                               flickManager: FlickManager(
+                                  autoPlay: false,
                                   videoPlayerController:
                                       controller.videoPlayerController!),
                               flickVideoWithControls:

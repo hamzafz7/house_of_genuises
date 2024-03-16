@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
@@ -24,6 +25,7 @@ class downloadedVideoController extends GetxController {
   updateWatchVideoStatus(RequestStatus status) =>
       watchVideoStatus.value = status;
   VideoPlayerController? videoPlayerController;
+  FlickManager? flickManager;
   final _secureStorage = const FlutterSecureStorage();
 
   Future<File> decryptFile(File file, String key) async {
@@ -52,7 +54,6 @@ class downloadedVideoController extends GetxController {
   Future<void> watchVideo() async {
     updateWatchVideoStatus(RequestStatus.loading);
     if (video != null) {
-      await Future.delayed(Duration(seconds: 2));
       try {
         final key = 'video_${video?.courseName}-${video?.videoName}';
         final path = await _secureStorage.read(key: key);
@@ -60,10 +61,11 @@ class downloadedVideoController extends GetxController {
         File tempFile =
             await decryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
         print("zzzzz");
-        videoPlayerController = VideoPlayerController.file(tempFile);
-        await videoPlayerController?.initialize();
+        videoPlayerController = await VideoPlayerController.file(tempFile)
+          ..initialize();
         updateWatchVideoStatus(RequestStatus.success);
       } catch (e) {
+        print(e.toString());
         updateWatchVideoStatus(RequestStatus.onError);
       }
     } else {
