@@ -19,7 +19,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FlutterDownloader.initialize(debug: false
+  await FlutterDownloader.initialize(debug: true
       // optional: set to false to disable printing logs to console
       );
   await GetStorage.init();

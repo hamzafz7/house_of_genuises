@@ -69,6 +69,9 @@ dependencies:
   flutter_downloader: ^1.11.6
   flutter_file_downloader: ^1.2.1
   permission_handler: ^11.3.0
+  cr_file_saver: ^0.0.2+1
+  aes_crypt_null_safe: ^2.0.2
+  background_downloader: any
 
 dev_dependencies:
   flutter_test:

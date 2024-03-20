@@ -103,13 +103,15 @@ class CourseLessonWidget extends StatelessWidget {
                   )
                 : IconButton(
                     onPressed: () {
-                      if (lessionModel.isOpen! ||
-                          controller.courseInfoModel!.course!.isPaid! ||
-                          controller.courseInfoModel!.course!.isOpen! ||
-                          controller
-                                  .courseInfoModel!.course!.isTeachWithCourse ==
-                              true ||
-                          CacheProvider.getUserType() == 'admin') {
+                      if ((lessionModel.isOpen! ||
+                              controller.courseInfoModel!.course!.isPaid! ||
+                              controller.courseInfoModel!.course!.isOpen! ||
+                              controller.courseInfoModel!.course!
+                                      .isTeachWithCourse ==
+                                  true ||
+                              CacheProvider.getUserType() == 'admin') &&
+                          controller.downloadStatus.value !=
+                              RequestStatus.loading) {
                         controller.updateCurrentId(lessionModel.id);
                         controller.downloadVideo(
                             lessionModel.link!,
