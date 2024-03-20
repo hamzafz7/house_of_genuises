@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
+import 'package:house_of_genuises/data/providers/download_provide.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/block/aes_fast.dart';
@@ -26,8 +27,7 @@ import 'package:house_of_genuises/presentation/custom_dialogs/pick_quality_from_
 import 'package:house_of_genuises/presentation/my_courses/controllers/my_courses_controller.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:background_downloader/background_downloader.dart'
-    as bgDownloader;
+import 'package:al_downloader/al_downloader.dart';
 import 'package:http/http.dart' as http;
 
 class CourseDetailsController extends GetxController {
@@ -348,6 +348,51 @@ class CourseDetailsController extends GetxController {
   //   }
   // }
 
+  Future<void> saveAndDownload({
+    required String url,
+    required String courseName,
+    required String courseVidName,
+    required int videoId,
+    required String? description,
+  }) async {
+    updateDownloadStatus(RequestStatus.loading);
+
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      Uint8List uint8list = response.bodyBytes;
+      var buffer = uint8list.buffer;
+      ByteData byteData = ByteData.view(buffer);
+
+      var dir = await getApplicationDocumentsDirectory();
+      String filePath = '${dir.path}/$courseVidName.mp4';
+      File file = await File(filePath).writeAsBytes(
+          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+      // Encrypt the file
+      await compute(encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+      // Assuming _secureStorage and VideoDatabase are accessible here
+      final key = 'video_$courseName-$courseVidName';
+      await _secureStorage.write(key: key, value: filePath);
+      await VideoDatabase.insertVideo(
+        courseName: courseName,
+        videoName: courseVidName,
+        key: key,
+        videoId: videoId,
+        description: description,
+      );
+
+      updateDownloadStatus(RequestStatus.success);
+      getDownloadedVideos();
+      Get.snackbar(
+          "تم الأمر بنجاح", "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات");
+      print("success downloading video");
+    } else {
+      updateDownloadStatus(RequestStatus.onError);
+      throw Exception('Failed to download video');
+    }
+  }
+
   // Future<void> saveAndDownload({
   //   required String url,
   //   required String courseName,
@@ -477,162 +522,9 @@ class CourseDetailsController extends GetxController {
 
 //
 
-  // Future<void> saveAndDownload({
-  //   required String url,
-  //   required String courseName,
-  //   required String courseVidName,
-  //   required int videoId,
-  //   required String? description,
-  // }) async {
-  //   updateDownloadStatus(RequestStatus.loading);
-
-  //   final directory = await getApplicationSupportDirectory();
-  //   final savedDir = directory.path;
-  //   final savedDirPath = Directory(savedDir);
-  //   bool hasExisted = await savedDirPath.exists();
-  //   if (!hasExisted) {
-  //     await savedDirPath.create(recursive: true);
-  //   }
-
-  //   final taskId = await FlutterDownloader.enqueue(
-  //     url: url,
-  //     savedDir: savedDir,
-  //     fileName: courseVidName,
-  //     showNotification: true,
-  //     openFileFromNotification: false,
-  //     saveInPublicStorage: false,
-  //   );
-
-  //   ReceivePort _port = ReceivePort();
-  //   IsolateNameServer.registerPortWithName(
-  //     _port.sendPort,
-  //     'downloader_send_port',
-  //   );
-  //   _port.listen((dynamic data) {
-  //     String id = data[0];
-  //     DownloadTaskStatus status = DownloadTaskStatus.values[data[1]];
-  //     int progress = data[2];
-  //     if (id == taskId && status == DownloadTaskStatus.complete) {
-  //       final key = 'video_$courseName-$courseVidName';
-  //       final filePath = '$savedDir/$courseVidName.mp4';
-
-  //       try {
-  //         // Use compute to run encryptFile in a separate isolate
-  //         compute(encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
-
-  //         // Assuming _secureStorage and VideoDatabase are accessible here
-  //         _secureStorage.write(key: key, value: filePath);
-  //         VideoDatabase.insertVideo(
-  //           courseName: courseName,
-  //           videoName: courseVidName,
-  //           key: key,
-  //           videoId: videoId,
-  //           description: description,
-  //         ).then((value) {
-  //           updateDownloadStatus(RequestStatus.success);
-  //           getDownloadedVideos();
-  //           Get.snackbar(
-  //             "تم الأمر بنجاح",
-  //             "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات",
-  //           );
-  //           print("success downloading video");
-  //         });
-  //       } catch (error) {
-  //         print("Error encrypting file: $error");
-  //         updateDownloadStatus(RequestStatus.onError);
-  //       }
-  //     } else if (status == DownloadTaskStatus.failed) {
-  //       updateDownloadStatus(RequestStatus.onError);
-  //     }
-  //   });
-
-  //   FlutterDownloader.registerCallback(downloadCallback);
-  // }
-  Future<void> saveAndDownload({
-    required String url,
-    required String courseName,
-    required String courseVidName,
-    required int videoId,
-    required String? description,
-  }) async {
-    updateDownloadStatus(RequestStatus.loading);
-
-    final directory = await getApplicationSupportDirectory();
-    final savedDir = directory.path;
-    final savedDirPath = Directory(savedDir);
-    bool hasExisted = await savedDirPath.exists();
-    if (!hasExisted) {
-      await savedDirPath.create(recursive: true);
-    }
-
-    // Define the download task
-    final task = bgDownloader.DownloadTask(
-      url: url,
-      filename: courseVidName,
-      updates: bgDownloader.Updates.statusAndProgress,
-    );
-
-    // Listen to updates from the downloader
-    final subscription = bgDownloader.FileDownloader().updates.listen((update) {
-      if (update is bgDownloader.TaskStatusUpdate) {
-        final status = update.status;
-        if (status == bgDownloader.TaskStatus.complete) {
-          final key = 'video_$courseName-$courseVidName';
-          final filePath = '$savedDir/$courseVidName.mp4';
-
-          try {
-            // Use compute to run encryptFile in a separate isolate
-            compute(encryptFile, '$filePath|u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
-
-            // Assuming _secureStorage and VideoDatabase are accessible here
-            _secureStorage.write(key: key, value: filePath);
-            VideoDatabase.insertVideo(
-              courseName: courseName,
-              videoName: courseVidName,
-              key: key,
-              videoId: videoId,
-              description: description,
-            ).then((value) {
-              updateDownloadStatus(RequestStatus.success);
-              getDownloadedVideos();
-              Get.snackbar(
-                "تم الأمر بنجاح",
-                "نود بإعلامك أن هذا الفيديو أصبح من المحفوظات",
-              );
-              print("success downloading video");
-            });
-          } catch (error) {
-            print("Error encrypting file: $error");
-            updateDownloadStatus(RequestStatus.onError);
-          }
-        } else if (status == bgDownloader.TaskStatus.failed) {
-          updateDownloadStatus(RequestStatus.onError);
-        }
-      } else if (update is bgDownloader.TaskProgressUpdate) {
-        // Handle progress updates
-        print('Download progress: ${update.progress}');
-      }
-    });
-
-    // Enqueue the download task
-    final successfullyEnqueued =
-        await bgDownloader.FileDownloader().enqueue(task);
-
-    // Remember to cancel the subscription when you're done listening to updates
-    // subscription.cancel();
+  void downloadCallback(String id, int status, int progress) {
+    final SendPort send =
+        IsolateNameServer.lookupPortByName('downloader_send_port')!;
+    send.send([id, status, progress]);
   }
-
-  Future<bool> requestStoragePermission() async {
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      status = await Permission.storage.request();
-    }
-    return status.isGranted;
-  }
-}
-
-void downloadCallback(String id, int status, int progress) {
-  final SendPort send =
-      IsolateNameServer.lookupPortByName('downloader_send_port')!;
-  send.send([id, status, progress]);
 }

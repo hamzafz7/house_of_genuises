@@ -40,7 +40,7 @@ class DownloadProvider with ChangeNotifier {
     return externalStorageDirPath;
   }
 
-  Future<bool> requestStoragePermissions() async {
+  static Future<bool> requestStoragePermissions() async {
     var storagePermissionIsGranted = false;
 
     final storageReq = await Permission.storage

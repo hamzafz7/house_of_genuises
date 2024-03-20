@@ -5,6 +5,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
+import 'package:house_of_genuises/data/providers/download_provide.dart';
 import 'package:house_of_genuises/data/providers/encrypt.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pointycastle/api.dart';
@@ -59,12 +60,12 @@ class downloadedVideoController extends GetxController {
       try {
         final key = 'video_${video?.courseName}-${video?.videoName}';
         final path = await _secureStorage.read(key: key);
-        final pathdec = EncryptData.decrypt_file(path!);
-        File file = File(pathdec!);
-        // File tempFile =
-        //     await decryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
+
+        File file = File(path!);
+        File tempFile =
+            await decryptFile(file, 'u8x/A?D(G+KbPeShVmYq3t6w9z/C&F)J');
         print("zzzzz");
-        videoPlayerController = await VideoPlayerController.file(file)
+        videoPlayerController = await VideoPlayerController.file(tempFile)
           ..initialize();
         updateWatchVideoStatus(RequestStatus.success);
       } catch (e) {
