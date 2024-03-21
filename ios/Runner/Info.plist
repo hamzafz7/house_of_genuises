@@ -11,6 +11,7 @@
     <array>
     <string>sms</string>
     <string>tel</string>
+	<string>whatsapp</string>
      </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

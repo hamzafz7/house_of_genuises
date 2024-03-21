@@ -5,8 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
 import 'package:house_of_genuises/data/models/video_model.dart';
-import 'package:house_of_genuises/data/providers/download_provide.dart';
-import 'package:house_of_genuises/data/providers/encrypt.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/block/aes_fast.dart';
