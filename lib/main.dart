@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Theme.of(context).platform == TargetPlatform.android) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      return androidInfo.isPhysicalDevice;
+      return androidInfo.isPhysicalDevice ?? false;
     } else if (Theme.of(context).platform == TargetPlatform.iOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       return iosInfo.isPhysicalDevice;

@@ -44,7 +44,7 @@ class ShowDownloadedVideo extends GetView<downloadedVideoController> {
                               ),
                               flickVideoWithControlsFullscreen:
                                   FlickVideoWithControls(
-                                videoFit: BoxFit.fitWidth,
+                                videoFit: BoxFit.contain,
                                 controls: Container(
                                   child: Stack(
                                     children: [

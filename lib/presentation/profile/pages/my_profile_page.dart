@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:house_of_genuises/common/constants/colors.dart';
 import 'package:house_of_genuises/common/constants/constants.dart';
 import 'package:house_of_genuises/common/constants/enums/request_enum.dart';
@@ -8,6 +9,7 @@ import 'package:house_of_genuises/common/routes/app_routes.dart';
 import 'package:house_of_genuises/data/providers/casheProvider/cashe_provider.dart';
 import 'package:house_of_genuises/presentation/controllers/themeController.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/custom_dialogs.dart';
+import 'package:house_of_genuises/presentation/custom_dialogs/delete_account_dialog.dart';
 import 'package:house_of_genuises/presentation/custom_dialogs/log-out.dart';
 import 'package:house_of_genuises/presentation/profile/controllers/profile_controller.dart';
 import 'package:house_of_genuises/presentation/profile/widgets/my_profile_header.dart';
@@ -130,10 +132,24 @@ class MyProfilePage extends GetView<MyProfileController> {
                                   SizedBox(
                                     height: 30.h,
                                   ),
-                                  // ProfileListItem(
-                                  //     svgUrl: "assets/icons/x.svg",
-                                  //     onTap: () {},
-                                  //     text: "حذف الحساب")
+                                  Obx(
+                                    () =>
+                                        controller.deleteProfileStatus.value ==
+                                                RequestStatus.loading
+                                            ? appCircularProgress()
+                                            : ProfileListItem(
+                                                svgUrl: "assets/icons/x.svg",
+                                                onTap: () {
+                                                  CustomDialog(context, child:
+                                                      DeleteProfileDialog(
+                                                          onPressed: () {
+                                                    controller.deleteProfile();
+
+                                                    Get.back();
+                                                  }), height: 250, width: 390);
+                                                },
+                                                text: "حذف الحساب"),
+                                  )
                                 ],
                               ),
               ),

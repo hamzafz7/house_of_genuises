@@ -74,7 +74,7 @@ class ShowCourseVideo extends GetView<ShowLessonController> {
                                 ),
                                 flickVideoWithControlsFullscreen:
                                     FlickVideoWithControls(
-                                  videoFit: BoxFit.fitWidth,
+                                  videoFit: BoxFit.contain,
                                   controls: Container(
                                     child: Stack(
                                       children: [

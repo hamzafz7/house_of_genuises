@@ -48,12 +48,12 @@ dependencies:
   percent_indicator: ^4.2.3
   persistent_bottom_nav_bar: ^5.0.2
   image_picker: ^1.0.5
-  device_info_plus: any
+  device_info_plus: 3.2.4
   flutter_windowmanager: ^0.2.0
   shimmer: ^3.0.0
   flutter_image_compress: ^2.1.0
   card_swiper: ^3.0.1
-  path_provider: ^2.1.2
+  path_provider: any
   video_player: ^2.8.2
   flick_video_player: any
   flutter_cached_pdfview: ^0.4.2

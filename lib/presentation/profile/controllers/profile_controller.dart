@@ -29,12 +29,15 @@ class MyProfileController extends GetxController {
 
   final getProfileStatus = RequestStatus.begin.obs;
   final logOutStatus = RequestStatus.begin.obs;
+  final deleteProfileStatus = RequestStatus.begin.obs;
   final updateProfileStatus = RequestStatus.begin.obs;
   updateGetProfileStatus(RequestStatus status) =>
       getProfileStatus.value = status;
   updateLogOutStatus(RequestStatus status) => logOutStatus.value = status;
   updateEditProfileStatus(RequestStatus status) =>
       updateProfileStatus.value = status;
+  updateDeleteProfileStatus(RequestStatus status) =>
+      deleteProfileStatus.value = status;
 
   RxString imagePicked = "".obs;
   getImagePicked() async {
@@ -103,6 +106,19 @@ class MyProfileController extends GetxController {
       Get.offAllNamed(AppRoute.loginPageRoute);
     } else if (!response.success) {
       updateLogOutStatus(RequestStatus.onError);
+      Get.snackbar("حدث خطأ", response.errorMessage!);
+    }
+  }
+
+  Future<void> deleteProfile() async {
+    updateDeleteProfileStatus(RequestStatus.loading);
+    var response = await _repo.signOut();
+    if (response.success) {
+      updateDeleteProfileStatus(RequestStatus.success);
+      CacheProvider.clearAppToken();
+      Get.offAllNamed(AppRoute.loginPageRoute);
+    } else if (!response.success) {
+      updateDeleteProfileStatus(RequestStatus.onError);
       Get.snackbar("حدث خطأ", response.errorMessage!);
     }
   }

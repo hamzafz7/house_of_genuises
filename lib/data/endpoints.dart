@@ -9,6 +9,7 @@ String logOutUrl = 'auth/logout';
 // User :
 String getProfileUrl = 'users/myProfile';
 String updateProfileUrl = 'users/updateProfile';
+String deleteProfileUrl = 'users/delete';
 
 // News :
 String newsUrl = "news/visible";

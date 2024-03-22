@@ -68,6 +68,26 @@ class AccountRepo {
     }
   }
 
+  Future<AppResponse> deleteProfile() async {
+    try {
+      final response = await ApiProvider.delete(
+        url: 'deleteProfileUrl/${CacheProvider.getUserId()}',
+        token: CacheProvider.getAppToken(),
+      );
+      return AppResponse(
+        errorMessage: null,
+        data: response.data,
+        success: true,
+      );
+    } on DioException catch (e) {
+      return AppResponse(
+        errorMessage: e.message ?? e.toString(),
+        data: null,
+        success: false,
+      );
+    }
+  }
+
   Future<AppResponse> getMyProfile() async {
     try {
       final response = await ApiProvider.get(
