@@ -112,7 +112,7 @@ class MyProfileController extends GetxController {
 
   Future<void> deleteProfile() async {
     updateDeleteProfileStatus(RequestStatus.loading);
-    var response = await _repo.signOut();
+    var response = await _repo.deleteProfile();
     if (response.success) {
       updateDeleteProfileStatus(RequestStatus.success);
       CacheProvider.clearAppToken();

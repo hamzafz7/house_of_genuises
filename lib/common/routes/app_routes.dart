@@ -10,6 +10,7 @@ import 'package:house_of_genuises/presentation/quizzes/pages/quizz_statistic_pag
 import 'package:house_of_genuises/presentation/quizzes/pages/result_page.dart';
 import 'package:house_of_genuises/presentation/search/page/search_page.dart';
 import 'package:house_of_genuises/presentation/settings/pages/about_us_page.dart';
+import 'package:house_of_genuises/presentation/settings/pages/privacy_policy_dart.dart';
 import 'package:house_of_genuises/presentation/settings/pages/settings_page.dart';
 import 'package:house_of_genuises/presentation/userinfo/page/user_info_page.dart';
 import 'package:house_of_genuises/presentation/yearcoursespage/page/year_courses_page.dart';
@@ -30,6 +31,7 @@ class AppRoute {
   static String quizzPageRoute = '/quizz_page';
   static String quizResultPageRoute = '/quiz_result_page';
   static String searchPageRoute = '/search_page';
+  static String privacyPolicyRoute = '/privacy_policy';
 
   static List<GetPage> pages = [
     GetPage(name: onboardingPageRoute, page: () => const OnBoardingPage()),
@@ -48,5 +50,6 @@ class AppRoute {
     GetPage(name: quizzPageRoute, page: () => const QuizzesPage()),
     GetPage(name: quizResultPageRoute, page: () => ResultPage()),
     GetPage(name: searchPageRoute, page: () => const SearchPage()),
+    GetPage(name: privacyPolicyRoute, page: () => const PricyPolicy()),
   ];
 }

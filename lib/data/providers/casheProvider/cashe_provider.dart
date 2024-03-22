@@ -97,7 +97,7 @@ class CacheProvider {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      _getStorage.write("device_id", androidInfo.fingerprint);
+      _getStorage.write("device_id", androidInfo.androidId);
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       _getStorage.write("device_id", iosInfo.identifierForVendor);

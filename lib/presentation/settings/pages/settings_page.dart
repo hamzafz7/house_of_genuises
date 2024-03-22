@@ -21,7 +21,9 @@ class SettingsPage extends GetView<SettingController> {
           ),
           ProfileListItem(
               svgUrl: "assets/icons/Lock.svg",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoute.privacyPolicyRoute);
+              },
               text: "سياسة الخصوصية"),
           SizedBox(
             height: 25.h,
