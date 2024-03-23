@@ -71,7 +71,7 @@ class AccountRepo {
   Future<AppResponse> deleteProfile() async {
     try {
       final response = await ApiProvider.delete(
-        url: 'deleteProfileUrl/${CacheProvider.getUserId()}',
+        url: '$deleteProfileUrl/${CacheProvider.getUserId()}',
         token: CacheProvider.getAppToken(),
       );
       return AppResponse(
